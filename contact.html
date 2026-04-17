@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - 俄域茗通 | 以茶为媒・通联中俄</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tea-dark': '#5C3A21',
+                        'tea-medium': '#8B6914',
+                        'tea-light': '#C4A265',
+                        'tea-cream': '#F5E6C8',
+                        'tea-warm': '#D4A853',
+                        'tea-bg': '#F8F4E9',
+                        'gold-accent': '#C9A96E',
+                        'card-bg': '#F8F4E9',
+                        'border-gold': '#D4B896',
+                        'btn-brown': '#8C6E4D',
+                    },
+                    fontFamily: {
+                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],
+                        'sans-zh': ['"PingFang SC"', '"Microsoft YaHei"', '"Helvetica Neue"', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* 保留必要的伪元素和复杂样式 */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .07;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        body::before {
+            width: 320px; height: 420px;
+            top: 60px; left: -60px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 260'%3E%3Cpath d='M100 10 C60 10 30 50 30 100 C30 155 60 200 100 210 C140 200 170 155 170 100 C170 50 140 10 100 10Z' fill='%235C3A21'/%3E%3Cpath d='M100 210 L100 250' stroke='%235C3A21' stroke-width='6' fill='none'/%3E%3Cellipse cx='100' cy='255' rx='20' ry='8' fill='%235C3A21'/%3E%3C/svg%3E");
+        }
+        body::after {
+            width: 280px; height: 360px;
+            bottom: 80px; right: -40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 240'%3E%3Cellipse cx='90' cy='130' rx='70' ry='90' fill='none' stroke='%235C3A21' stroke-width='6'/%3E%3Cpath d='M90 40 C130 40 155 80 155 130 C155 175 130 205 90 210' fill='none' stroke='%235C3A21' stroke-width='4'/%3E%3Cpath d='M50 60 Q20 100 30 150' fill='none' stroke='%235C3A21' stroke-width='3'/%3E%3Cpath d='M80 20 L90 40 L100 20' fill='%235C3A21'/%3E%3Cpath d='M60 15 L70 35 L80 15' fill='%235C3A21'/%3E%3Cpath d='M100 15 L110 35 L120 15' fill='%235C3A21'/%3E%3C/svg%3E");
+        }
+        body { font-family: "PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif,"Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }  
+
+        /* 导航下划线伪元素 */
+        .nav-link-item { position: relative; padding-bottom: 4px; }
+        .nav-link-item::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px; background: #D4A853; transition: width 0.3s;
+        }
+        .nav-link-item:hover::after,
+        .nav-link-item.active::after { width: 100%; }
+        .nav-link-item:hover, .nav-link-item.active { color: #D4A853; }
+    /* ── 新增：产品服务风格背景 ── */
+        body {
+            background-image: url('images/about_bg_warm.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #FDF8F0;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: rgba(253,248,240,0.72);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* 确保内容在遮罩之上 */
+        .page-hero, .main-wrap, .cn-divider, .brand-vision, .brand-seal, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 调整卡片背景增加透明度，与新背景融合 */
+        .form-card {
+            background: rgba(255,255,255,.75); /* 微调透明度 */
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M200 40c0 0-80 65-80 130c0 44.2 35.8 80 80 80s80-35.8 80-80c0-65-80-130-80-130z' fill='none' stroke='%235C3A21' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E") repeat;
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        .form-card::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 120px;
+            height: 120px;
+            background: url("data:image/svg+xml,%3Csvg width='90' height='90' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M45 8c0 0-32 30-32 58c0 19.9 14.3 36 32 36s32-16.1 32-36c0-28-32-58-32-58z' fill='%235C3A21' opacity='0.05'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+        }
+
+        .seal-circle::before {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            border: 1px dashed rgba(212, 168, 83, .25);
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--tea-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--tea-warm); border-radius: 4px; }
+
+        /* 淡入动画 */
+        .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* 响应式调整 */
+        @media (max-width: 860px) {
+            .main-wrap { flex-direction: column; gap: 40px; padding: 50px 24px 60px; }
+            .info-col { flex: none; width: 100%; }
+            .form-row { flex-direction: column; gap: 0; }
+            .navbar { padding: 18px 24px; }
+            .navbar.scrolled { padding: 13px 24px; }
+            .nav-links { gap: 18px; }
+            .nav-links a { font-size: .9rem; }
+        }
+    </style>
+</head>
+<body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed relative">
+
+<!-- 导航栏 -->
+<nav class="navbar fixed top-0 left-0 right-0 z-[1000] flex justify-between items-center py-[22px] px-[60px] bg-[rgba(248,244,233,.88)] backdrop-blur-xl border-b border-[rgba(196,162,101,.15)] transition-all duration-400">
+    <div class="nav-logo flex items-center gap-3 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
+        <img src="images/logo.jpg" alt="俄域茗通Logo" class="h-[42px] w-auto rounded-md mix-blend-multiply">
+        <span>俄域茗通</span>
+    </div>
+    <ul class="flex gap-[42px] list-none">
+        <!-- 给每个导航链接添加 font-serif-zh -->
+        <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
+        <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
+        <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
+        <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 ">案例展示</a></li>
+        <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">联系我们</a></li>
+    </ul>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero relative z-10 pt-[140px] px-[60px] pb-[60px] text-center bg-gradient-to-b from-[#FDF8F0] to-[#F5EBD8] overflow-hidden">
+    <div class="page-hero-inner relative z-20 max-w-[820px] mx-auto">
+        <h1 class="font-serif-zh text-[2.6rem] font-black tracking-[6px] text-tea-dark mb-4">以茶为媒・<span class="hl bg-gradient-to-br from-tea-warm to-gold-accent bg-clip-text text-transparent">通联中俄</span></h1>
+        <div class="hero-divider w-[60px] h-[3px] bg-gradient-to-r from-transparent via-tea-warm to-transparent mx-auto my-[22px] rounded-sm"></div>
+        <p class="subtitle text-[1rem] text-tea-medium tracking-[1.5px] leading-loose">
+            无论您是希望开拓俄罗斯市场的安徽茶企<br>
+            还是寻求中俄茶文化合作的行业伙伴，皆可与我们对接洽谈
+        </p>
+    </div>
+</section>
+
+<!-- 主内容：左右分栏 -->
+<div class="main-wrap relative z-10 max-w-[1100px] mx-auto py-[70px] px-[40px] pb-[80px] flex gap-[60px] items-start">
+
+    <!-- 左栏：联系信息 -->
+    <div class="info-col flex-none w-[390px]">
+
+        <!-- 商务对接 -->
+        <div class="info-block mb-[40px] fade-in">
+            <div class="info-block-title font-serif-zh text-[1.08rem] font-black text-tea-dark tracking-[3px] pb-[10px] mb-[18px] border-b border-[rgba(212,184,150,.3)] flex items-center gap-[10px]">
+                <span class="ib-dot w-2 h-2 rounded-full bg-tea-warm flex-shrink-0"></span>商务合作咨询
+            </div>
+
+            <div class="info-row flex items-start gap-[13px] mb-[14px]">
+                <div class="info-icon w-8 h-8 flex-shrink-0 flex items-center justify-center mt-[2px]">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] stroke-tea-medium fill-none stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+                        <path d="M19 3c-1.1 0-2 .4-2.7 1.1" stroke-dasharray="2,1"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-text-main text-[.9rem] text-tea-dark font-semibold tracking-[.5px] leading-relaxed">茶企出海服务咨询</div>
+                    <div class="info-text-sub text-[.82rem] text-tea-medium tracking-[.5px] leading-relaxed mt-[2px]">139 XXXX XXXX &nbsp;·&nbsp; 某某某</div>
+                </div>
+            </div>
+
+            <div class="info-row flex items-start gap-[13px] mb-[14px]">
+                <div class="info-icon w-8 h-8 flex-shrink-0 flex items-center justify-center mt-[2px]">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] stroke-tea-medium fill-none stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-text-main text-[.9rem] text-tea-dark font-semibold tracking-[.5px] leading-relaxed">渠道 / 活动合作对接</div>
+                    <div class="info-text-sub text-[.82rem] text-tea-medium tracking-[.5px] leading-relaxed mt-[2px]">137 XXXX XXXX &nbsp;·&nbsp; 某某某</div>
+                </div>
+            </div>
+
+            <div class="info-row flex items-start gap-[13px] mb-[14px]">
+                <div class="info-icon w-8 h-8 flex-shrink-0 flex items-center justify-center mt-[2px]">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] stroke-tea-medium fill-none stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="M2 7l10 7 10-7"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-text-main text-[.9rem] text-tea-dark font-semibold tracking-[.5px] leading-relaxed">商务邮箱</div>
+                    <div class="info-text-sub text-[.82rem] text-tea-medium tracking-[.5px] leading-relaxed mt-[2px]">XXXXXXXX@163.com</div>
+                </div>
+            </div>
+
+            <div class="work-time-banner mt-[28px] py-[16px] px-[20px] bg-[rgba(212,168,83,.07)] border border-[rgba(212,168,83,.2)] rounded-lg flex items-center gap-[12px]">
+                <span class="wt-icon text-[1.2rem]">🕘</span>
+                <div class="wt-text text-[.85rem] text-tea-dark tracking-[.5px] leading-relaxed">工作时间：<strong class="text-tea-warm">周一至周五 &nbsp;9:00 – 18:00</strong><br>节假日如需紧急对接，可直接致电咨询</div>
+            </div>
+        </div>
+
+        <!-- 线下地址 -->
+        <div class="info-block mb-[40px] fade-in">
+            <div class="info-block-title font-serif-zh text-[1.08rem] font-black text-tea-dark tracking-[3px] pb-[10px] mb-[18px] border-b border-[rgba(212,184,150,.3)] flex items-center gap-[10px]">
+                <span class="ib-dot w-2 h-2 rounded-full bg-tea-warm flex-shrink-0"></span>线下地址
+            </div>
+
+            <div class="info-row flex items-start gap-[13px] mb-[14px]">
+                <div class="info-icon w-8 h-8 flex-shrink-0 flex items-center justify-center mt-[2px]">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] stroke-tea-medium fill-none stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-text-main text-[.9rem] text-tea-dark font-semibold tracking-[.5px] leading-relaxed">国内总部</div>
+                    <div class="info-text-sub text-[.82rem] text-tea-medium tracking-[.5px] leading-relaxed mt-[2px]">安徽省合肥市 XX 区 XX 产业园 XX 栋 XX 室</div>
+                </div>
+            </div>
+
+            <div class="info-row flex items-start gap-[13px] mb-[14px]">
+                <div class="info-icon w-8 h-8 flex-shrink-0 flex items-center justify-center mt-[2px]">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] stroke-tea-medium fill-none stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-text-main text-[.9rem] text-tea-dark font-semibold tracking-[.5px] leading-relaxed">北京运营中心</div>
+                    <div class="info-text-sub text-[.82rem] text-tea-medium tracking-[.5px] leading-relaxed mt-[2px]">北京市朝阳区 XX 大厦 XX 室</div>
+                </div>
+            </div>
+
+            <div class="info-row flex items-start gap-[13px] mb-[14px]">
+                <div class="info-icon w-8 h-8 flex-shrink-0 flex items-center justify-center mt-[2px]">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] stroke-tea-medium fill-none stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-text-main text-[.9rem] text-tea-dark font-semibold tracking-[.5px] leading-relaxed">俄罗斯联络处</div>
+                    <div class="info-text-sub text-[.82rem] text-tea-medium tracking-[.5px] leading-relaxed mt-[2px]">俄罗斯莫斯科市 XX 区 XX 街道 XX 号</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 社交媒体 -->
+        <div class="info-block mb-[40px] fade-in">
+            <div class="info-block-title font-serif-zh text-[1.08rem] font-black text-tea-dark tracking-[3px] pb-[10px] mb-[18px] border-b border-[rgba(212,184,150,.3)] flex items-center gap-[10px]">
+                <span class="ib-dot w-2 h-2 rounded-full bg-tea-warm flex-shrink-0"></span>品牌社交媒体
+            </div>
+
+            <!-- 微信 -->
+            <div class="social-row flex items-center gap-[12px] mb-[12px]">
+                <div class="social-icon w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-tea-medium">
+                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-5.972 2.975-7.928C13.14 2.7 11.018 2.188 8.691 2.188zM5.49 5.19c.46 0 .833.373.833.833 0 .46-.373.833-.833.833a.833.833 0 010-1.666zm4.402 0c.46 0 .833.373.833.833 0 .46-.373.833-.833.833a.833.833 0 010-1.666zm4.807 2.032c-2.8 0-5.073 1.887-5.073 4.213 0 2.328 2.274 4.215 5.073 4.215.554 0 1.107-.065 1.634-.2a.594.594 0 01.49.065l1.31.766a.22.22 0 00.114.037.2.2 0 00.2-.2c0-.05-.02-.1-.033-.147l-.27-1.018a.408.408 0 01.147-.457c1.253-.944 2.049-2.286 2.049-3.74.003-2.327-2.272-4.534-5.641-4.534zm-2.13 2.687a.574.574 0 010 1.148.574.574 0 010-1.148zm4.26 0a.574.574 0 010 1.148.574.574 0 010-1.148z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="social-name text-[.88rem] text-tea-dark font-semibold tracking-[.5px]">微信公众号</span>
+                    <span class="social-handle text-[.78rem] text-tea-light ml-[6px] tracking-[.5px]">俄域茗通</span>
+                </div>
+            </div>
+
+            <!-- 小红书 -->
+            <div class="social-row flex items-center gap-[12px] mb-[12px]">
+                <div class="social-icon w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-tea-medium">
+                        <path d="M21.333 0H2.667A2.667 2.667 0 000 2.667v18.666A2.667 2.667 0 002.667 24h18.666A2.667 2.667 0 0024 21.333V2.667A2.667 2.667 0 0021.333 0zM12 5.406c1.099 0 2.139.315 3.017.86a5.587 5.587 0 012.094 2.298 5.592 5.592 0 01.497 3.174 5.585 5.585 0 01-1.438 2.87 5.602 5.602 0 01-2.778 1.561 5.606 5.606 0 01-3.181-.288 5.59 5.59 0 01-2.43-1.896 5.578 5.578 0 01-1.028-3.079A5.587 5.587 0 017.5 7.501 5.591 5.591 0 0112 5.406zm0 1.96a3.63 3.63 0 100 7.26 3.63 3.63 0 000-7.26zm6.563-2.147a1.044 1.044 0 110 2.089 1.044 1.044 0 010-2.089z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="social-name text-[.88rem] text-tea-dark font-semibold tracking-[.5px]">小红书</span>
+                    <span class="social-handle text-[.78rem] text-tea-light ml-[6px] tracking-[.5px]">俄域茗通徽茶出海</span>
+                </div>
+            </div>
+
+            <!-- 抖音 -->
+            <div class="social-row flex items-center gap-[12px] mb-[12px]">
+                <div class="social-icon w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-tea-medium">
+                        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.77 1.52V6.75a4.85 4.85 0 01-1-.06z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="social-name text-[.88rem] text-tea-dark font-semibold tracking-[.5px]">抖音</span>
+                    <span class="social-handle text-[.78rem] text-tea-light ml-[6px] tracking-[.5px]">俄域茗通</span>
+                </div>
+            </div>
+
+            <!-- VK -->
+            <div class="social-row flex items-center gap-[12px] mb-[12px]">
+                <div class="social-icon w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-tea-medium">
+                        <path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.391 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.033-1.01-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.204.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .643.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.474-.085.745-.576.745z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="social-name text-[.88rem] text-tea-dark font-semibold tracking-[.5px]">VK（俄罗斯）</span>
+                    <span class="social-handle text-[.78rem] text-tea-light ml-[6px] tracking-[.5px]">俄域茗通官方账号</span>
+                </div>
+            </div>
+
+            <!-- Telegram -->
+            <div class="social-row flex items-center gap-[12px] mb-[12px]">
+                <div class="social-icon w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-tea-medium">
+                        <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 12 12 12 0 0011.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="social-name text-[.88rem] text-tea-dark font-semibold tracking-[.5px]">Telegram</span>
+                    <span class="social-handle text-[.78rem] text-tea-light ml-[6px] tracking-[.5px]">中俄茶文化交流社群</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 右栏：表单 -->
+    <div class="form-col flex-1 fade-in">
+        <div class="form-card bg-[rgba(255,255,255,.7)] border border-[rgba(212,184,150,.3)] rounded-xl py-[44px] px-[40px] pb-[38px] shadow-[0_8px_40px_rgba(92,58,33,.05)] backdrop-blur-md relative overflow-hidden">
+            <div class="form-header flex items-center gap-[14px] mb-[32px] pb-[20px] border-b border-[rgba(212,184,150,.2)]">
+                <div class="form-header-icon w-[42px] h-[42px] bg-[rgba(212,168,83,.1)] border border-[rgba(212,168,83,.25)] rounded-lg flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-[22px] h-[22px] fill-none stroke-tea-warm stroke-[1.6] stroke-linecap-round stroke-linejoin-round">
+                        <path d="M5 8h14l-1.5 9H6.5L5 8z"/>
+                        <path d="M8 8V6a2 2 0 014 0v2"/>
+                        <path d="M19 10c1.1 0 2 .9 2 2s-.9 2-2 2"/>
+                        <path d="M9 17v2m6-2v2"/>
+                    </svg>
+                </div>
+                <div class="form-header-text">
+                    <h3 class="font-serif-zh text-[1.1rem] font-black text-tea-dark tracking-[2px]">合作咨询表单</h3>
+                    <p class="text-[.8rem] text-tea-light tracking-[1px] mt-[3px]">填写信息，开启您的出海之旅</p>
+                </div>
+            </div>
+
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <div class="form-row flex gap-[16px]">
+                    <div class="form-group flex-1 mb-[20px]">
+                        <label class="form-label block text-[.8rem] font-semibold text-tea-medium tracking-[1px] mb-[8px]">姓名 / 企业名称<span class="req text-tea-warm ml-[3px]">*</span></label>
+                        <input type="text" class="form-input w-full py-[12px] px-[16px] bg-[#FDFAF4] border border-[rgba(180,150,110,.35)] rounded-lg font-sans-zh text-[.88rem] text-tea-dark tracking-[.5px] transition-colors duration-300 outline-none focus:border-tea-warm focus:shadow-[0_0_0_3px_rgba(212,168,83,.1)]" placeholder="请输入您的姓名或企业名称" required>
+                    </div>
+                    <div class="form-group flex-1 mb-[20px]">
+                        <label class="form-label block text-[.8rem] font-semibold text-tea-medium tracking-[1px] mb-[8px]">联系电话<span class="req text-tea-warm ml-[3px]">*</span></label>
+                        <input type="tel" class="form-input w-full py-[12px] px-[16px] bg-[#FDFAF4] border border-[rgba(180,150,110,.35)] rounded-lg font-sans-zh text-[.88rem] text-tea-dark tracking-[.5px] transition-colors duration-300 outline-none focus:border-tea-warm focus:shadow-[0_0_0_3px_rgba(212,168,83,.1)]" placeholder="请输入您的联系电话" required>
+                    </div>
+                </div>
+
+                <div class="form-group mb-[20px]">
+                    <label class="form-label block text-[.8rem] font-semibold text-tea-medium tracking-[1px] mb-[8px]">联系邮箱</label>
+                    <input type="email" class="form-input w-full py-[12px] px-[16px] bg-[#FDFAF4] border border-[rgba(180,150,110,.35)] rounded-lg font-sans-zh text-[.88rem] text-tea-dark tracking-[.5px] transition-colors duration-300 outline-none focus:border-tea-warm focus:shadow-[0_0_0_3px_rgba(212,168,83,.1)]" placeholder="请输入您的联系邮箱（选填）">
+                </div>
+
+                <div class="form-group mb-[20px]">
+                    <label class="form-label block text-[.8rem] font-semibold text-tea-medium tracking-[1px] mb-[8px]">合作类型<span class="req text-tea-warm ml-[3px]">*</span></label>
+                    <select class="form-select w-full py-[12px] px-[16px] bg-[#FDFAF4] border border-[rgba(180,150,110,.35)] rounded-lg font-sans-zh text-[.88rem] text-tea-dark tracking-[.5px] transition-colors duration-300 outline-none focus:border-tea-warm focus:shadow-[0_0_0_3px_rgba(212,168,83,.1)] appearance-none bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1L6 6L11 1%22 stroke=%22%23C4A265%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E')] bg-no-repeat bg-right-[14px] center pr-[36px] cursor-pointer" required>
+                        <option value="" disabled selected>请选择您的合作类型</option>
+                        <option value="export">茶企出海服务咨询</option>
+                        <option value="channel">渠道合作</option>
+                        <option value="activity">活动联动</option>
+                        <option value="intangible">非遗 / 专家合作</option>
+                        <option value="other">其他合作</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-[20px]">
+                    <label class="form-label block text-[.8rem] font-semibold text-tea-medium tracking-[1px] mb-[8px]">您的核心需求</label>
+                    <textarea class="form-textarea w-full py-[12px] px-[16px] bg-[#FDFAF4] border border-[rgba(180,150,110,.35)] rounded-lg font-sans-zh text-[.88rem] text-tea-dark tracking-[.5px] transition-colors duration-300 outline-none focus:border-tea-warm focus:shadow-[0_0_0_3px_rgba(212,168,83,.1)] h-[110px] resize-y leading-relaxed" placeholder="请简要描述您的合作意向或核心需求，我们将为您提供针对性方案（选填）"></textarea>
+                </div>
+
+                <div class="submit-wrap text-center mt-[10px]">
+                    <div class="submit-row flex items-center justify-center gap-[12px] mb-[14px]">
+                        <span class="ruiwen w-[28px] h-[28px] opacity-[.35] flex-shrink-0">
+                            <svg viewBox="0 0 28 28" fill="none" class="w-full h-full">
+                                <path d="M4 24V14h6v-4h4V6h10" stroke="#D4B896" stroke-width="1.2" stroke-linecap="round"/>
+                                <path d="M4 24h8v-6h4v-4h4V8" stroke="#D4B896" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2,2"/>
+                            </svg>
+                        </span>
+                        <button type="submit" class="submit-btn inline-block py-[13px] px-[52px] bg-btn-brown text-white border-none rounded-lg font-serif-zh text-[1rem] font-bold tracking-[3px] cursor-pointer transition-all duration-250 shadow-[0_4px_18px_rgba(140,110,77,.18)] hover:bg-[#7A5D3B] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(140,110,77,.25)] active:translate-y-0">提 交 咨 询</button>
+                        <span class="ruiwen w-[28px] h-[28px] opacity-[.35] flex-shrink-0 scale-x-[-1]">
+                            <svg viewBox="0 0 28 28" fill="none" class="w-full h-full">
+                                <path d="M4 24V14h6v-4h4V6h10" stroke="#D4B896" stroke-width="1.2" stroke-linecap="round"/>
+                                <path d="M4 24h8v-6h4v-4h4V8" stroke="#D4B896" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2,2"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <p class="submit-hint text-[.78rem] text-tea-light tracking-[.8px] leading-relaxed">我们将在 1 个工作日内与您取得联系<br>为您提供一对一的出海咨询服务</p>
+                </div>
+            </form>
+
+            <!-- 提交成功提示（默认隐藏） -->
+            <div id="successMsg" style="display:none;text-align:center;padding:30px 0;">
+                <div style="font-size:2rem;margin-bottom:12px;">🍃</div>
+                <div style="font-family:var(--font-serif-zh);font-size:1.1rem;font-weight:700;color:var(--tea-dark);letter-spacing:2px;margin-bottom:10px;">感谢您的咨询</div>
+                <div style="font-size:.88rem;color:var(--tea-medium);line-height:1.9;letter-spacing:.5px;">我们已收到您的合作信息<br>将在 1 个工作日内与您取得联系</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 分隔线 -->
+<div class="cn-divider flex items-center justify-center gap-[16px] py-[50px] max-w-[600px] mx-auto relative z-10">
+    <div class="d-line flex-1 max-w-[200px] h-[1px] bg-border-gold opacity-[.3]"></div>
+    <div class="d-ornament flex gap-[6px]">
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-[.4]"></span>
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-[.4]"></span>
+    </div>
+    <div class="d-line flex-1 max-w-[200px] h-[1px] bg-border-gold opacity-[.3]"></div>
+</div>
+
+<!-- 品牌愿景 -->
+<div class="brand-vision relative z-10 max-w-[760px] mx-auto text-center px-[40px] pb-[70px] fade-in">
+    <div class="bv-label inline-block py-[4px] px-[18px] bg-[rgba(212,168,83,.1)] border border-[rgba(212,168,83,.22)] rounded-full text-[.75rem] font-semibold text-tea-warm tracking-[2px] mb-[20px]">品牌愿景</div>
+    <p class="bv-text text-[.92rem] text-tea-dark leading-[2.2] tracking-[.8px] opacity-[.82]">
+        俄域茗通，专注安徽茶文化对俄品牌出海全链条服务，以文化转译为核心，以专业服务为支撑，助力安徽茶企突破出海壁垒，让徽茶香飘俄罗斯，打造地方特色文化产业国际化转型的创新示范。
+    </p>
+</div>
+
+<!-- 品牌印章 -->
+<div class="brand-seal relative z-10 flex flex-col items-center gap-0 pt-[36px] fade-in">
+    <div class="seal-circle w-[100px] h-[100px] rounded-full border-2 border-[rgba(212,168,83,.35)] flex flex-col items-center justify-center bg-[rgba(255,255,255,.5)] shadow-[inset_0_0_0_6px_rgba(212,168,83,.06)] relative">
+        <div class="seal-text font-serif-zh text-[1.15rem] font-black text-tea-dark tracking-[2px] leading-[1.3]">俄域<br>茗通</div>
+        <div class="seal-sub text-[.6rem] text-tea-light tracking-[2px] mt-[3px]">ЧАЙ · ХУЭ</div>
+    </div>
+    <div class="seal-dot w-[6px] h-[6px] rounded-full bg-[rgba(212,168,83,.3)] mt-[10px]"></div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer-divider max-w-[900px] mx-auto mt-[20px] relative z-10">
+    <div class="line-1 h-[1px] bg-[rgba(212,184,150,.4)]"></div>
+    <div class="line-gap h-[2px]"></div>
+    <div class="line-2 h-[1px] bg-[rgba(224,208,184,.5)]"></div>
+</div>
+<footer class="footer-main relative z-10 overflow-hidden">
+    <div class="footer-main-inner relative py-[56px] px-[40px] pb-[40px] text-center bg-gradient-to-b from-[#F2E8D6] to-[#EFE2CC]">
+        <div class="footer-watermark absolute inset-0 opacity-[.04] pointer-events-none">
+            <svg class="leaf-1 w-[64px] h-[64px] absolute top-[24px] left-[10%] -rotate-20 fill-[#5C3A21]" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-2 w-[48px] h-[48px] absolute top-[32px] right-[12%] rotate-15 fill-[#5C3A21]" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-3 w-[40px] h-[40px] absolute bottom-[16px] left-[30%] rotate-40 fill-[#5C3A21]" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+        </div>
+        <h3 class="footer-brand font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-[8px]">俄域茗通</h3>
+        <div class="footer-ornament flex items-center justify-center gap-[12px] mb-[16px]">
+            <div class="orn-line w-[32px] h-[1px] bg-[rgba(212,168,83,.4)]"></div>
+            <div class="orn-dot w-[6px] h-[6px] rounded-full bg-[rgba(212,168,83,.5)]"></div>
+            <div class="orn-line w-[32px] h-[1px] bg-[rgba(212,168,83,.4)]"></div>
+        </div>
+        <p class="footer-slogan text-[.85rem] text-[#785A44] tracking-[3px] font-medium mb-[24px]">跨文化传播视域下文化转译服务的设计与运营</p>
+        <div class="footer-nav flex justify-center gap-[32px] flex-wrap">
+            <a href="index.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">首页</a>
+            <a href="about.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">关于我们</a>
+            <a href="products.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">产品服务</a>
+            <a href="cases.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">案例展示</a>
+            <a href="market.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">产品营销</a>
+            <a href="contact.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">联系我们</a>
+        </div>
+    </div>
+    <div class="footer-copyright py-[20px] px-[40px] text-center bg-[#E6D5B8]">
+        <p class="text-[.75rem] text-[#947860] tracking-[1px] m-0">&copy; 2026 俄域茗通团队. 保留所有权利.</p>
+    </div>
+</footer>
+
+<script>
+/* 滚动导航 */
+window.addEventListener('scroll',()=>{
+    document.querySelector('.navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+
+/* 滚动淡入 */
+const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+/* 表单提交 */
+function handleSubmit(e){
+    e.preventDefault();
+    const form=document.getElementById('contactForm');
+    const msg=document.getElementById('successMsg');
+    form.style.opacity='0';
+    form.style.transition='opacity .4s';
+    setTimeout(()=>{
+        form.style.display='none';
+        msg.style.display='block';
+        msg.style.opacity='0';
+        msg.style.transition='opacity .6s';
+        setTimeout(()=>msg.style.opacity='1',20);
+    },400);
+}
+</script>
+
+</body>
+</html>

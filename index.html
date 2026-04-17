@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 俄域茗通 | 徽茶为芯，通中俄民心</title>
+
+    <!-- Tailwind CDN + 自定义配置 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tea-dark':   '#5C3A21',
+                        'tea-medium': '#8B6914',
+                        'tea-light':  '#C4A265',
+                        'tea-cream':  '#F5E6C8',
+                        'tea-warm':   '#D4A853',
+                        'tea-bg':     '#FDF8F0',
+                        'gold':       '#C9A96E',
+                    },
+                    fontFamily: {
+                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],
+                        'serif-en': ['"Georgia"', '"Palatino Linotype"', '"Book Antiqua"', '"Times New Roman"', 'serif'],
+                    },
+                    letterSpacing: {
+                        'zh-lg':  '3px',
+                        'zh-xl':  '4px',
+                        'zh-2xl': '6px',
+                    },
+                    keyframes: {
+                        floatBg: {
+                            '0%,100%': { transform: 'translate(0,0) scale(1)' },
+                            '50%':     { transform: 'translate(30px,-20px) scale(1.05)' },
+                        },
+                        fadeUp: {
+                            'from': { opacity: '0', transform: 'translateY(25px)' },
+                            'to':   { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0' },
+                            'to':   { opacity: '1' },
+                        },
+                        ringPulse: {
+                            '0%':   { width: '28px', height: '28px', opacity: '0.4' },
+                            '100%': { width: '50px', height: '50px', opacity: '0' },
+                        },
+                        dotPulse: {
+                            '0%,100%': { transform: 'scale(1)' },
+                            '50%':     { transform: 'scale(1.2)', boxShadow: '0 0 16px rgba(212,168,83,1)' },
+                        },
+                        drawCn: { 'to': { strokeDashoffset: '250' } },
+                        drawRu: { 'to': { strokeDashoffset: '0' } },
+                        glowPulse: {
+                            '0%,100%': { filter: 'drop-shadow(0 0 6px rgba(212,168,83,0.4))' },
+                            '50%':     { filter: 'drop-shadow(0 0 16px rgba(212,168,83,0.9))' },
+                        },
+                        gapBlink: {
+                            '0%,100%': { opacity: '0.3' },
+                            '50%':     { opacity: '1' },
+                        },
+                        hintIn: { 'to': { opacity: '0.8' } },
+                        hintF: {
+                            '0%,100%': { transform: 'translateX(-50%) translateY(0)' },
+                            '50%':     { transform: 'translateX(-50%) translateY(-5px)' },
+                        },
+                        pfly: {
+                            '0%':   { opacity: '1', transform: 'translate(0,0) scale(0.4) rotate(0deg)' },
+                            '50%':  { opacity: '1', transform: 'translate(var(--tx),var(--ty)) scale(1.2) rotate(180deg)' },
+                            '100%': { opacity: '0', transform: 'translate(var(--tx2),var(--ty2)) scale(0.2) rotate(360deg)' },
+                        },
+                    },
+                    animation: {
+                        'float-bg':   'floatBg 20s ease-in-out infinite',
+                        'fade-up-1':  'fadeUp 1s 0.3s ease forwards',
+                        'fade-up-2':  'fadeUp 1s 0.5s ease forwards',
+                        'fade-up-3':  'fadeUp 1s 0.6s ease forwards',
+                        'fade-up-4':  'fadeUp 1s 0.7s ease forwards',
+                        'fade-up-5':  'fadeUp 1s 0.9s ease forwards',
+                        'fade-in':    'fadeIn 1.2s 0.4s ease forwards',
+                        'ring-pulse': 'ringPulse 2s ease-in-out infinite',
+                        'dot-pulse':  'dotPulse 1.5s ease-in-out infinite',
+                        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+                        'gap-blink':  'gapBlink 1.2s ease-in-out infinite',
+                        'hint-in':    'hintIn 2s 2s ease forwards',
+                        'hint-f':     'hintF 3s 2s ease-in-out infinite',
+                        'pfly':       'pfly 2.5s ease-out forwards',
+                    },
+                    backgroundImage: {
+                        'hero-grad':   'linear-gradient(160deg, #FDF8F0 0%, #F5E6C8 40%, #EDD9B5 100%)',
+                        'warm-grad':   'linear-gradient(135deg, #D4A853, #C9A96E)',
+                        'line-grad':   'linear-gradient(90deg, #D4A853 0%, #C9A96E 50%, #D4A853 100%)',
+                        'footer-grad': 'linear-gradient(to bottom, #F2E8D6, #EFE2CC)',
+                        'divider-1':   'linear-gradient(90deg, transparent, rgba(212,184,150,0.4), transparent)',
+                        'divider-2':   'linear-gradient(90deg, transparent, rgba(224,208,184,0.5), transparent)',
+                    },
+                    boxShadow: {
+                        'nav-scroll': '0 4px 30px rgba(92,58,33,0.08)',
+                        'card':       '0 15px 40px rgba(92,58,33,0.08)',
+                        'tip':        '0 10px 40px rgba(92,58,33,0.12)',
+                        'celeb':      '0 16px 50px rgba(92,58,33,0.15)',
+                        'dot':        '0 0 10px rgba(212,168,83,0.8)',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- 仅保留无法用 Tailwind 工具类表达的内容：伪元素、SVG stroke 动画、JS 状态类 -->
+    <style>
+        /* 全局字体与基础 */
+        body { font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }
+
+        /* 导航下划线伪元素 */
+        .nav-link-item { position: relative; padding-bottom: 4px; }
+        .nav-link-item::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px; background: #D4A853; transition: width 0.3s;
+        }
+        .nav-link-item:hover::after,
+        .nav-link-item.active::after { width: 100%; }
+        .nav-link-item:hover, .nav-link-item.active { color: #D4A853; }
+
+        /* Hero 背景浮动圆 */
+        .hero-float-circle {
+            position: absolute; top: -30%; right: -10%;
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(196,162,101,0.08) 0%, transparent 70%);
+            animation: floatBg 20s ease-in-out infinite;
+        }
+        @keyframes floatBg {
+            0%,100% { transform: translate(0,0) scale(1); }
+            50%      { transform: translate(30px,-20px) scale(1.05); }
+        }
+
+        /* fadeUp / fadeIn 关键帧 */
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(25px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+        /* 渐变文字 highlight */
+        .text-grad-warm {
+            background: linear-gradient(135deg, #D4A853, #C9A96E);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        /* Pin 相关动画 */
+        @keyframes ringPulse {
+            0%   { width:28px; height:28px; opacity:.4; }
+            100% { width:50px; height:50px; opacity:0;  }
+        }
+        @keyframes dotPulse {
+            0%,100% { transform:scale(1); }
+            50%     { transform:scale(1.2); box-shadow:0 0 16px rgba(212,168,83,1); }
+        }
+        .pin-dot-outer {
+            width:32px; height:32px; border-radius:50%;
+            border: 2px solid #D4A853;
+            position:absolute; top:50%; left:50%;
+            transform:translate(-50%,-50%);
+            animation: ringPulse 2s ease-in-out infinite; opacity:.4;
+        }
+        .pin-dot-inner {
+            width:14px; height:14px; border-radius:50%;
+            background:#D4A853;
+            box-shadow: 0 0 10px rgba(212,168,83,0.8);
+            position:relative; flex-shrink:0;
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+
+        /* Pin 显隐状态 */
+        .pin {
+            position:absolute; z-index:3; display:flex; align-items:center; gap:8px;
+            opacity:0; transform:scale(0.5);
+            transform-origin:16px 50%;
+            transition: all .5s cubic-bezier(0.34,1.56,0.64,1);
+            pointer-events:none;
+        }
+        .pin.show { opacity:1; transform:scale(1); }
+        .pin.anhui  { left:61%; top:55%; }
+        .pin.moscow { left:19%; top:47%; }
+        .pin.anhui .pin-text { transform: translateX(25px); }
+
+        /* SVG 连线动画 */
+        @keyframes drawCn { to { stroke-dashoffset: 250; } }
+        @keyframes drawRu { to { stroke-dashoffset: 0;   } }
+        @keyframes glowPulse {
+            0%,100% { filter: drop-shadow(0 0 6px rgba(212,168,83,0.4)); }
+            50%     { filter: drop-shadow(0 0 16px rgba(212,168,83,0.9)); }
+        }
+        @keyframes gapBlink { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+        .line-layer { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2; }
+        .tea-line { fill:none; stroke:url(#lineGrad); stroke-width:3; stroke-dasharray:12,8; }
+        .tea-line.cn, .tea-line.ru { opacity:0; }
+        .tea-line.cn.visible { opacity:1; stroke-dashoffset:500; animation: drawCn 1.5s ease forwards; }
+        .tea-line.ru.visible { opacity:1; stroke-dashoffset:-500; animation: drawRu 1.5s ease forwards; }
+        .tea-line.full { opacity:0; stroke-width:0; }
+        .tea-line.full.connected {
+            opacity:1; stroke-width:3.5; stroke-dasharray:none;
+            filter: drop-shadow(0 0 8px rgba(212,168,83,0.6));
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .gap-circle { fill:none; stroke:#D4A853; stroke-width:2; stroke-dasharray:2,2; opacity:0; transition:opacity .5s 1.2s; }
+        .gap-circle.show { opacity:1; animation: gapBlink 1.2s ease-in-out infinite; }
+        .road-text { font-family:"Songti SC",serif; font-size:11px; font-weight:900; fill:#5C3A21; letter-spacing:4px; opacity:0; transition:opacity .8s; }
+        .road-text.show { opacity:.9; }
+        .flow-dot { r:6; fill:#FFF; opacity:0; filter:drop-shadow(0 0 8px rgba(212,168,83,1)); }
+        .flow-dot.active { opacity:1; }
+
+        /* Tip 气泡 */
+        .map-tip {
+            position:absolute; padding:18px 24px;
+            background:rgba(253,248,240,0.95); backdrop-filter:blur(14px);
+            border:1px solid rgba(196,162,101,0.3); border-radius:12px;
+            box-shadow:0 10px 40px rgba(92,58,33,0.12); color:#5C3A21; z-index:10;
+            opacity:0; transform:translateY(12px) scale(0.94);
+            transition: all .6s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none;
+        }
+        .map-tip.show { opacity:1; transform:translateY(0) scale(1); }
+
+        /* 烟花粒子 */
+        .celeb-overlay { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:20; opacity:0; }
+        .celeb-overlay.active { opacity:1; }
+        .tea-particle { position:absolute; font-size:1.5rem; opacity:0; }
+        .celeb-overlay.active .tea-particle { animation: pfly 2.5s ease-out forwards; }
+        @keyframes pfly {
+            0%  { opacity:1; transform:translate(0,0) scale(0.4) rotate(0deg); }
+            50% { opacity:1; transform:translate(var(--tx),var(--ty)) scale(1.2) rotate(180deg); }
+            100%{ opacity:0; transform:translate(var(--tx2),var(--ty2)) scale(0.2) rotate(360deg); }
+        }
+
+        /* 庆典卡片 */
+        .celeb-card {
+            position:absolute; bottom:70px; right:20px; width:280px;
+            transform-origin:bottom right; transform:scale(0);
+            background:rgba(253,248,240,0.95); backdrop-filter:blur(18px);
+            padding:30px 24px; border-radius:16px;
+            border:1px solid rgba(196,162,101,0.3);
+            box-shadow:0 16px 50px rgba(92,58,33,0.15);
+            text-align:center; z-index:25;
+            opacity:0; transition: all .8s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .celeb-card.show { opacity:1; transform:scale(1); }
+
+        /* Hint & Reset */
+        @keyframes hintIn { to{opacity:.8} }
+        @keyframes hintF {
+            0%,100% { transform:translateX(-50%) translateY(0); }
+            50%     { transform:translateX(-50%) translateY(-5px); }
+        }
+        .hint {
+            position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);
+            font-size:.85rem; color:#C4A265; letter-spacing:2px;
+            opacity:0;
+            animation: hintIn 2s 2s ease forwards, hintF 3s 2s ease-in-out infinite;
+        }
+        .hint.hidden { opacity:0!important; animation:none; transition:opacity .5s; }
+
+        /* map-wrap 状态 */
+        .map-wrap { position:absolute; cursor:pointer; transition: filter .5s ease, transform .5s ease; }
+        .map-wrap img { width:100%; height:100%; object-fit:contain; display:block; mix-blend-mode:darken; }
+        .map-wrap:hover { filter:drop-shadow(0 0 20px rgba(212,168,83,.4)) brightness(1.05); transform:scale(1.02); }
+        .map-wrap.active { filter:drop-shadow(0 0 28px rgba(212,168,83,.5)) brightness(1.08); transform:scale(1.02); }
+        .map-wrap.russia { width:540px; top:0; right:0; }
+        .map-wrap.china  { width:500px; bottom:20px; left:60px; }
+
+        /* Feature card hover */
+        .feature-card { transition: all .4s ease; }
+        .feature-card:hover { transform:translateY(-10px); box-shadow:0 15px 40px rgba(92,58,33,0.08); border-color:#D4A853; }
+
+        /* Footer 暗纹 */
+        .footer-watermark { position:absolute; inset:0; opacity:.04; pointer-events:none; }
+        .footer-watermark svg { position:absolute; fill:#5C3A21; }
+        .footer-watermark .leaf-1 { width:64px;height:64px; top:24px; left:10%; transform:rotate(-20deg); }
+        .footer-watermark .leaf-2 { width:48px;height:48px; top:32px; right:12%; transform:rotate(15deg); }
+        .footer-watermark .leaf-3 { width:40px;height:40px; bottom:16px; left:30%; transform:rotate(40deg); }
+    </style>
+</head>
+<body class="font-serif-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed">
+
+<!-- ========== 导航栏 ========== -->
+<nav id="navbar"
+     class="fixed top-0 left-0 right-0 z-[1000]
+            flex justify-between items-center
+            px-[60px] py-[22px]
+            bg-[rgba(253,248,240,0.85)] backdrop-blur-xl
+            border-b border-[rgba(196,162,101,0.15)]
+            transition-all duration-400">
+
+    <div class="flex items-center gap-3 text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
+        <img src="images/logo.jpg" alt="俄域茗通Logo"
+             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
+        <span>俄域茗通</span>
+    </div>
+
+    <ul class="flex gap-[42px] list-none">
+        <li><a href="index.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">首页</a></li>
+        <li><a href="about.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
+        <li><a href="products.html" class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
+        <li><a href="cases.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>
+        <li><a href="market.html"   class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="contact.html"  class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
+    </ul>
+</nav>
+
+<!-- ========== Hero ========== -->
+<section class="min-h-screen flex items-center px-[60px] pt-[120px] pb-[60px]
+                relative overflow-hidden bg-hero-grad">
+
+    <!-- 浮动背景圆 -->
+    <div class="hero-float-circle"></div>
+
+    <div class="flex items-center justify-between w-full max-w-[1440px] mx-auto relative z-[2]">
+
+        <!-- 左侧文案 -->
+        <div class="flex-[0_0_32%] pr-5">
+
+            <p class="font-serif-en italic text-[0.85rem] text-tea-light tracking-[2px] mb-4
+                       opacity-0 animate-[fadeUp_1s_0.3s_ease_forwards]">
+                Хуэйча — на тысячи ли
+            </p>
+
+            <h1 class="text-[2.8rem] font-black leading-[1.4] text-tea-dark tracking-[4px] mb-5
+                        opacity-0 animate-[fadeUp_1s_0.5s_ease_forwards]">
+                徽茶为芯<br>
+                <span class="text-grad-warm">传茶道 通民心</span>
+            </h1>
+
+            <div class="w-[60px] h-[3px] bg-gradient-to-r from-tea-warm to-transparent
+                        my-5 opacity-0 animate-[fadeUp_1s_0.6s_ease_forwards]"></div>
+
+            <p class="text-[1.05rem] text-tea-medium leading-[1.8] tracking-wider
+                       opacity-0 animate-[fadeUp_1s_0.7s_ease_forwards]">
+                依托一带一路与RCEP战略红利<br>
+                以文化转译为核心，B2B+B2C+O2O全域驱动<br>
+                赋能安徽非遗茶品牌高质量出海俄罗斯
+            </p>
+
+            <div class="grid grid-cols-2 gap-x-2 gap-y-3 mt-[30px] w-fit
+                        opacity-0 animate-[fadeUp_1s_0.9s_ease_forwards]">
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
+                    文化适配咨询
+                </span>
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
+                    产品与IP设计
+                </span>
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
+                    快速市场测试
+                </span>
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
+                    O2O沉浸体验
+                </span>
+            </div>
+        </div>
+
+        <!-- 右侧地图 -->
+        <div class="flex-[0_0_65%] relative h-[600px]
+                    opacity-0 animate-[fadeIn_1.2s_0.4s_ease_forwards]">
+
+            <div class="w-full h-full relative" id="mapStage">
+
+                <!-- 俄罗斯地图 -->
+                <div class="map-wrap russia" id="russiaWrap">
+                    <img src="images/russia-map.png" alt="俄罗斯市场">
+                    <div class="pin moscow" id="pinMoscow">
+                        <div class="pin-dot-outer"></div>
+                        <div class="pin-dot-inner" id="dotMoscow"></div>
+                        <div class="pin-text">
+                            <div class="font-serif-en italic text-[13px] text-tea-dark font-bold tracking-[1.5px]">Москва</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 中国地图 -->
+                <div class="map-wrap china" id="chinaWrap">
+                    <img src="images/china-map.png" alt="中国发源地">
+                    <div class="pin anhui" id="pinAnhui">
+                        <div class="pin-dot-outer"></div>
+                        <div class="pin-dot-inner" id="dotAnhui"></div>
+                        <div class="pin-text">
+                            <div class="text-[14px] font-black text-tea-dark tracking-[2px]">安徽</div>
+                            <div class="text-[10px] text-tea-medium tracking-[1px] mt-0.5">黄山 · 祁门 · 六安</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SVG 连线层 -->
+                <svg class="line-layer" id="lineSvg" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="#D4A853"/>
+                            <stop offset="50%"  stop-color="#C9A96E"/>
+                            <stop offset="100%" stop-color="#D4A853"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="tea-line cn" id="lineCn"/>
+                    <circle class="gap-circle" id="gap1" r="3"/>
+                    <circle class="gap-circle" id="gap2" r="3"/>
+                    <path class="tea-line ru" id="lineRu"/>
+                    <path class="tea-line full" id="lineFull"/>
+                    <text class="road-text" id="roadText" text-anchor="middle">数字化万里茶道</text>
+                    <circle class="flow-dot" id="flowDot"/>
+                </svg>
+
+                <!-- 中国气泡 -->
+                <div class="map-tip" id="tipCn" style="left:0%;top:32%;">
+                    <div class="text-[0.75rem] text-tea-light mb-2 tracking-[2px]">🍃 供应链溯源 · 非遗工艺传扬</div>
+                    <div class="font-black text-[1.05rem] text-tea-dark mb-1">提炼东方茶道精神</div>
+                    <div class="text-[0.8rem] text-tea-medium leading-[1.6]">
+                        聚合黄山毛峰、祁门红茶、六安瓜片<br>将国家级非遗底蕴转化为可感知品牌资产
+                    </div>
+                </div>
+
+                <!-- 俄罗斯气泡 -->
+                <div class="map-tip" id="tipRu" style="left:3%;top:1%;">
+                    <div class="text-[0.75rem] text-tea-light mb-2 tracking-[2px]">🌍 文化转译 · 终端场景触达</div>
+                    <div class="font-black text-[1.05rem] text-tea-dark mb-1">重塑俄语区品牌叙事</div>
+                    <div class="text-[0.8rem] text-tea-medium leading-[1.6]">
+                        深入莫斯科/圣彼得堡主流商超<br>联动VK/Telegram与线下孔子学院跨界营销
+                    </div>
+                </div>
+
+                <!-- 烟花层 & 庆典卡片 -->
+                <div class="celeb-overlay" id="celeb"></div>
+                <div class="celeb-card" id="celebCard">
+                    <h2 class="text-[1.35rem] font-black tracking-[2px] text-tea-dark mb-3 leading-[1.4]">
+                        文化转译 · 互利共赢
+                    </h2>
+                    <p class="text-[0.85rem] text-tea-medium tracking-wider mb-3 leading-[1.6]">
+                        打破文化隔阂，重塑徽茶出海势能
+                    </p>
+                    <p class="font-serif-en italic text-[0.85rem] text-tea-light tracking-wider leading-[1.4]">
+                        «Мост культурного обмена»
+                    </p>
+                </div>
+
+                <p class="hint" id="hint">—— 点击两国地图，开启中俄茶路 ——</p>
+
+                <button id="resetBtn"
+                        class="absolute bottom-[-20px] right-5
+                               bg-[rgba(253,248,240,0.8)] border border-tea-light rounded-[20px]
+                               px-5 py-2 font-serif-zh text-[0.8rem] text-tea-dark font-semibold
+                               cursor-pointer opacity-0 transition-all duration-300 z-30
+                               hover:bg-tea-warm hover:text-white hover:border-tea-warm">
+                    重新体验
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 核心业务 ========== -->
+<section class="py-[100px] px-[60px] bg-white relative">
+
+    <div class="text-center mb-[60px]">
+        <h2 class="text-[2.2rem] text-tea-dark tracking-[3px] font-black">创新出海服务体系</h2>
+        <p class="text-[1rem] text-tea-light mt-[10px] tracking-[2px]">
+            构建从文化解码、快速验证到渠道落地的全案闭环
+        </p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-[40px] max-w-[1200px] mx-auto">
+
+        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl
+                    border border-[rgba(196,162,101,0.15)] text-center">
+            <div class="text-[2.5rem] mb-5 inline-block">📊</div>
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">文化适配与市场测试</h3>
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">
+                深度解码俄罗斯消费者审美与价值偏好，提供品牌俄语命名与核心叙事重塑。结合A/B测试与KOL社群反馈，以最低成本验证文化出海方案的商业可行性。
+            </p>
+        </div>
+
+        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl
+                    border border-[rgba(196,162,101,0.15)] text-center">
+            <div class="text-[2.5rem] mb-5 inline-block">🎨</div>
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">创新产品与文创IP设计</h3>
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">
+                打造"徽茶小玛"中俄融合IP，推出"茶炊徽香"茶包、"旋舞茶翼"耳挂茶包及"万里红途"数字盲盒，将传统非遗转化为契合俄罗斯生活场景的文创符号。
+            </p>
+        </div>
+
+        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl
+                    border border-[rgba(196,162,101,0.15)] text-center">
+            <div class="text-[2.5rem] mb-5 inline-block">🌐</div>
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">O2O 沉浸式跨文化营销</h3>
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">
+                依托"徽茶为芯"双语小程序与VK/TG社交矩阵，提供个性化茶谱定制，联动俄罗斯本土机构开展茶文化快闪，实现从数字认知到线下商业变现的双向引流。
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ========== 页脚分割线 ========== -->
+<div class="max-w-[900px] mx-auto relative z-10">
+    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>
+    <div class="h-0.5"></div>
+    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>
+</div>
+
+<!-- ========== 页脚 ========== -->
+<footer class="relative z-10 overflow-hidden">
+
+    <!-- 主区域 -->
+    <div class="relative px-[40px] pt-[56px] pb-[40px] text-center bg-footer-grad">
+
+        <!-- 茶叶暗纹 -->
+        <div class="footer-watermark">
+            <svg class="leaf-1" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-2" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-3" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+        </div>
+
+        <!-- 品牌名 -->
+        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2">
+            俄域茗通
+        </h3>
+
+        <!-- 金色点缀 -->
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.5)]"></div>
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+        </div>
+
+        <!-- Slogan -->
+        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">
+            跨文化传播视域下文化转译服务的设计与运营
+        </p>
+
+        <!-- 快捷导航 -->
+        <nav class="flex justify-center gap-8 flex-wrap">
+            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>
+            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>
+            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
+            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
+            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
+        </nav>
+    </div>
+
+    <!-- 版权条 -->
+    <div class="px-[40px] py-5 text-center bg-[#E6D5B8]">
+        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">
+            &copy; 2026 俄域茗通团队. 保留所有权利.
+        </p>
+    </div>
+
+</footer>
+
+<script>
+(() => {
+    const $ = id => document.getElementById(id);
+    const mapStage    = $('mapStage'),   chinaWrap  = $('chinaWrap'),   russiaWrap = $('russiaWrap');
+    const pinAnhui    = $('pinAnhui'),   pinMoscow  = $('pinMoscow');
+    const dotAnhui    = $('dotAnhui'),   dotMoscow  = $('dotMoscow');
+    const lineSvg     = $('lineSvg'),    lineCn     = $('lineCn'),      lineRu     = $('lineRu'),    lineFull = $('lineFull');
+    const flowDot     = $('flowDot'),    gap1       = $('gap1'),         gap2       = $('gap2'),      roadText = $('roadText');
+    const tipCn       = $('tipCn'),      tipRu      = $('tipRu');
+    const celeb       = $('celeb'),      celebCard  = $('celebCard'),    hint       = $('hint'),      resetBtn = $('resetBtn');
+
+    let cnClicked = false, ruClicked = false, flowId = null;
+
+    function getPinPos(el) {
+        const sr = mapStage.getBoundingClientRect(), r = el.getBoundingClientRect();
+        return { x: r.left + r.width/2 - sr.left, y: r.top + r.height/2 - sr.top };
+    }
+
+    function calcPaths() {
+        const w = mapStage.offsetWidth, h = mapStage.offsetHeight;
+        lineSvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        const a = getPinPos(dotAnhui), m = getPinPos(dotMoscow);
+        const mid = { x:(a.x+m.x)/2, y:(a.y+m.y)/2 };
+        const cp1 = { x:a.x+(mid.x-a.x)*.5, y:a.y-60 };
+        const cp2 = { x:mid.x+(m.x-mid.x)*.5, y:m.y+60 };
+        const g1  = { x:mid.x-10, y:mid.y+5 }, g2 = { x:mid.x+10, y:mid.y-5 };
+        lineCn.setAttribute('d',   `M ${a.x},${a.y} C ${cp1.x},${cp1.y} ${mid.x-40},${mid.y+20} ${g1.x},${g1.y}`);
+        lineRu.setAttribute('d',   `M ${g2.x},${g2.y} C ${mid.x+40},${mid.y-20} ${cp2.x},${cp2.y} ${m.x},${m.y}`);
+        lineFull.setAttribute('d', `M ${a.x},${a.y} C ${cp1.x},${cp1.y} ${mid.x},${mid.y} C ${mid.x},${mid.y} ${cp2.x},${cp2.y} ${m.x},${m.y}`);
+        gap1.setAttribute('cx', g1.x); gap1.setAttribute('cy', g1.y);
+        gap2.setAttribute('cx', g2.x); gap2.setAttribute('cy', g2.y);
+        roadText.setAttribute('x', mid.x); roadText.setAttribute('y', mid.y-25);
+    }
+
+    function syncLineTracking() {
+        let start = performance.now();
+        (function tick(now) { calcPaths(); if(now-start<600) requestAnimationFrame(tick); })(start);
+    }
+
+    window.addEventListener('load', calcPaths);
+    window.addEventListener('resize', () => {
+        calcPaths();
+        if(cnClicked && ruClicked && flowId) { cancelAnimationFrame(flowId); startFlow(); }
+    });
+
+    [chinaWrap, russiaWrap].forEach(el => {
+        el.addEventListener('mouseenter', syncLineTracking);
+        el.addEventListener('mouseleave', syncLineTracking);
+    });
+
+    chinaWrap.addEventListener('click', () => {
+        if(cnClicked) return; cnClicked = true; hint.classList.add('hidden');
+        chinaWrap.classList.add('active'); pinAnhui.classList.add('show');
+        syncLineTracking(); lineCn.classList.add('visible');
+        setTimeout(() => { gap1.classList.add('show'); gap2.classList.add('show'); }, 1200);
+        setTimeout(() => tipCn.classList.add('show'), 1500);
+        setTimeout(tryConnect, 2000);
+    });
+
+    russiaWrap.addEventListener('click', () => {
+        if(ruClicked) return; ruClicked = true; hint.classList.add('hidden');
+        russiaWrap.classList.add('active'); pinMoscow.classList.add('show');
+        syncLineTracking(); lineRu.classList.add('visible');
+        setTimeout(() => tipRu.classList.add('show'), 1500);
+        setTimeout(tryConnect, 2000);
+    });
+
+    function tryConnect() {
+        if(!cnClicked || !ruClicked) return;
+        setTimeout(() => {
+            lineCn.style.opacity='0'; lineRu.style.opacity='0';
+            gap1.style.opacity='0';   gap2.style.opacity='0';
+            calcPaths(); lineFull.classList.add('connected'); roadText.classList.add('show');
+            startFlow();
+        }, 600);
+        setTimeout(celebrate, 1500);
+    }
+
+    function startFlow() {
+        const path = lineFull, len = path.getTotalLength();
+        let t = 0; flowDot.classList.add('active');
+        (function tick() {
+            t += .003; if(t>1) t=0;
+            const p = path.getPointAtLength(t*len);
+            flowDot.setAttribute('cx', p.x); flowDot.setAttribute('cy', p.y);
+            flowId = requestAnimationFrame(tick);
+        })();
+    }
+
+    function celebrate() {
+        celeb.classList.add('active');
+        const emojis=['🌟','✨','🌿','📦','🚀','🤝'];
+        for(let i=0;i<20;i++){
+            const el=document.createElement('div'); el.className='tea-particle';
+            el.textContent=emojis[~~(Math.random()*emojis.length)];
+            el.style.left=(40+Math.random()*20)+'%'; el.style.top=(30+Math.random()*20)+'%';
+            el.style.setProperty('--tx',(Math.random()*200-100)+'px');
+            el.style.setProperty('--ty',(Math.random()*200-100)+'px');
+            el.style.setProperty('--tx2',(Math.random()*400-200)+'px');
+            el.style.setProperty('--ty2',(Math.random()*400-200)+'px');
+            el.style.animationDelay=(Math.random()*.5)+'s';
+            celeb.appendChild(el);
+        }
+        setTimeout(()=>{ celebCard.classList.add('show'); resetBtn.classList.add('show'); }, 800);
+    }
+
+    resetBtn.addEventListener('click', () => {
+        cnClicked=ruClicked=false; if(flowId) cancelAnimationFrame(flowId);
+        chinaWrap.classList.remove('active'); russiaWrap.classList.remove('active');
+        lineCn.classList.remove('visible'); lineRu.classList.remove('visible');
+        lineFull.classList.remove('connected'); lineFull.style.opacity='0';
+        lineCn.style.opacity=''; lineRu.style.opacity='';
+        [gap1,gap2].forEach(g=>{ g.classList.remove('show'); g.style.opacity=''; });
+        [pinAnhui,pinMoscow,tipCn,tipRu,roadText,celebCard,resetBtn].forEach(el=>el.classList.remove('show'));
+        flowDot.classList.remove('active'); celeb.classList.remove('active'); celeb.innerHTML='';
+        hint.classList.remove('hidden'); syncLineTracking();
+    });
+
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if(window.scrollY > 50) {
+            nav.classList.add('!py-4','shadow-nav-scroll','!bg-[rgba(253,248,240,0.95)]');
+        } else {
+            nav.classList.remove('!py-4','shadow-nav-scroll','!bg-[rgba(253,248,240,0.95)]');
+        }
+    });
+})();
+</script>
+</body>
+</html>

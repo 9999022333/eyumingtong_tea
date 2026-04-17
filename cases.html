@@ -1,0 +1,809 @@
+<!DOCTYPE html>  
+<html lang="zh-CN">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>案例展示 - 俄域茗通 | 以成果为证・以案例为鉴</title>  
+
+    <script src="https://cdn.tailwindcss.com"></script>  
+    <script>  
+        tailwind.config = {  
+            theme: {  
+                extend: {  
+                    colors: {  
+                        'tea-dark':   '#5C3A21',  
+                        'tea-medium': '#8B6914',  
+                        'tea-light':  '#C4A265',  
+                        'tea-cream':  '#F5E6C8',  
+                        'tea-warm':   '#D4A853',  
+                        'tea-bg':     '#FDF8F0',  
+                        'gold':       '#C9A96E',  
+                        'card-bg':    '#F8F4E9',  
+                        'border-gold':'#D4B896',  
+                    },  
+                    fontFamily: {  
+                        'serif-zh': ['"Songti SC"','"STSong"','"SimSun"','"Noto Serif SC"','serif'],  
+                        'sans-zh':  ['"PingFang SC"','"Microsoft YaHei"','"Helvetica Neue"','sans-serif'],  
+                    },  
+                }  
+            }  
+        }  
+    </script>  
+
+    <style>  
+        body { font-family: "PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif; }  
+
+    /* ── 新增：产品服务风格背景 ── */
+        body {
+            background-image: url('images/about_bg_warm.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #FDF8F0;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: rgba(253,248,240,0.72);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* 确保内容在遮罩之上 */
+        .page-hero, .main-wrap, .cn-divider, .brand-vision, .brand-seal, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+    /* 调整卡片背景增加透明度，与新背景融合 */
+    .form-card {
+        background: rgba(255,255,255,.75); /* 微调透明度 */
+    }
+
+        /* 滚动条 */  
+        ::-webkit-scrollbar { width: 8px; }  
+        ::-webkit-scrollbar-track { background: #FDF8F0; }  
+        ::-webkit-scrollbar-thumb { background: #D4A853; border-radius: 4px; }  
+ 
+        body { font-family: "PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif,"Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }  
+
+        /* 导航下划线伪元素 */
+        .nav-link-item { position: relative; padding-bottom: 4px; }
+        .nav-link-item::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px; background: #D4A853; transition: width 0.3s;
+        }
+        .nav-link-item:hover::after,
+        .nav-link-item.active::after { width: 100%; }
+        .nav-link-item:hover, .nav-link-item.active { color: #D4A853; }
+
+        /* Hero 背景纹 */  
+        .hero-pattern::before {  
+            content: ''; position: absolute; inset: 0;  
+            background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M200 40c0 0-80 65-80 130c0 44.2 35.8 80 80 80s80-35.8 80-80c0-65-80-130-80-130z' fill='none' stroke='%235C3A21' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E") repeat;  
+            opacity: .5; pointer-events: none;  
+        }  
+
+        /* 渐变文字 */  
+        .text-grad {  
+            background: linear-gradient(135deg,#D4A853,#C9A96E);  
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;  
+        }  
+
+        /* 模块标题渐变线 */  
+        .mh-line {  
+            flex: 1; height: 1px; max-width: 300px;  
+            background: linear-gradient(90deg,#D4B896,transparent);  
+        }  
+
+        /* 案例卡片水印 & hover */  
+        .case-card { transition: all .4s ease; }  
+        .case-card::after {  
+            content: ''; position: absolute; bottom: -10px; right: -10px;  
+            width: 100px; height: 100px;  
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8c0 0-28 26-28 52c0 17.7 12.5 32 28 32s28-14.3 28-32c0-26-28-52-28-52z' fill='%235C3A21' opacity='0.06'/%3E%3C/svg%3E") no-repeat center;  
+            background-size: contain; pointer-events: none;  
+        }  
+        .case-card:hover {  
+            box-shadow: 0 12px 40px rgba(92,58,33,.08);  
+            border-color: #D4A853;  
+            transform: translateY(-3px);  
+        }  
+
+        /* 内容营销卡片水印 & hover */  
+        .content-case-card { transition: all .3s ease; }  
+        .content-case-card::after {  
+            content: ''; position: absolute; bottom: -8px; right: -8px;  
+            width: 80px; height: 80px;  
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 6c0 0-20 19-20 38c0 12.7 9 23 20 23s20-10.3 20-23c0-19-20-38-20-38z' fill='%235C3A21' opacity='0.06'/%3E%3C/svg%3E") no-repeat center;  
+            background-size: contain; pointer-events: none;  
+        }  
+        .content-case-card:hover {  
+            transform: translateY(-3px);  
+            box-shadow: 0 8px 30px rgba(92,58,33,.06);  
+            border-color: #D4A853;  
+        }  
+
+        /* 数据汇总卡片 hover */  
+        .ds-item { transition: all .3s; }  
+        .ds-item:hover { border-color: #D4A853; transform: translateY(-2px); }  
+
+        /* 页脚水印 */  
+        .footer-watermark { position: absolute; inset: 0; opacity: .04; pointer-events: none; }  
+        .footer-watermark svg { position: absolute; fill: #5C3A21; }  
+        .footer-watermark .leaf-1 { width:64px; height:64px; top:24px; left:10%; transform:rotate(-20deg); }  
+        .footer-watermark .leaf-2 { width:48px; height:48px; top:32px; right:12%; transform:rotate(15deg); }  
+        .footer-watermark .leaf-3 { width:40px; height:40px; bottom:16px; left:30%; transform:rotate(40deg); }  
+
+        /* fade-in */  
+        .fade-in { opacity:0; transform:translateY(30px); transition:opacity .8s ease, transform .8s ease; }  
+        .fade-in.visible { opacity:1; transform:translateY(0); }  
+    </style>  
+</head>  
+<body class="bg-tea-bg text-tea-dark overflow-x-hidden leading-[1.8]  
+             font-sans-zh">  
+
+<!-- ========== 导航栏 ========== -->  
+<nav id="navbar"  
+     class="fixed top-0 left-0 right-0 z-[1000]  
+            flex justify-between items-center  
+            px-[60px] py-[22px]  
+            bg-[rgba(253,248,240,0.85)] backdrop-blur-[20px]  
+            border-b border-[rgba(196,162,101,0.15)]  
+            transition-all duration-400">  
+    <div class="flex items-center gap-3  
+                font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">  
+        <img src="images/logo.jpg" alt="俄域茗通Logo"  
+             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">  
+        <span>俄域茗通</span>  
+    </div>  
+    <ul class="flex gap-[42px] list-none">
+        <!-- 给每个导航链接添加 font-serif-zh -->
+        <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
+        <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
+        <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
+        <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">案例展示</a></li>
+        <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
+    </ul>
+</nav>  
+
+<!-- ========== Hero KV ========== -->  
+<section class="hero-pattern relative pt-[140px] pb-[80px] px-[60px]  
+                text-center overflow-hidden  
+                bg-[linear-gradient(180deg,#FDF8F0_0%,#F5EBD8_100%)]">  
+    <div class="relative z-[2] max-w-[900px] mx-auto">  
+        <h1 class="font-serif-zh text-[2.6rem] font-black tracking-[6px] text-tea-dark mb-4">  
+            以成果为证・<span class="text-grad">以案例为鉴</span>  
+        </h1>  
+        <div class="w-[60px] h-[3px] rounded-sm mx-auto my-6  
+                    bg-[linear-gradient(90deg,transparent,#D4A853,transparent)]"></div>  
+        <p class="text-[1.05rem] text-tea-medium tracking-[1.5px] leading-[1.9]">  
+            从市场诊断到落地执行<br>全流程陪伴安徽茶企完成对俄品牌出海升级  
+        </p>  
+    </div>  
+</section>  
+
+<!-- ========== 板块一：意向合作与规划案例 ========== -->  
+<section class="max-w-[1000px] mx-auto px-[60px] pt-[70px]">  
+
+    <!-- 模块标题 -->  
+    <div class="fade-in flex items-center gap-4 mb-9 pb-4  
+                border-b border-[rgba(212,184,150,0.2)]">  
+        <span class="text-[1.4rem]">🏆</span>  
+        <h2 class="font-serif-zh text-[1.6rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">  
+            意向合作与规划案例  
+        </h2>  
+        <div class="mh-line"></div>  
+    </div>  
+    <p class="fade-in text-[0.95rem] text-tea-dark opacity-80 text-center mb-10 leading-[2]">  
+        项目筹备阶段已与多家茶企达成初步合作意向<br>以下为重点推进的品牌出海规划案例（2024年第二季度）  
+    </p>  
+
+    <!-- 案例1 -->  
+    <div class="case-card fade-in relative overflow-hidden  
+                bg-card-bg border border-[rgba(212,184,150,0.35)] rounded-lg mb-9">  
+        <div class="inline-block  
+                    bg-[linear-gradient(135deg,rgba(212,184,150,0.4),rgba(212,184,150,0.2))]  
+                    px-5 py-2 font-serif-zh text-[0.8rem] font-bold text-tea-dark tracking-[2px]  
+                    border-b border-[rgba(212,184,150,0.3)] border-r border-[rgba(212,184,150,0.3)]  
+                    rounded-br-lg">  
+            重点推进 · 壹  
+        </div>  
+        <div class="px-8 pt-7 pb-8 relative z-[1]">  
+            <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]  
+                       mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">  
+                黄山徽州区某核心产区茶厂合作项目  
+            </h3>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 项目背景</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    客户为黄山徽州区富溪乡某核心茶厂，拥有约300亩生态茶园，稳定供应特级、一级黄山毛峰原料。此前主要以散装原料形式供应给国内品牌商，无独立品牌运营经验，希望借“一带一路”契机，打造面向俄罗斯中产阶级的独立茶叶品牌。  
+                </p>  
+            </div>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 当前进展 (2024.04-2024.06)</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    已完成：1. 俄罗斯圣彼得堡、莫斯科两地茶叶市场走访与消费者口味盲测；2. 俄语品牌名「Хуаншань Утро」（黄山晨曦）及Logo视觉初稿；3. 品牌故事框架（基于“徽商骆驼队”与“丝绸之路”的文化联结）。正在推进：包装设计的俄式审美优化与俄罗斯EAC认证咨询。  
+                </p>  
+            </div>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 2024年Q3-Q4预期里程碑</p>  
+                <div class="flex flex-wrap gap-3 mt-[6px]">  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">完成品牌全案本土化升级</span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">签订首批试销订单 (500kg)</span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">进入莫斯科2家高端连锁超市</span>  
+                </div>  
+            </div>  
+
+            <div class="bg-[rgba(212,168,83,0.06)] border-l-[3px] border-tea-warm  
+                        px-5 py-[14px] mt-2 rounded-r-[6px]">  
+                <p class="text-[0.85rem] text-tea-dark leading-[1.9] italic opacity-[0.78]">  
+                    "我们做了一辈子茶，都是卖给茶商。俄域茗通团队不仅帮我们卖货，还帮我们‘讲故事’，这是我们以前想都不敢想的。"  
+                </p>  
+                <p class="text-[0.75rem] text-tea-light not-italic mt-2 tracking-wider">—— 项目客户 · 黄山某茶厂厂长</p>  
+            </div>  
+        </div>  
+    </div>  
+
+    <!-- 案例2 -->  
+    <div class="case-card fade-in relative overflow-hidden  
+                bg-card-bg border border-[rgba(212,184,150,0.35)] rounded-lg mb-9">  
+        <div class="inline-block  
+                    bg-[linear-gradient(135deg,rgba(212,184,150,0.4),rgba(212,184,150,0.2))]  
+                    px-5 py-2 font-serif-zh text-[0.8rem] font-bold text-tea-dark tracking-[2px]  
+                    border-b border-[rgba(212,184,150,0.3)] border-r border-[rgba(212,184,150,0.3)]  
+                    rounded-br-lg">  
+            重点推进 · 贰  
+        </div>  
+        <div class="px-8 pt-7 pb-8 relative z-[1]">  
+            <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]  
+                       mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">  
+                祁门红茶某老字号品牌合作项目  
+            </h3>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 项目背景</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    该品牌为祁门县百年老字号，曾获巴拿马万国博览会金奖，在国内华东地区具有较高知名度。历史上祁红曾通过丝绸之路大量外销欧洲，但在当代俄罗斯市场知名度较低。客户希望重塑“东方香槟”的历史荣光，主打俄罗斯高端礼品市场。  
+                </p>  
+            </div>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 当前进展 (2024.05-2024.06)</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    已完成：1. 俄罗斯红茶竞品（主要为斯里兰卡、印度品牌）在俄定价体系与包装风格调研；2. 确立了“历史复刻+现代轻奢”的双产品线策略；3. 品牌历史文献的中俄双语整理与转译。正在推进：俄罗斯“中国年”活动的参展对接。  
+                </p>  
+            </div>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 核心策略方向</p>  
+                <div class="flex flex-wrap gap-3 mt-[6px]">  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">产品：复刻1915年巴拿马金奖包装</span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">渠道：聚焦俄罗斯高端礼品店与机场</span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">传播：强调“中俄友谊茶”历史叙事</span>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</section>  
+
+<!-- 中式分隔线 -->  
+<div class="flex items-center justify-center gap-4 py-[55px] max-w-[600px] mx-auto">  
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>  
+    <div class="flex gap-[6px]">  
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>  
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>  
+    </div>  
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>  
+</div>  
+
+<!-- ========== 板块二：非遗产业赋能合作规划 ========== -->  
+<section class="max-w-[1000px] mx-auto px-[60px]">  
+
+    <div class="fade-in flex items-center gap-4 mb-9 pb-4  
+                border-b border-[rgba(212,184,150,0.2)]">  
+        <span class="text-[1.4rem]">🏺</span>  
+        <h2 class="font-serif-zh text-[1.6rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">  
+            非遗产业赋能合作规划  
+        </h2>  
+        <div class="mh-line"></div>  
+    </div>  
+    <p class="fade-in text-[0.95rem] text-tea-dark opacity-80 text-center mb-10 leading-[2]">  
+        以非遗为根，以文化转译为翼<br>让安徽制茶技艺真正成为对俄市场的品牌信任锚点  
+    </p>  
+
+    <div class="case-card fade-in relative overflow-hidden  
+                bg-card-bg border border-[rgba(212,184,150,0.35)] rounded-lg mb-9">  
+        <div class="inline-block  
+                    bg-[linear-gradient(135deg,rgba(212,184,150,0.4),rgba(212,184,150,0.2))]  
+                    px-5 py-2 font-serif-zh text-[0.8rem] font-bold text-tea-dark tracking-[2px]  
+                    border-b border-[rgba(212,184,150,0.3)] border-r border-[rgba(212,184,150,0.3)]  
+                    rounded-br-lg">  
+            核心合作 · 壹  
+        </div>  
+        <div class="px-8 pt-7 pb-8 relative z-[1]">  
+            <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]  
+                       mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">  
+                黄山毛峰非遗传承人合作计划  
+            </h3>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 合作背景</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    俄罗斯消费者对“手工”、“传统”、“大师”概念具有极高的认可度。目前已与黄山毛峰核心产区的3位市级/区级非遗传承人达成初步合作意向，计划将“大师作”从国内营销概念转化为俄罗斯市场可感知的品牌资产。  
+                </p>  
+            </div>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 合作内容规划</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    <strong>1. 技艺可视化：</strong>拍摄“杀青”、“揉捻”等关键工序的高清特写，制作中俄双语字幕短视频；<br>  
+                    <strong>2. 产品分级背书：</strong>针对不同等级产品，设计“监制”、“亲制”等不同层级的背书形式；<br>  
+                    <strong>3. 文化交流：</strong>计划邀请传承人参与2025年俄罗斯“中国文化节”，进行现场茶艺展示。  
+                </p>  
+            </div>  
+
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 阶段性成果</p>  
+                <div class="flex flex-wrap gap-3 mt-[6px]">  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">  
+                        已完成 <span class="font-serif-zh font-black text-tea-warm">2位</span> 传承人的深度访谈  
+                    </span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">非遗纪录片脚本撰写中</span>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</section>  
+
+<!-- 中式分隔线 -->  
+<div class="flex items-center justify-center gap-4 py-[55px] max-w-[600px] mx-auto">  
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>  
+    <div class="flex gap-[6px]">  
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>  
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>  
+    </div>  
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>  
+</div>  
+
+<!-- ========== 板块三：内容营销初期成果与规划 ========== -->  
+<section class="max-w-[1000px] mx-auto px-[60px]">  
+
+    <div class="fade-in flex items-center gap-4 mb-9 pb-4  
+                border-b border-[rgba(212,184,150,0.2)]">  
+        <span class="text-[1.4rem]">📊</span>  
+        <h2 class="font-serif-zh text-[1.6rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">  
+            内容营销初期成果与规划  
+        </h2>  
+        <div class="mh-line"></div>  
+    </div>  
+    <p class="fade-in text-[0.95rem] text-tea-dark opacity-80 text-center mb-10 leading-[2]">  
+        以内容为引擎，以数据为佐证<br>全域矩阵驱动品牌曝光、行业获客与市场教育 (数据统计周期：2024.03-2024.06)  
+    </p>  
+
+    <!-- 数据汇总 -->  
+    <div class="fade-in flex flex-wrap gap-5 justify-center pt-[30px] pb-[10px]">  
+        <div class="ds-item text-center px-7 py-5  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg min-w-[150px]">  
+            <div class="font-serif-zh text-[1.8rem] font-black text-tea-warm tracking-wider mb-[6px]">12,000+</div>  
+            <div class="text-[0.8rem] text-tea-medium tracking-wider">全平台累计阅读/播放</div>  
+        </div>  
+        <div class="ds-item text-center px-7 py-5  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg min-w-[150px]">  
+            <div class="font-serif-zh text-[1.8rem] font-black text-tea-warm tracking-wider mb-[6px]">420+</div>  
+            <div class="text-[0.8rem] text-tea-medium tracking-wider">精准行业粉丝 (B端+C端)</div>  
+        </div>  
+        <div class="ds-item text-center px-7 py-5  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg min-w-[150px]">  
+            <div class="font-serif-zh text-[1.8rem] font-black text-tea-warm tracking-wider mb-[6px]">7</div>  
+            <div class="text-[0.8rem] text-tea-medium tracking-wider">深度意向茶企咨询</div>  
+        </div>  
+        <div class="ds-item text-center px-7 py-5  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg min-w-[150px]">  
+            <div class="font-serif-zh text-[1.8rem] font-black text-tea-warm mb-[6px]">2</div>  
+            <div class="text-[0.8rem] text-tea-medium tracking-wider">已签署保密协议 (NDA)</div>  
+        </div>  
+    </div>  
+
+    <div class="h-9"></div>  
+
+    <!-- 国内矩阵 第一行 -->  
+    <div class="fade-in grid grid-cols-2 gap-6 mb-6">  
+        <div class="content-case-card relative overflow-hidden  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg px-6 py-7">  
+            <span class="inline-block px-[14px] py-[3px] mb-[14px]  
+                         bg-[rgba(212,168,83,0.1)] border border-[rgba(212,168,83,0.25)]  
+                         rounded-full text-[0.72rem] font-semibold text-tea-warm tracking-[2px]">  
+                微信公众号  
+            </span>  
+            <h4 class="font-serif-zh text-[1.02rem] font-bold text-tea-dark tracking-[2px]  
+                       mb-[10px] pb-[10px] border-b border-[rgba(212,184,150,0.2)]">  
+                「俄域茗通」深度产业洞察  
+            </h4>  
+            <p class="text-[0.85rem] text-tea-dark leading-[1.9] opacity-[0.82]">  
+                定位B端茶企决策者。输出俄罗斯茶叶政策解读、徽茶出海SWOT分析、以及从“原料思维”到“品牌思维”的认知升级文章。  
+            </p>  
+            <div class="flex flex-wrap gap-[10px] mt-[14px]">  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    原创深度文 <strong class="text-tea-warm font-serif-zh">11</strong> 篇  
+                </span>  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    最高单篇阅读 <strong class="text-tea-warm font-serif-zh">860+</strong>  
+                </span>  
+            </div>  
+        </div>  
+
+        <div class="content-case-card relative overflow-hidden  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg px-6 py-7">  
+            <span class="inline-block px-[14px] py-[3px] mb-[14px]  
+                         bg-[rgba(212,168,83,0.1)] border border-[rgba(212,168,83,0.25)]  
+                         rounded-full text-[0.72rem] font-semibold text-tea-warm tracking-[2px]">  
+                小红书  
+            </span>  
+            <h4 class="font-serif-zh text-[1.02rem] font-bold text-tea-dark tracking-[2px]  
+                       mb-[10px] pb-[10px] border-b border-[rgba(212,184,150,0.2)]">  
+                茶文化科普与美学种草  
+            </h4>  
+            <p class="text-[0.85rem] text-tea-dark leading-[1.9] opacity-[0.82]">  
+                定位年轻群体与茶文化爱好者。内容涵盖：“中国茶 vs 俄罗斯茶”趣味对比、黄山茶园风光实拍、以及茶具美学分享。  
+            </p>  
+            <div class="flex flex-wrap gap-[10px] mt-[14px]">  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    已发布笔记 <strong class="text-tea-warm font-serif-zh">18</strong> 篇  
+                </span>  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    累计互动 (赞藏评) <strong class="text-tea-warm font-serif-zh">950+</strong>  
+                </span>  
+            </div>  
+        </div>  
+    </div>  
+
+    <!-- 国内矩阵 第二行 -->  
+    <div class="fade-in grid grid-cols-2 gap-6 mb-6">  
+        <div class="content-case-card relative overflow-hidden  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg px-6 py-7">  
+            <span class="inline-block px-[14px] py-[3px] mb-[14px]  
+                         bg-[rgba(212,168,83,0.1)] border border-[rgba(212,168,83,0.25)]  
+                         rounded-full text-[0.72rem] font-semibold text-tea-warm tracking-[2px]">  
+                抖音/视频号  
+            </span>  
+            <h4 class="font-serif-zh text-[1.02rem] font-bold text-tea-dark tracking-[2px]  
+                       mb-[10px] pb-[10px] border-b border-[rgba(212,184,150,0.2)]">  
+                短视频：“老茶新说”  
+            </h4>  
+            <p class="text-[0.85rem] text-tea-dark leading-[1.9] opacity-[0.82]">  
+                内容形式：1. 非遗手作纪实；2. 团队俄罗斯市场考察Vlog；3. “一分钟看懂中俄茶叶贸易史”动画科普。  
+            </p>  
+            <div class="flex flex-wrap gap-[10px] mt-[14px]">  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    已发布视频 <strong class="text-tea-warm font-serif-zh">9</strong> 条  
+                </span>  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    视频号平均完播率 <strong class="text-tea-warm font-serif-zh">38%</strong>  
+                </span>  
+            </div>  
+        </div>  
+
+        <div class="content-case-card relative overflow-hidden  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg px-6 py-7">  
+            <span class="inline-block px-[14px] py-[3px] mb-[14px]  
+                         bg-[rgba(212,168,83,0.1)] border border-[rgba(212,168,83,0.25)]  
+                         rounded-full text-[0.72rem] font-semibold text-tea-warm tracking-[2px]">  
+                行业白皮书  
+            </span>  
+            <h4 class="font-serif-zh text-[1.02rem] font-bold text-tea-dark tracking-[2px]  
+                       mb-[10px] pb-[10px] border-b border-[rgba(212,184,150,0.2)]">  
+                《2024徽茶对俄出海白皮书》  
+            </h4>  
+            <p class="text-[0.85rem] text-tea-dark leading-[1.9] opacity-[0.82]">  
+                联合高校俄语系、国际贸易系专家共同编写。内容涵盖：政策法规、清关流程、消费者画像、渠道图谱及经典案例（含失败案例复盘）。  
+            </p>  
+            <div class="flex flex-wrap gap-[10px] mt-[14px]">  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    预计发布时间 <strong class="text-tea-warm font-serif-zh">2024.09</strong>  
+                </span>  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    内部预登记索取 <strong class="text-tea-warm font-serif-zh">30+</strong>  
+                </span>  
+            </div>  
+        </div>  
+    </div>  
+
+    <div class="h-3"></div>  
+
+    <!-- 海外矩阵 -->  
+    <div class="fade-in grid grid-cols-2 gap-6">  
+        <div class="content-case-card relative overflow-hidden  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg px-6 py-7">  
+            <span class="inline-block px-[14px] py-[3px] mb-[14px]  
+                         bg-[rgba(212,168,83,0.1)] border border-[rgba(212,168,83,0.25)]  
+                         rounded-full text-[0.72rem] font-semibold text-tea-warm tracking-[2px]">  
+                VKontakte (VK)  
+            </span>  
+            <h4 class="font-serif-zh text-[1.02rem] font-bold text-tea-dark tracking-[2px]  
+                       mb-[10px] pb-[10px] border-b border-[rgba(212,184,150,0.2)]">  
+                俄罗斯本土社群预热  
+            </h4>  
+            <p class="text-[0.85rem] text-tea-dark leading-[1.9] opacity-[0.82]">  
+                已完成账号注册与装修。计划与俄罗斯本地“茶文化爱好者”社群（Клуб любителей чая）合作，通过KOL测评、抽奖赠饮等方式进行冷启动。  
+            </p>  
+            <div class="flex flex-wrap gap-[10px] mt-[14px]">  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    计划正式启动 <strong class="text-tea-warm font-serif-zh">2024.08</strong>  
+                </span>  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    首年目标粉丝 <strong class="text-tea-warm font-serif-zh">2,000+</strong>  
+                </span>  
+            </div>  
+        </div>  
+
+        <div class="content-case-card relative overflow-hidden  
+                    bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg px-6 py-7">  
+            <span class="inline-block px-[14px] py-[3px] mb-[14px]  
+                         bg-[rgba(212,168,83,0.1)] border border-[rgba(212,168,83,0.25)]  
+                         rounded-full text-[0.72rem] font-semibold text-tea-warm tracking-[2px]">  
+                Telegram (B端)  
+            </span>  
+            <h4 class="font-serif-zh text-[1.02rem] font-bold text-tea-dark tracking-[2px]  
+                       mb-[10px] pb-[10px] border-b border-[rgba(212,184,150,0.2)]">  
+                俄罗斯经销商资源对接频道  
+            </h4>  
+            <p class="text-[0.85rem] text-tea-dark leading-[1.9] opacity-[0.82]">  
+                定位精准B端。已通过在俄华人商会、义乌小商品城俄罗斯商户资源进行前期蓄水。将定期发布产品报价、集装箱拼单信息及国内茶厂考察直播。  
+            </p>  
+            <div class="flex flex-wrap gap-[10px] mt-[14px]">  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    已积累意向商户 <strong class="text-tea-warm font-serif-zh">12</strong> 家  
+                </span>  
+                <span class="px-[14px] py-1 bg-[rgba(92,58,33,0.04)] rounded-2xl text-[0.78rem] text-tea-medium tracking-[0.5px]">  
+                    主要覆盖城市：莫斯科、圣彼得堡  
+                </span>  
+            </div>  
+        </div>  
+    </div>  
+</section>  
+
+<!-- 中式分隔线 -->  
+<div class="flex items-center justify-center gap-4 py-[55px] max-w-[600px] mx-auto">  
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>  
+    <div class="flex gap-[6px]">  
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>  
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>  
+    </div>  
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>  
+</div>  
+
+<!-- ========== 板块四：活动筹备与落地纪实 ========== -->  
+<section class="max-w-[1000px] mx-auto px-[60px] pb-[70px]">  
+
+    <div class="fade-in flex items-center gap-4 mb-9 pb-4  
+                border-b border-[rgba(212,184,150,0.2)]">  
+        <span class="text-[1.4rem]">🏮</span>  
+        <h2 class="font-serif-zh text-[1.6rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">  
+            活动筹备与落地纪实  
+        </h2>  
+        <div class="mh-line"></div>  
+    </div>  
+    <p class="fade-in text-[0.95rem] text-tea-dark opacity-80 text-center mb-10 leading-[2]">  
+        线上线下联动，中俄双地落地<br>以活动为支点撬动品牌传播与渠道拓展  
+    </p>  
+
+    <!-- 活动1 -->  
+    <div class="case-card fade-in relative overflow-hidden  
+                bg-card-bg border border-[rgba(212,184,150,0.35)] rounded-lg mb-9">  
+        <div class="inline-block  
+                    bg-[linear-gradient(135deg,rgba(212,184,150,0.4),rgba(212,184,150,0.2))]  
+                    px-5 py-2 font-serif-zh text-[0.8rem] font-bold text-tea-dark tracking-[2px]  
+                    border-b border-[rgba(212,184,150,0.3)] border-r border-[rgba(212,184,150,0.3)]  
+                    rounded-br-lg">  
+            已完成 · 壹  
+        </div>  
+        <div class="px-8 pt-7 pb-8 relative z-[1]">  
+            <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]  
+                       mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">  
+                徽茶出海主题线上闭门分享会 (第一期)  
+            </h3>  
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 活动概况</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    2024年4月15日，成功举办第一期线上闭门分享会。邀请了安徽省某茶叶进出口公司的资深业务员作为嘉宾，分享了对俄茶叶贸易的“坑点”与实操经验。项目团队也首次系统发布了“文化转译”服务模型。  
+                </p>  
+            </div>  
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 活动数据</p>  
+                <div class="flex flex-wrap gap-3 mt-[6px]">  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">  
+                        报名茶企 <span class="font-serif-zh font-black text-tea-warm">17</span> 家  
+                    </span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">  
+                        实际参会 <span class="font-serif-zh font-black text-tea-warm">12</span> 家  
+                    </span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">  
+                        会后1对1深度对接 <span class="font-serif-zh font-black text-tea-warm">5</span> 家  
+                    </span>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+
+    <!-- 活动2 -->  
+    <div class="case-card fade-in relative overflow-hidden  
+                bg-card-bg border border-[rgba(212,184,150,0.35)] rounded-lg mb-9">  
+        <div class="inline-block  
+                    bg-[linear-gradient(135deg,rgba(212,184,150,0.4),rgba(212,184,150,0.2))]  
+                    px-5 py-2 font-serif-zh text-[0.8rem] font-bold text-tea-dark tracking-[2px]  
+                    border-b border-[rgba(212,184,150,0.3)] border-r border-[rgba(212,184,150,0.3)]  
+                    rounded-br-lg">  
+            规划中 · 贰  
+        </div>  
+        <div class="px-8 pt-7 pb-8 relative z-[1]">  
+            <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]  
+                       mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">  
+                “丝路茶韵”中俄茶文化线上交流会  
+            </h3>  
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 活动规划</p>  
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">  
+                    计划于2024年9月“国际茶日”前后举办。拟邀请：俄罗斯某孔子学院中方院长、俄罗斯汉学家（中国茶文化方向）、以及黄山毛峰非遗传承人。活动将在Zoom及VK平台同步直播，配备中俄双语同传。  
+                </p>  
+            </div>  
+            <div class="mb-[18px]">  
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 预期成果</p>  
+                <div class="flex flex-wrap gap-3 mt-[6px]">  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">  
+                        双端预计观看 <span class="font-serif-zh font-black text-tea-warm">800+</span> 人次  
+                    </span>  
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]  
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]  
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">  
+                        媒体报道 <span class="font-serif-zh font-black text-tea-warm">3-5</span> 家  
+                    </span>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+
+    <!-- 活动3 -->
+    <div class="case-card fade-in relative overflow-hidden
+                bg-card-bg border border-[rgba(212,184,150,0.35)] rounded-lg mb-9">
+        <div class="inline-block
+                    bg-[linear-gradient(135deg,rgba(212,184,150,0.4),rgba(212,184,150,0.2))]
+                    px-5 py-2 font-serif-zh text-[0.8rem] font-bold text-tea-dark tracking-[2px]
+                    border-b border-[rgba(212,184,150,0.3)] border-r border-[rgba(212,184,150,0.3)]
+                    rounded-br-lg">
+            筹备中 · 叁
+        </div>
+        <div class="px-8 pt-7 pb-8 relative z-[1]">
+            <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]
+                       mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">
+                合肥高校茶文化快闪体验周
+            </h3>
+
+            <div class="mb-[18px]">
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 活动概况</p>
+                <p class="text-[0.88rem] text-tea-dark leading-[2] opacity-[0.82] tracking-[0.3px]">
+                    计划选址合肥某高校（新区）图书馆前广场。设置：1. 免费品茶区（黄山毛峰、祁红）；2. 中俄茶文化对比图文展；3. 现场扫码关注送定制茶样活动。旨在培育未来潜在消费者及储备俄语/国贸人才。
+                </p>
+            </div>
+
+            <div class="mb-[18px]">
+                <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 预期成果</p>
+                <div class="flex flex-wrap gap-3 mt-[6px]">
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">
+                        预计现场参与 <span class="font-serif-zh font-black text-tea-warm">500+</span> 人次
+                    </span>
+                    <span class="inline-flex items-center gap-[6px] px-4 py-[6px]
+                                 bg-[rgba(212,168,83,0.08)] border border-[rgba(212,168,83,0.2)]
+                                 rounded-full text-[0.82rem] text-tea-dark tracking-[0.5px]">
+                        收集简历/建立人才库 <span class="font-serif-zh font-black text-tea-warm">50+</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ========== 页脚分隔线 ========== -->
+<div class="max-w-[900px] mx-auto">
+    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>
+    <div class="h-[2px]"></div>
+    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>
+</div>
+
+<!-- ========== 页脚 ========== -->
+<footer class="overflow-hidden">
+    <div class="relative px-10 pt-14 pb-10 text-center
+                bg-[linear-gradient(to_bottom,#F2E8D6,#EFE2CC)]">
+
+        <!-- 水印 -->
+        <div class="footer-watermark">
+            <svg class="leaf-1" viewBox="0 0 24 24">
+                <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>
+            </svg>
+            <svg class="leaf-2" viewBox="0 0 24 24">
+                <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>
+            </svg>
+            <svg class="leaf-3" viewBox="0 0 24 24">
+                <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>
+            </svg>
+        </div>
+
+        <!-- 品牌名 -->
+        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2 relative z-[1]">
+            俄域茗通
+        </h3>
+
+        <!-- 装饰线 -->
+        <div class="flex items-center justify-center gap-3 mb-4 relative z-[1]">
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+            <div class="w-[6px] h-[6px] rounded-full bg-[rgba(212,168,83,0.5)]"></div>
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+        </div>
+
+        <!-- Slogan -->
+        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6 relative z-[1]">
+            跨文化传播视域下文化转译服务的设计与运营
+        </p>
+
+        <!-- 导航链接 -->
+        <nav class="flex justify-center flex-wrap gap-8 relative z-[1]">
+            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>
+            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>
+            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
+            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
+            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
+        </nav>
+    </div>
+
+    <!-- 版权栏 -->
+    <div class="px-10 py-5 text-center bg-[#E6D5B8]">
+        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">
+            &copy; 2026 俄域茗通团队. 保留所有权利.
+        </p>
+    </div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => {
+        document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
