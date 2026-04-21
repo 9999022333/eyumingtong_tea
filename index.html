@@ -1,692 +1,1006 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首页 - 俄域茗通 | 徽茶为芯，通中俄民心</title>
+<!DOCTYPE html>  
+<html lang="zh-CN">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>首页 - 俄域茗通 | 徽茶为芯，通中俄民心</title>  
 
-    <!-- Tailwind CDN + 自定义配置 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'tea-dark':   '#5C3A21',
-                        'tea-medium': '#8B6914',
-                        'tea-light':  '#C4A265',
-                        'tea-cream':  '#F5E6C8',
-                        'tea-warm':   '#D4A853',
-                        'tea-bg':     '#FDF8F0',
-                        'gold':       '#C9A96E',
-                    },
-                    fontFamily: {
-                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],
-                        'serif-en': ['"Georgia"', '"Palatino Linotype"', '"Book Antiqua"', '"Times New Roman"', 'serif'],
-                    },
-                    letterSpacing: {
-                        'zh-lg':  '3px',
-                        'zh-xl':  '4px',
-                        'zh-2xl': '6px',
-                    },
-                    keyframes: {
-                        floatBg: {
-                            '0%,100%': { transform: 'translate(0,0) scale(1)' },
-                            '50%':     { transform: 'translate(30px,-20px) scale(1.05)' },
-                        },
-                        fadeUp: {
-                            'from': { opacity: '0', transform: 'translateY(25px)' },
-                            'to':   { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        fadeIn: {
-                            'from': { opacity: '0' },
-                            'to':   { opacity: '1' },
-                        },
-                        ringPulse: {
-                            '0%':   { width: '28px', height: '28px', opacity: '0.4' },
-                            '100%': { width: '50px', height: '50px', opacity: '0' },
-                        },
-                        dotPulse: {
-                            '0%,100%': { transform: 'scale(1)' },
-                            '50%':     { transform: 'scale(1.2)', boxShadow: '0 0 16px rgba(212,168,83,1)' },
-                        },
-                        drawCn: { 'to': { strokeDashoffset: '250' } },
-                        drawRu: { 'to': { strokeDashoffset: '0' } },
-                        glowPulse: {
-                            '0%,100%': { filter: 'drop-shadow(0 0 6px rgba(212,168,83,0.4))' },
-                            '50%':     { filter: 'drop-shadow(0 0 16px rgba(212,168,83,0.9))' },
-                        },
-                        gapBlink: {
-                            '0%,100%': { opacity: '0.3' },
-                            '50%':     { opacity: '1' },
-                        },
-                        hintIn: { 'to': { opacity: '0.8' } },
-                        hintF: {
-                            '0%,100%': { transform: 'translateX(-50%) translateY(0)' },
-                            '50%':     { transform: 'translateX(-50%) translateY(-5px)' },
-                        },
-                        pfly: {
-                            '0%':   { opacity: '1', transform: 'translate(0,0) scale(0.4) rotate(0deg)' },
-                            '50%':  { opacity: '1', transform: 'translate(var(--tx),var(--ty)) scale(1.2) rotate(180deg)' },
-                            '100%': { opacity: '0', transform: 'translate(var(--tx2),var(--ty2)) scale(0.2) rotate(360deg)' },
-                        },
-                    },
-                    animation: {
-                        'float-bg':   'floatBg 20s ease-in-out infinite',
-                        'fade-up-1':  'fadeUp 1s 0.3s ease forwards',
-                        'fade-up-2':  'fadeUp 1s 0.5s ease forwards',
-                        'fade-up-3':  'fadeUp 1s 0.6s ease forwards',
-                        'fade-up-4':  'fadeUp 1s 0.7s ease forwards',
-                        'fade-up-5':  'fadeUp 1s 0.9s ease forwards',
-                        'fade-in':    'fadeIn 1.2s 0.4s ease forwards',
-                        'ring-pulse': 'ringPulse 2s ease-in-out infinite',
-                        'dot-pulse':  'dotPulse 1.5s ease-in-out infinite',
-                        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
-                        'gap-blink':  'gapBlink 1.2s ease-in-out infinite',
-                        'hint-in':    'hintIn 2s 2s ease forwards',
-                        'hint-f':     'hintF 3s 2s ease-in-out infinite',
-                        'pfly':       'pfly 2.5s ease-out forwards',
-                    },
-                    backgroundImage: {
-                        'hero-grad':   'linear-gradient(160deg, #FDF8F0 0%, #F5E6C8 40%, #EDD9B5 100%)',
-                        'warm-grad':   'linear-gradient(135deg, #D4A853, #C9A96E)',
-                        'line-grad':   'linear-gradient(90deg, #D4A853 0%, #C9A96E 50%, #D4A853 100%)',
-                        'footer-grad': 'linear-gradient(to bottom, #F2E8D6, #EFE2CC)',
-                        'divider-1':   'linear-gradient(90deg, transparent, rgba(212,184,150,0.4), transparent)',
-                        'divider-2':   'linear-gradient(90deg, transparent, rgba(224,208,184,0.5), transparent)',
-                    },
-                    boxShadow: {
-                        'nav-scroll': '0 4px 30px rgba(92,58,33,0.08)',
-                        'card':       '0 15px 40px rgba(92,58,33,0.08)',
-                        'tip':        '0 10px 40px rgba(92,58,33,0.12)',
-                        'celeb':      '0 16px 50px rgba(92,58,33,0.15)',
-                        'dot':        '0 0 10px rgba(212,168,83,0.8)',
-                    },
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>  
+    <script>  
+        tailwind.config = {  
+            theme: {  
+                extend: {  
+                    colors: {  
+                        'tea-dark':   '#5C3A21',  
+                        'tea-medium': '#8B6914',  
+                        'tea-light':  '#C4A265',  
+                        'tea-cream':  '#F5E6C8',  
+                        'tea-warm':   '#D4A853',  
+                        'tea-bg':     '#FDF8F0',  
+                        'gold':       '#C9A96E',  
+                    },  
+                    fontFamily: {  
+                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],  
+                        'serif-en': ['"Georgia"', '"Palatino Linotype"', '"Book Antiqua"', '"Times New Roman"', 'serif'],  
+                    },  
+                }  
+            }  
+        }  
+    </script>  
 
-    <!-- 仅保留无法用 Tailwind 工具类表达的内容：伪元素、SVG stroke 动画、JS 状态类 -->
-    <style>
-        /* 全局字体与基础 */
-        body { font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }
+    <style>  
+        body { font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }  
 
-        /* 导航下划线伪元素 */
-        .nav-link-item { position: relative; padding-bottom: 4px; }
-        .nav-link-item::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 0; height: 2px; background: #D4A853; transition: width 0.3s;
-        }
-        .nav-link-item:hover::after,
-        .nav-link-item.active::after { width: 100%; }
-        .nav-link-item:hover, .nav-link-item.active { color: #D4A853; }
+        /* ── 导航 ── */  
+        .nav-link-item { position: relative; padding-bottom: 4px; }  
+        .nav-link-item::after {  
+            content: ''; position: absolute; bottom: 0; left: 0;  
+            width: 0; height: 2px; background: #D4A853; transition: width 0.3s;  
+        }  
+        .nav-link-item:hover::after, .nav-link-item.active::after { width: 100%; }  
+        .nav-link-item:hover, .nav-link-item.active { color: #D4A853; }  
 
-        /* Hero 背景浮动圆 */
-        .hero-float-circle {
-            position: absolute; top: -30%; right: -10%;
-            width: 800px; height: 800px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(196,162,101,0.08) 0%, transparent 70%);
-            animation: floatBg 20s ease-in-out infinite;
-        }
-        @keyframes floatBg {
-            0%,100% { transform: translate(0,0) scale(1); }
-            50%      { transform: translate(30px,-20px) scale(1.05); }
-        }
+        /* ── Hero ── */  
+        .hero-float-circle {  
+            position: absolute; top: -30%; right: -10%;  
+            width: 800px; height: 800px; border-radius: 50%;  
+            background: radial-gradient(circle, rgba(196,162,101,0.08) 0%, transparent 70%);  
+            animation: floatBg 20s ease-in-out infinite;  
+        }  
+        @keyframes floatBg {  
+            0%,100% { transform: translate(0,0) scale(1); }  
+            50%     { transform: translate(30px,-20px) scale(1.05); }  
+        }  
+        @keyframes fadeUp {  
+            from { opacity:0; transform:translateY(25px); }  
+            to   { opacity:1; transform:translateY(0); }  
+        }  
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }  
+        .text-grad-warm {  
+            background: linear-gradient(135deg, #D4A853, #C9A96E);  
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;  
+        }  
 
-        /* fadeUp / fadeIn 关键帧 */
-        @keyframes fadeUp {
-            from { opacity:0; transform:translateY(25px); }
-            to   { opacity:1; transform:translateY(0); }
-        }
-        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        /* ── 地图 ── */  
+        .map-wrap { position:absolute; cursor:pointer; transition: filter .5s ease, transform .5s ease; }  
+        .map-wrap img { width:100%; height:100%; object-fit:contain; display:block; mix-blend-mode:darken; }  
+        .map-wrap:hover { filter:drop-shadow(0 0 20px rgba(212,168,83,.4)) brightness(1.05); transform:scale(1.02); }  
+        .map-wrap.active { filter:drop-shadow(0 0 28px rgba(212,168,83,.5)) brightness(1.08); transform:scale(1.02); }  
+        .map-wrap.russia { width:540px; top:0; right:0; }  
+        .map-wrap.china  { width:500px; bottom:20px; left:60px; }  
 
-        /* 渐变文字 highlight */
-        .text-grad-warm {
-            background: linear-gradient(135deg, #D4A853, #C9A96E);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
+        /* ── Pin ── */  
+        .pin {  
+            position:absolute; z-index:3; display:flex; align-items:center; gap:8px;  
+            opacity:0; transform:scale(0.5); transform-origin:16px 50%;  
+            transition: all .5s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none;  
+        }  
+        .pin.show { opacity:1; transform:scale(1); }  
+        .pin.anhui  { left:61%; top:55%; }  
+        .pin.moscow { left:19%; top:47%; }  
+        .pin.anhui .pin-text { transform: translateX(25px); }  
+        @keyframes ringPulse {  
+            0%   { width:28px; height:28px; opacity:.4; }  
+            100% { width:50px; height:50px; opacity:0;  }  
+        }  
+        @keyframes dotPulse {  
+            0%,100% { transform:scale(1); }  
+            50%     { transform:scale(1.2); box-shadow:0 0 16px rgba(212,168,83,1); }  
+        }  
+        .pin-dot-outer {  
+            width:32px; height:32px; border-radius:50%; border: 2px solid #D4A853;  
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);  
+            animation: ringPulse 2s ease-in-out infinite; opacity:.4;  
+        }  
+        .pin-dot-inner {  
+            width:14px; height:14px; border-radius:50%; background:#D4A853;  
+            box-shadow: 0 0 10px rgba(212,168,83,0.8); position:relative; flex-shrink:0;  
+            animation: dotPulse 1.5s ease-in-out infinite;  
+        }  
 
-        /* Pin 相关动画 */
-        @keyframes ringPulse {
-            0%   { width:28px; height:28px; opacity:.4; }
-            100% { width:50px; height:50px; opacity:0;  }
-        }
-        @keyframes dotPulse {
-            0%,100% { transform:scale(1); }
-            50%     { transform:scale(1.2); box-shadow:0 0 16px rgba(212,168,83,1); }
-        }
-        .pin-dot-outer {
-            width:32px; height:32px; border-radius:50%;
-            border: 2px solid #D4A853;
-            position:absolute; top:50%; left:50%;
-            transform:translate(-50%,-50%);
-            animation: ringPulse 2s ease-in-out infinite; opacity:.4;
-        }
-        .pin-dot-inner {
-            width:14px; height:14px; border-radius:50%;
-            background:#D4A853;
-            box-shadow: 0 0 10px rgba(212,168,83,0.8);
-            position:relative; flex-shrink:0;
-            animation: dotPulse 1.5s ease-in-out infinite;
-        }
+        /* ── SVG ── */  
+        .line-layer { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2; }  
+        @keyframes drawCn { to { stroke-dashoffset: 250; } }  
+        @keyframes drawRu { to { stroke-dashoffset: 0;   } }  
+        @keyframes glowPulse {  
+            0%,100% { filter: drop-shadow(0 0 6px rgba(212,168,83,0.4)); }  
+            50%     { filter: drop-shadow(0 0 16px rgba(212,168,83,0.9)); }  
+        }  
+        @keyframes gapBlink { 0%,100%{opacity:.3} 50%{opacity:1} }  
 
-        /* Pin 显隐状态 */
-        .pin {
-            position:absolute; z-index:3; display:flex; align-items:center; gap:8px;
-            opacity:0; transform:scale(0.5);
-            transform-origin:16px 50%;
-            transition: all .5s cubic-bezier(0.34,1.56,0.64,1);
-            pointer-events:none;
-        }
-        .pin.show { opacity:1; transform:scale(1); }
-        .pin.anhui  { left:61%; top:55%; }
-        .pin.moscow { left:19%; top:47%; }
-        .pin.anhui .pin-text { transform: translateX(25px); }
+        .tea-line { fill:none; stroke:url(#lineGrad); stroke-width:3; stroke-dasharray:12,8; }  
+        .tea-line.cn, .tea-line.ru { opacity:0; }  
+        .tea-line.cn.visible { opacity:1; stroke-dashoffset:500; animation: drawCn 1.5s ease forwards; }  
+        .tea-line.ru.visible { opacity:1; stroke-dashoffset:-500; animation: drawRu 1.5s ease forwards; }  
+        .tea-line.full { opacity:0; stroke-width:0; }  
+        .tea-line.full.connected {  
+            opacity:1; stroke-width:3.5; stroke-dasharray:none;  
+            filter: drop-shadow(0 0 8px rgba(212,168,83,0.6));  
+            animation: glowPulse 2s ease-in-out infinite;  
+        }  
+        .tea-line.full.ghost {  
+            opacity:1; stroke-width:2; stroke-dasharray:none;  
+            stroke-opacity:0.1; filter:none; animation:none;  
+            transition: stroke-opacity 1.5s ease, stroke-width 1.5s ease, filter 1s ease;  
+        }  
+        .gap-circle { fill:none; stroke:#D4A853; stroke-width:2; stroke-dasharray:2,2; opacity:0; transition:opacity .5s 1.2s; }  
+        .gap-circle.show { opacity:1; animation: gapBlink 1.2s ease-in-out infinite; }  
+        .road-text {  
+            font-family:"Songti SC",serif; font-size:11px; font-weight:900;  
+            fill:#5C3A21; letter-spacing:4px; opacity:0; transition:opacity .8s;  
+        }  
+        .road-text.show { opacity:.9; }  
+        .road-text.dim  { opacity:.18; transition: opacity 1.5s ease; }  
 
-        /* SVG 连线动画 */
-        @keyframes drawCn { to { stroke-dashoffset: 250; } }
-        @keyframes drawRu { to { stroke-dashoffset: 0;   } }
-        @keyframes glowPulse {
-            0%,100% { filter: drop-shadow(0 0 6px rgba(212,168,83,0.4)); }
-            50%     { filter: drop-shadow(0 0 16px rgba(212,168,83,0.9)); }
-        }
-        @keyframes gapBlink { 0%,100%{opacity:.3} 50%{opacity:1} }
+        /* ── 三节点 ── */  
+        .route-node {  
+            position:absolute; z-index:15; pointer-events:none;  
+            opacity:0; transform:scale(0);  
+            transition: all .8s cubic-bezier(0.34,1.56,0.64,1);  
+        }  
+        .route-node.lit { opacity:1; transform:scale(1); }  
 
-        .line-layer { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2; }
-        .tea-line { fill:none; stroke:url(#lineGrad); stroke-width:3; stroke-dasharray:12,8; }
-        .tea-line.cn, .tea-line.ru { opacity:0; }
-        .tea-line.cn.visible { opacity:1; stroke-dashoffset:500; animation: drawCn 1.5s ease forwards; }
-        .tea-line.ru.visible { opacity:1; stroke-dashoffset:-500; animation: drawRu 1.5s ease forwards; }
-        .tea-line.full { opacity:0; stroke-width:0; }
-        .tea-line.full.connected {
-            opacity:1; stroke-width:3.5; stroke-dasharray:none;
-            filter: drop-shadow(0 0 8px rgba(212,168,83,0.6));
-            animation: glowPulse 2s ease-in-out infinite;
-        }
-        .gap-circle { fill:none; stroke:#D4A853; stroke-width:2; stroke-dasharray:2,2; opacity:0; transition:opacity .5s 1.2s; }
-        .gap-circle.show { opacity:1; animation: gapBlink 1.2s ease-in-out infinite; }
-        .road-text { font-family:"Songti SC",serif; font-size:11px; font-weight:900; fill:#5C3A21; letter-spacing:4px; opacity:0; transition:opacity .8s; }
-        .road-text.show { opacity:.9; }
-        .flow-dot { r:6; fill:#FFF; opacity:0; filter:drop-shadow(0 0 8px rgba(212,168,83,1)); }
-        .flow-dot.active { opacity:1; }
+        .node-core {  
+            width:18px; height:18px; border-radius:50%;  
+            background: radial-gradient(circle, #FFF 10%, #D4A853 60%, rgba(212,168,83,0) 100%);  
+            box-shadow:0 0 0 rgba(212,168,83,0);  
+            transition: box-shadow 1s ease; position:relative;  
+        }  
+        .route-node.lit .node-core {  
+            box-shadow: 0 0 30px 12px rgba(212,168,83,0.45);  
+        }  
 
-        /* Tip 气泡 */
-        .map-tip {
-            position:absolute; padding:18px 24px;
-            background:rgba(253,248,240,0.95); backdrop-filter:blur(14px);
-            border:1px solid rgba(196,162,101,0.3); border-radius:12px;
-            box-shadow:0 10px 40px rgba(92,58,33,0.12); color:#5C3A21; z-index:10;
-            opacity:0; transform:translateY(12px) scale(0.94);
-            transition: all .6s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none;
-        }
-        .map-tip.show { opacity:1; transform:translateY(0) scale(1); }
+        @keyframes nodeBurst {  
+            0%   { transform:scale(0.3); opacity:0.8; }  
+            60%  { transform:scale(3); opacity:0.2; }  
+            100% { transform:scale(4.5); opacity:0; }  
+        }  
+        .node-burst {  
+            position:absolute; top:50%; left:50%;  
+            width:18px; height:18px; margin:-9px 0 0 -9px;  
+            border-radius:50%;  
+            background: radial-gradient(circle, rgba(212,168,83,0.7), transparent 70%);  
+            opacity:0; pointer-events:none;  
+        }  
+        .route-node.lit .node-burst { animation: nodeBurst 1.2s ease-out forwards; }  
 
-        /* 烟花粒子 */
-        .celeb-overlay { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:20; opacity:0; }
-        .celeb-overlay.active { opacity:1; }
-        .tea-particle { position:absolute; font-size:1.5rem; opacity:0; }
-        .celeb-overlay.active .tea-particle { animation: pfly 2.5s ease-out forwards; }
-        @keyframes pfly {
-            0%  { opacity:1; transform:translate(0,0) scale(0.4) rotate(0deg); }
-            50% { opacity:1; transform:translate(var(--tx),var(--ty)) scale(1.2) rotate(180deg); }
-            100%{ opacity:0; transform:translate(var(--tx2),var(--ty2)) scale(0.2) rotate(360deg); }
-        }
+        @keyframes nodeRipple {  
+            0%   { transform:scale(1); opacity:0.4; }  
+            100% { transform:scale(3.5); opacity:0; }  
+        }  
+        .node-ripple {  
+            position:absolute; top:50%; left:50%;  
+            width:18px; height:18px; margin:-9px 0 0 -9px;  
+            border-radius:50%; border:1px solid rgba(212,168,83,0.5);  
+            opacity:0; pointer-events:none;  
+        }  
+        .route-node.lit .node-ripple { animation: nodeRipple 2.4s ease-out infinite; }  
+        .route-node.lit .node-ripple:nth-child(3) { animation-delay:0.8s; }  
+        .route-node.lit .node-ripple:nth-child(4) { animation-delay:1.6s; }  
 
-        /* 庆典卡片 */
-        .celeb-card {
-            position:absolute; bottom:70px; right:20px; width:280px;
-            transform-origin:bottom right; transform:scale(0);
-            background:rgba(253,248,240,0.95); backdrop-filter:blur(18px);
-            padding:30px 24px; border-radius:16px;
-            border:1px solid rgba(196,162,101,0.3);
-            box-shadow:0 16px 50px rgba(92,58,33,0.15);
-            text-align:center; z-index:25;
-            opacity:0; transition: all .8s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        .celeb-card.show { opacity:1; transform:scale(1); }
-
-        /* Hint & Reset */
-        @keyframes hintIn { to{opacity:.8} }
-        @keyframes hintF {
-            0%,100% { transform:translateX(-50%) translateY(0); }
-            50%     { transform:translateX(-50%) translateY(-5px); }
-        }
-        .hint {
-            position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);
-            font-size:.85rem; color:#C4A265; letter-spacing:2px;
+        /* ── 节点标签 ── */  
+        .node-label {  
+            position:absolute; left:50%;  
+            white-space:nowrap;  
+            display:flex; flex-direction:column; align-items:center;  
+            pointer-events:none;  
+        }  
+        /* 起点、终点标签在上方 */
+        .route-node .node-label {
+            top: -10px;
+            transform: translateX(-120%) translateY(0);
             opacity:0;
-            animation: hintIn 2s 2s ease forwards, hintF 3s 2s ease-in-out infinite;
+            transition: opacity 1.2s cubic-bezier(0.25,1,0.5,1),
+                        transform 1.2s cubic-bezier(0.25,1,0.5,1);
         }
-        .hint.hidden { opacity:0!important; animation:none; transition:opacity .5s; }
+        /* 中间节点标签在下方 */
+        .route-node.mid-node .node-label {
+            top:auto; bottom: -10px;
+            transform: translateX(50%) translateY(20px);
+            opacity:0;
+            transition: opacity 1.2s cubic-bezier(0.25,1,0.5,1),
+                        transform 1.2s cubic-bezier(0.25,1,0.5,1);
+        }
+        .route-node .node-label.unfold {
+            opacity:1; transform: translateX(-120%) translateY(0);
+        }
+        .route-node.mid-node .node-label.unfold {
+            opacity:1; transform: translateX(40%) translateY(20px);
+        }  
 
-        /* map-wrap 状态 */
-        .map-wrap { position:absolute; cursor:pointer; transition: filter .5s ease, transform .5s ease; }
-        .map-wrap img { width:100%; height:100%; object-fit:contain; display:block; mix-blend-mode:darken; }
-        .map-wrap:hover { filter:drop-shadow(0 0 20px rgba(212,168,83,.4)) brightness(1.05); transform:scale(1.02); }
-        .map-wrap.active { filter:drop-shadow(0 0 28px rgba(212,168,83,.5)) brightness(1.08); transform:scale(1.02); }
-        .map-wrap.russia { width:540px; top:0; right:0; }
-        .map-wrap.china  { width:500px; bottom:20px; left:60px; }
+        /* 引线 */  
+        .label-line {  
+            width:1px; height:0; overflow:hidden;  
+            background: linear-gradient(to bottom, rgba(212,168,83,0), rgba(212,168,83,0.5));  
+            transition: height 0.8s cubic-bezier(0.25,1,0.5,1);  
+        }  
+        .node-label.unfold .label-line { height:18px; }  
+        .route-node.mid-node .label-line {  
+            background: linear-gradient(to top, rgba(212,168,83,0), rgba(212,168,83,0.5));  
+            order:1;  
+        }  
 
-        /* Feature card hover */
-        .feature-card { transition: all .4s ease; }
-        .feature-card:hover { transform:translateY(-10px); box-shadow:0 15px 40px rgba(92,58,33,0.08); border-color:#D4A853; }
+        /* 卡片 */  
+        .label-card {  
+            background: linear-gradient(145deg, rgba(253,248,240,0.97), rgba(242,226,200,0.94));  
+            backdrop-filter: blur(20px);  
+            border:1px solid rgba(196,162,101,0.2);  
+            border-radius:5px;  
+            padding:0 22px;  
+            max-height:0; overflow:hidden; opacity:0;  
+            transition: max-height 1s cubic-bezier(0.25,1,0.5,1) 0.3s,  
+                        opacity 0.8s ease 0.3s,  
+                        padding 1s cubic-bezier(0.25,1,0.5,1) 0.3s;  
+            box-shadow: 0 4px 24px rgba(92,58,33,0.06),  
+                        inset 0 1px 0 rgba(255,255,255,0.5);  
+            position:relative;  
+        }  
+        .node-label.unfold .label-card {  
+            max-height:80px; opacity:1; padding:10px 22px;  
+        }  
+        .label-card::before {  
+            content:''; position:absolute; top:0; left:14px; right:14px; height:1px;  
+            background: linear-gradient(90deg, transparent, rgba(212,168,83,0.4), transparent);  
+        }  
+        .route-node.mid-node .label-card::before { top:auto; bottom:0; }  
 
-        /* Footer 暗纹 */
-        .footer-watermark { position:absolute; inset:0; opacity:.04; pointer-events:none; }
-        .footer-watermark svg { position:absolute; fill:#5C3A21; }
-        .footer-watermark .leaf-1 { width:64px;height:64px; top:24px; left:10%; transform:rotate(-20deg); }
-        .footer-watermark .leaf-2 { width:48px;height:48px; top:32px; right:12%; transform:rotate(15deg); }
-        .footer-watermark .leaf-3 { width:40px;height:40px; bottom:16px; left:30%; transform:rotate(40deg); }
-    </style>
-</head>
-<body class="font-serif-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed">
+        .label-zh {
+            font-size:0.92rem; font-weight:800;
+            letter-spacing:4px; color:#5C3A21;
+            line-height:1;
+            text-align: center;
+            opacity:0; transform:translateY(6px);
+            transition: opacity 0.7s ease 0.7s, transform 0.7s ease 0.7s;
+        }  
+        .node-label.unfold .label-zh { opacity:1; transform:translateY(0); }  
 
-<!-- ========== 导航栏 ========== -->
-<nav id="navbar"
-     class="fixed top-0 left-0 right-0 z-[1000]
-            flex justify-between items-center
-            px-[60px] py-[22px]
-            bg-[rgba(253,248,240,0.85)] backdrop-blur-xl
-            border-b border-[rgba(196,162,101,0.15)]
-            transition-all duration-400">
+        .label-ornament {  
+            display:flex; align-items:center; justify-content:center; gap:6px;  
+            margin:7px 0 6px;  
+            opacity:0;  
+            transition: opacity 0.6s ease 0.9s;  
+        }  
+        .node-label.unfold .label-ornament { opacity:1; }  
+        .label-ornament-line {  
+            width:16px; height:1px;  
+            background: linear-gradient(90deg, transparent, rgba(212,168,83,0.5), transparent);  
+        }  
+        .label-ornament-dot {  
+            width:2.5px; height:2.5px; border-radius:50%; background:#D4A853; opacity:0.5;  
+        }  
 
-    <div class="flex items-center gap-3 text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
-        <img src="images/logo.jpg" alt="俄域茗通Logo"
-             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
-        <span>俄域茗通</span>
-    </div>
+        .label-sub {  
+            font-size:0.68rem; color:#8B6914;  
+            letter-spacing:2px; line-height:1; opacity:0;  
+            transform:translateY(4px);  
+            transition: opacity 0.7s ease 1.1s, transform 0.7s ease 1.1s;  
+        }  
+        .node-label.unfold .label-sub { opacity:0.7; transform:translateY(0); }  
 
-    <ul class="flex gap-[42px] list-none">
-        <li><a href="index.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">首页</a></li>
-        <li><a href="about.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
-        <li><a href="products.html" class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
-        <li><a href="cases.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>
-        <li><a href="market.html"   class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
-        <li><a href="contact.html"  class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
-    </ul>
-</nav>
+        /* ── 主叶（旅行者） ── */  
+        .hero-leaf {  
+            position:absolute; z-index:20; pointer-events:none;  
+            opacity:0; transition: opacity 0.6s ease;  
+        }  
+        .hero-leaf.active { opacity:1; }  
+        .hero-leaf svg { display:block; filter: drop-shadow(0 0 10px rgba(212,168,83,0.5)); }  
 
-<!-- ========== Hero ========== -->
-<section class="min-h-screen flex items-center px-[60px] pt-[120px] pb-[60px]
-                relative overflow-hidden bg-hero-grad">
+        /* 尾迹粒子 */  
+        .trail-dot {  
+            position:absolute; z-index:13; pointer-events:none;  
+            border-radius:50; opacity:0;  
+        }  
 
-    <!-- 浮动背景圆 -->
-    <div class="hero-float-circle"></div>
+        /* ── 余韵叶 ── */  
+        .drift-leaf {  
+            position:absolute; z-index:14; pointer-events:none; opacity:0;  
+        }  
+        .drift-leaf svg { display:block; }  
 
-    <div class="flex items-center justify-between w-full max-w-[1440px] mx-auto relative z-[2]">
+        /* ── 茶气 ── */  
+        @keyframes steamFloat {  
+            0%   { opacity:0; transform:translateY(0) scale(0.4); }  
+            25%  { opacity:0.4; }  
+            100% { opacity:0; transform:translateY(-50px) scale(1.3); }  
+        }  
+        .steam-particle {  
+            position:absolute; z-index:10; pointer-events:none;  
+            border-radius:50%;  
+            background: radial-gradient(circle, rgba(212,168,83,0.35), transparent);  
+            opacity:0;  
+        }  
 
-        <!-- 左侧文案 -->
-        <div class="flex-[0_0_32%] pr-5">
+        /* ── Hint ── */  
+        @keyframes hintIn { to{opacity:.8} }  
+        @keyframes hintF {  
+            0%,100% { transform:translateX(-50%) translateY(0); }  
+            50%     { transform:translateX(-50%) translateY(-5px); }  
+        }  
+        .hint {  
+            position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);  
+            font-size:.85rem; color:#C4A265; letter-spacing:2px; opacity:0;  
+            animation: hintIn 2s 2s ease forwards, hintF 3s 2s ease-in-out infinite;  
+        }  
+        .hint.hidden { opacity:0!important; animation:none; transition:opacity .5s; }  
 
-            <p class="font-serif-en italic text-[0.85rem] text-tea-light tracking-[2px] mb-4
-                       opacity-0 animate-[fadeUp_1s_0.3s_ease_forwards]">
-                Хуэйча — на тысячи ли
-            </p>
+        /* ── Feature ── */  
+        .feature-card { transition: all .4s ease; }  
+        .feature-card:hover { transform:translateY(-10px); box-shadow:0 15px 40px rgba(92,58,33,0.08); border-color:#D4A853; }  
+        .scroll-reveal {  
+            opacity:0; transform:translateY(30px);  
+            transition: opacity 0.8s ease, transform 0.8s ease;  
+        }  
+        .scroll-reveal.visible { opacity:1; transform:translateY(0); }  
 
-            <h1 class="text-[2.8rem] font-black leading-[1.4] text-tea-dark tracking-[4px] mb-5
-                        opacity-0 animate-[fadeUp_1s_0.5s_ease_forwards]">
-                徽茶为芯<br>
-                <span class="text-grad-warm">传茶道 通民心</span>
-            </h1>
+        /* ── Footer ── */  
+        .footer-watermark { position:absolute; inset:0; opacity:.04; pointer-events:none; }  
+        .footer-watermark svg { position:absolute; fill:#5C3A21; }  
+        .footer-watermark .leaf-1 { width:64px;height:64px; top:24px; left:10%; transform:rotate(-20deg); }  
+        .footer-watermark .leaf-2 { width:48px;height:48px; top:32px; right:12%; transform:rotate(15deg); }  
+        .footer-watermark .leaf-3 { width:40px;height:40px; bottom:16px; left:30%; transform:rotate(40deg); }  
+    </style>  
+</head>  
+<body class="font-serif-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed">  
 
-            <div class="w-[60px] h-[3px] bg-gradient-to-r from-tea-warm to-transparent
-                        my-5 opacity-0 animate-[fadeUp_1s_0.6s_ease_forwards]"></div>
+<!-- ========== 导航栏 ========== -->  
+<nav id="navbar"  
+     class="fixed top-0 left-0 right-0 z-[1000]  
+            flex justify-between items-center  
+            px-[60px] py-[22px]  
+            bg-[rgba(253,248,240,0.85)] backdrop-blur-xl  
+            border-b border-[rgba(196,162,101,0.15)]  
+            transition-all duration-400">  
+    <div class="flex items-center gap-3 text-[1.6rem] font-bold text-tea-dark tracking-[3px]">  
+        <img src="images/logo.jpg" alt="俄域茗通Logo"  
+             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">  
+        <span>俄域茗通</span>  
+    </div>  
+    <ul class="flex gap-[42px] list-none">  
+        <li><a href="index.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">首页</a></li>  
+        <li><a href="about.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>  
+        <li><a href="products.html" class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>  
+        <li><a href="cases.html"    class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>  
+        <li><a href="market.html"   class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>  
+        <li><a href="contact.html"  class="nav-link-item no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>  
+    </ul>  
+</nav>  
 
-            <p class="text-[1.05rem] text-tea-medium leading-[1.8] tracking-wider
-                       opacity-0 animate-[fadeUp_1s_0.7s_ease_forwards]">
-                依托一带一路与RCEP战略红利<br>
-                以文化转译为核心，B2B+B2C+O2O全域驱动<br>
-                赋能安徽非遗茶品牌高质量出海俄罗斯
-            </p>
+<!-- ========== Hero ========== -->  
+<section class="min-h-screen flex items-center px-[60px] pt-[120px] pb-[60px]  
+                relative overflow-hidden bg-gradient-to-br from-tea-bg via-tea-cream to-[#EDD9B5]">  
 
-            <div class="grid grid-cols-2 gap-x-2 gap-y-3 mt-[30px] w-fit
-                        opacity-0 animate-[fadeUp_1s_0.9s_ease_forwards]">
-                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
-                            text-[0.8rem] text-tea-dark tracking-wider w-fit
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
-                    文化适配咨询
-                </span>
-                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
-                            text-[0.8rem] text-tea-dark tracking-wider w-fit
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
-                    产品与IP设计
-                </span>
-                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
-                            text-[0.8rem] text-tea-dark tracking-wider w-fit
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
-                    快速市场测试
-                </span>
-                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full
-                            text-[0.8rem] text-tea-dark tracking-wider w-fit
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">
-                    O2O沉浸体验
-                </span>
-            </div>
-        </div>
+    <div class="hero-float-circle"></div>  
 
-        <!-- 右侧地图 -->
-        <div class="flex-[0_0_65%] relative h-[600px]
-                    opacity-0 animate-[fadeIn_1.2s_0.4s_ease_forwards]">
+    <div class="flex items-center justify-between w-full max-w-[1440px] mx-auto relative z-[2]">  
 
-            <div class="w-full h-full relative" id="mapStage">
+        <!-- 左侧文案 -->  
+        <div class="flex-[0_0_32%] pr-5">  
+            <p class="font-serif-en italic text-[0.85rem] text-tea-light tracking-[2px] mb-4  
+                       opacity-0 animate-[fadeUp_1s_0.3s_ease_forwards]">  
+                Хуэйча — на тысячи ли  
+            </p>  
+            <h1 class="text-[2.8rem] font-black leading-[1.4] text-tea-dark tracking-[4px] mb-5  
+                        opacity-0 animate-[fadeUp_1s_0.5s_ease_forwards]">  
+                徽茶为芯<br>  
+                <span class="text-grad-warm">传茶道 通民心</span>  
+            </h1>  
+            <div class="w-[60px] h-[3px] bg-gradient-to-r from-tea-warm to-transparent  
+                        my-5 opacity-0 animate-[fadeUp_1s_0.6s_ease_forwards]"></div>  
+            <p class="text-[1.05rem] text-tea-medium leading-[1.8] tracking-wider  
+                       opacity-0 animate-[fadeUp_1s_0.7s_ease_forwards]">  
+                依托一带一路与RCEP战略红利<br>  
+                以文化转译为核心，B2B企业服务为主体，兼顾B2C细分需求<br>  
+                赋能安徽非遗茶品牌高质量出海俄罗斯  
+            </p>  
+            <div class="grid grid-cols-2 gap-x-2 gap-y-3 mt-[30px] w-fit  
+                        opacity-0 animate-[fadeUp_1s_0.9s_ease_forwards]">  
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">文化适配咨询</span>  
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">产品与IP设计</span>  
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">快速市场测试</span>  
+                <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
+                            text-[0.8rem] text-tea-dark tracking-wider w-fit  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">O2O沉浸体验</span>  
+            </div>  
+        </div>  
 
-                <!-- 俄罗斯地图 -->
-                <div class="map-wrap russia" id="russiaWrap">
-                    <img src="images/russia-map.png" alt="俄罗斯市场">
-                    <div class="pin moscow" id="pinMoscow">
-                        <div class="pin-dot-outer"></div>
-                        <div class="pin-dot-inner" id="dotMoscow"></div>
-                        <div class="pin-text">
-                            <div class="font-serif-en italic text-[13px] text-tea-dark font-bold tracking-[1.5px]">Москва</div>
-                        </div>
-                    </div>
-                </div>
+        <!-- ====== 右侧地图 ====== -->  
+        <div class="flex-[0_0_65%] relative h-[600px]  
+                    opacity-0 animate-[fadeIn_1.2s_0.4s_ease_forwards]">  
 
-                <!-- 中国地图 -->
-                <div class="map-wrap china" id="chinaWrap">
-                    <img src="images/china-map.png" alt="中国发源地">
-                    <div class="pin anhui" id="pinAnhui">
-                        <div class="pin-dot-outer"></div>
-                        <div class="pin-dot-inner" id="dotAnhui"></div>
-                        <div class="pin-text">
-                            <div class="text-[14px] font-black text-tea-dark tracking-[2px]">安徽</div>
-                            <div class="text-[10px] text-tea-medium tracking-[1px] mt-0.5">黄山 · 祁门 · 六安</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="w-full h-full relative" id="mapStage">  
 
-                <!-- SVG 连线层 -->
-                <svg class="line-layer" id="lineSvg" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stop-color="#D4A853"/>
-                            <stop offset="50%"  stop-color="#C9A96E"/>
-                            <stop offset="100%" stop-color="#D4A853"/>
-                        </linearGradient>
-                    </defs>
-                    <path class="tea-line cn" id="lineCn"/>
-                    <circle class="gap-circle" id="gap1" r="3"/>
-                    <circle class="gap-circle" id="gap2" r="3"/>
-                    <path class="tea-line ru" id="lineRu"/>
-                    <path class="tea-line full" id="lineFull"/>
-                    <text class="road-text" id="roadText" text-anchor="middle">数字化万里茶道</text>
-                    <circle class="flow-dot" id="flowDot"/>
-                </svg>
+                <div class="map-wrap russia" id="russiaWrap">  
+                    <img src="images/russia-map.png" alt="俄罗斯市场">  
+                    <div class="pin moscow" id="pinMoscow">  
+                        <div class="pin-dot-outer"></div>  
+                        <div class="pin-dot-inner" id="dotMoscow"></div>  
+                        <div class="pin-text">  
+                            <div class="font-serif-en italic text-[13px] text-tea-dark font-bold tracking-[1.5px]">Москва</div>  
+                        </div>  
+                    </div>  
+                </div>  
 
-                <!-- 中国气泡 -->
-                <div class="map-tip" id="tipCn" style="left:0%;top:32%;">
-                    <div class="text-[0.75rem] text-tea-light mb-2 tracking-[2px]">🍃 供应链溯源 · 非遗工艺传扬</div>
-                    <div class="font-black text-[1.05rem] text-tea-dark mb-1">提炼东方茶道精神</div>
-                    <div class="text-[0.8rem] text-tea-medium leading-[1.6]">
-                        聚合黄山毛峰、祁门红茶、六安瓜片<br>将国家级非遗底蕴转化为可感知品牌资产
-                    </div>
-                </div>
+                <div class="map-wrap china" id="chinaWrap">  
+                    <img src="images/china-map.png" alt="中国发源地">  
+                    <div class="pin anhui" id="pinAnhui">  
+                        <div class="pin-dot-outer"></div>  
+                        <div class="pin-dot-inner" id="dotAnhui"></div>  
+                        <div class="pin-text">  
+                            <div class="text-[14px] font-black text-tea-dark tracking-[2px]">安徽</div>  
+                            <div class="text-[10px] text-tea-medium tracking-[1px] mt-0.5">黄山 · 祁门 · 六安</div>  
+                        </div>  
+                    </div>  
+                </div>  
 
-                <!-- 俄罗斯气泡 -->
-                <div class="map-tip" id="tipRu" style="left:3%;top:1%;">
-                    <div class="text-[0.75rem] text-tea-light mb-2 tracking-[2px]">🌍 文化转译 · 终端场景触达</div>
-                    <div class="font-black text-[1.05rem] text-tea-dark mb-1">重塑俄语区品牌叙事</div>
-                    <div class="text-[0.8rem] text-tea-medium leading-[1.6]">
-                        深入莫斯科/圣彼得堡主流商超<br>联动VK/Telegram与线下孔子学院跨界营销
-                    </div>
-                </div>
+                <!-- SVG -->  
+                <svg class="line-layer" id="lineSvg" xmlns="http://www.w3.org/2000/svg">  
+                    <defs>  
+                        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">  
+                            <stop offset="0%" stop-color="#D4A853"/>  
+                            <stop offset="50%" stop-color="#C9A96E"/>  
+                            <stop offset="100%" stop-color="#D4A853"/>  
+                        </linearGradient>  
+                    </defs>  
+                    <path class="tea-line cn" id="lineCn"/>  
+                    <circle class="gap-circle" id="gap1" r="3"/>  
+                    <circle class="gap-circle" id="gap2" r="3"/>  
+                    <path class="tea-line ru" id="lineRu"/>  
+                    <path class="tea-line full" id="lineFull"/>  
+                    <text class="road-text" id="roadText" text-anchor="middle">数字化万里茶道</text>  
+                </svg>  
 
-                <!-- 烟花层 & 庆典卡片 -->
-                <div class="celeb-overlay" id="celeb"></div>
-                <div class="celeb-card" id="celebCard">
-                    <h2 class="text-[1.35rem] font-black tracking-[2px] text-tea-dark mb-3 leading-[1.4]">
-                        文化转译 · 互利共赢
-                    </h2>
-                    <p class="text-[0.85rem] text-tea-medium tracking-wider mb-3 leading-[1.6]">
-                        打破文化隔阂，重塑徽茶出海势能
-                    </p>
-                    <p class="font-serif-en italic text-[0.85rem] text-tea-light tracking-wider leading-[1.4]">
-                        «Мост культурного обмена»
-                    </p>
-                </div>
+                <!-- 三节点 -->  
+                <div class="route-node" id="nodeStart">  
+                    <div class="node-burst"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-core"></div>  
+                    <div class="node-label" id="labelStart">  
+                        <div class="label-card">  
+                            <div class="label-zh">徽茶筑基</div>  
+                            <div class="label-ornament">  
+                                <div class="label-ornament-line"></div>  
+                                <div class="label-ornament-dot"></div>  
+                                <div class="label-ornament-line"></div>  
+                            </div>  
+                            <div class="label-sub">非遗工艺 · 溯源品控</div>  
+                        </div>  
+                        <div class="label-line"></div>  
+                    </div>  
+                </div>  
 
-                <p class="hint" id="hint">—— 点击两国地图，开启中俄茶路 ——</p>
+                <div class="route-node mid-node" id="nodeMid">  
+                    <div class="node-burst"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-core"></div>  
+                    <div class="node-label" id="labelMid">  
+                        <div class="label-line"></div>  
+                        <div class="label-card">  
+                            <div class="label-zh">文化转译</div>  
+                            <div class="label-ornament">  
+                                <div class="label-ornament-line"></div>  
+                                <div class="label-ornament-dot"></div>  
+                                <div class="label-ornament-line"></div>  
+                            </div>  
+                            <div class="label-sub">品牌叙事 · 跨语共鸣</div>  
+                        </div>  
+                    </div>  
+                </div>  
 
-                <button id="resetBtn"
-                        class="absolute bottom-[-20px] right-5
-                               bg-[rgba(253,248,240,0.8)] border border-tea-light rounded-[20px]
-                               px-5 py-2 font-serif-zh text-[0.8rem] text-tea-dark font-semibold
-                               cursor-pointer opacity-0 transition-all duration-300 z-30
-                               hover:bg-tea-warm hover:text-white hover:border-tea-warm">
-                    重新体验
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
+                <div class="route-node" id="nodeEnd">  
+                    <div class="node-burst"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-ripple"></div>  
+                    <div class="node-core"></div>  
+                    <div class="node-label" id="labelEnd">  
+                        <div class="label-card">  
+                            <div class="label-zh">俄域落地</div>  
+                            <div class="label-ornament">  
+                                <div class="label-ornament-line"></div>  
+                                <div class="label-ornament-dot"></div>  
+                                <div class="label-ornament-line"></div>  
+                            </div>  
+                            <div class="label-sub">商超触达 · 场景渗透</div>  
+                        </div>  
+                        <div class="label-line"></div>  
+                    </div>  
+                </div>  
 
-<!-- ========== 核心业务 ========== -->
-<section class="py-[100px] px-[60px] bg-white relative">
+                <!-- 主叶 -->  
+                <div class="hero-leaf" id="heroLeaf">  
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none">  
+                        <path d="M12 2C6.5 6 3 10 4 16c1 6 6 6 8 6s7 0 8-6c1-6-2.5-10-8-14z" fill="#5C3A21" opacity="0.9"/>  
+                        <path d="M12 6v12M9 9c1 1 2 3 3 5M15 9c-1 1-2 3-3 5" stroke="#D4A853" stroke-width="0.8" opacity="0.6"/>  
+                    </svg>  
+                </div>  
 
-    <div class="text-center mb-[60px]">
-        <h2 class="text-[2.2rem] text-tea-dark tracking-[3px] font-black">创新出海服务体系</h2>
-        <p class="text-[1rem] text-tea-light mt-[10px] tracking-[2px]">
-            构建从文化解码、快速验证到渠道落地的全案闭环
-        </p>
-    </div>
+                <!-- 粒子容器 -->  
+                <div id="trailContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:12;"></div>  
+                <div id="driftContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:14;"></div>  
+                <div id="steamContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9;"></div>  
 
-    <div class="grid grid-cols-3 gap-[40px] max-w-[1200px] mx-auto">
+                <p class="hint" id="hint">—— 点击两国地图，开启中俄茶路 ——</p>  
 
-        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl
-                    border border-[rgba(196,162,101,0.15)] text-center">
-            <div class="text-[2.5rem] mb-5 inline-block">📊</div>
-            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">文化适配与市场测试</h3>
-            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">
-                深度解码俄罗斯消费者审美与价值偏好，提供品牌俄语命名与核心叙事重塑。结合A/B测试与KOL社群反馈，以最低成本验证文化出海方案的商业可行性。
-            </p>
-        </div>
+                <button id="resetBtn"  
+                        class="absolute bottom-[-20px] right-5  
+                               bg-[rgba(253,248,240,0.8)] border border-tea-light rounded-[20px]  
+                               px-5 py-2 font-serif-zh text-[0.8rem] text-tea-dark font-semibold  
+                               cursor-pointer opacity-0 transition-all duration-300 z-30  
+                               hover:bg-tea-warm hover:text-white hover:border-tea-warm">  
+                    重新体验  
+                </button>  
+            </div>  
+        </div>  
+    </div>  
+</section>  
 
-        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl
-                    border border-[rgba(196,162,101,0.15)] text-center">
-            <div class="text-[2.5rem] mb-5 inline-block">🎨</div>
-            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">创新产品与文创IP设计</h3>
-            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">
-                打造"徽茶小玛"中俄融合IP，推出"茶炊徽香"茶包、"旋舞茶翼"耳挂茶包及"万里红途"数字盲盒，将传统非遗转化为契合俄罗斯生活场景的文创符号。
-            </p>
-        </div>
+<!-- ========== 核心业务 ========== -->  
+<section class="py-[100px] px-[60px] bg-white relative">  
+    <div class="text-center mb-[60px] scroll-reveal">  
+        <h2 class="text-[2.2rem] text-tea-dark tracking-[3px] font-black">创新出海服务体系</h2>  
+        <p class="text-[1rem] text-tea-light mt-[10px] tracking-[2px]">  
+            构建从市场诊断、品牌服务设计到快速市场测试的全链条咨询体系  
+        </p>  
+    </div>  
+    <div class="grid grid-cols-3 gap-[40px] max-w-[1200px] mx-auto">  
+        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl  
+                    border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
+            <div class="text-[2.5rem] mb-5 inline-block">📊</div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">文化适配咨询与品牌重塑</h3>  
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
+                深度解码俄罗斯茶叶消费偏好与文化语境，系统梳理竞争格局与市场进入障碍，提供品牌定位、俄语命名与核心叙事重构，帮助安徽茶企建立前置决策依据，降低出海试错成本。  
+            </p>  
+        </div>  
+        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl  
+                    border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
+            <div class="text-[2.5rem] mb-5 inline-block">🎨</div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">创新产品与文创IP设计</h3>  
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
+                打造"徽茶小玛（Хуйша Маруся）"中俄融合IP，推出"茶炊微香"茶包、"旋舞茶翼"耳挂茶包及"红金茶笺"茶谱，将安徽非遗制茶工艺转化为契合俄罗斯生活场景的文创符号。  
+            </p>  
+        </div>  
+        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl  
+                    border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
+            <div class="text-[2.5rem] mb-5 inline-block">🌐</div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">O2O 沉浸式跨文化营销</h3>  
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
+                依托"徽茶为芯·中俄茶文化传播"中俄双语小程序与VK社交平台矩阵，提供个性化茶谱定制与沉浸式文化学习体验，联动俄罗斯孔子学院等本土机构开展茶文化快闪，实现从数字内容认知到线下商业变现的双向引流。  
+            </p>  
+        </div>  
+    </div>  
+</section>  
 
-        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl
-                    border border-[rgba(196,162,101,0.15)] text-center">
-            <div class="text-[2.5rem] mb-5 inline-block">🌐</div>
-            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">O2O 沉浸式跨文化营销</h3>
-            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">
-                依托"徽茶为芯"双语小程序与VK/TG社交矩阵，提供个性化茶谱定制，联动俄罗斯本土机构开展茶文化快闪，实现从数字认知到线下商业变现的双向引流。
-            </p>
-        </div>
+<!-- ========== 页脚分割线 ========== -->  
+<div class="max-w-[900px] mx-auto relative z-10">  
+    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>  
+    <div class="h-0.5"></div>  
+    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>  
+</div>  
 
-    </div>
-</section>
+<!-- ========== 页脚 ========== -->  
+<footer class="relative z-10 overflow-hidden">  
+    <div class="relative px-[40px] pt-[56px] pb-[40px] text-center bg-gradient-to-b from-[#F2E8D6] to-[#EFE2CC]">  
+        <div class="footer-watermark">  
+            <svg class="leaf-1" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>  
+            <svg class="leaf-2" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>  
+            <svg class="leaf-3" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>  
+        </div>  
+        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2">俄域茗通</h3>  
+        <div class="flex items-center justify-center gap-3 mb-4">  
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>  
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.5)]"></div>  
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>  
+        </div>  
+        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">  
+            跨文化传播视域下文化转译服务的设计与运营  
+        </p>  
+        <nav class="flex justify-center gap-8 flex-wrap">  
+            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>  
+            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>  
+            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>  
+            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>  
+            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>  
+            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>  
+        </nav>  
+    </div>  
+    <div class="px-[40px] py-5 text-center bg-[#E6D5B8]">  
+        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">  
+            &copy; 2026 俄域茗通团队. 保留所有权利.  
+        </p>  
+    </div>  
+</footer>  
 
-<!-- ========== 页脚分割线 ========== -->
-<div class="max-w-[900px] mx-auto relative z-10">
-    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>
-    <div class="h-0.5"></div>
-    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>
-</div>
+<!-- =========== JS =========== -->  
+<script>  
+(() => {  
+    const $ = id => document.getElementById(id);  
 
-<!-- ========== 页脚 ========== -->
-<footer class="relative z-10 overflow-hidden">
+    const mapStage   = $('mapStage');  
+    const chinaWrap  = $('chinaWrap'),  russiaWrap = $('russiaWrap');  
+    const pinAnhui   = $('pinAnhui'),  pinMoscow  = $('pinMoscow');  
+    const dotAnhui   = $('dotAnhui'),  dotMoscow  = $('dotMoscow');  
+    const lineSvg    = $('lineSvg');  
+    const lineCn     = $('lineCn'),     lineRu = $('lineRu'), lineFull = $('lineFull');  
+    const gap1       = $('gap1'),       gap2   = $('gap2');  
+    const roadText   = $('roadText');  
+    const hint       = $('hint'),       resetBtn = $('resetBtn');  
+    const nodeS      = $('nodeStart'),  nodeM  = $('nodeMid'), nodeE = $('nodeEnd');  
+    const labelS     = $('labelStart'), labelM = $('labelMid'), labelE = $('labelEnd');  
+    const heroLeaf   = $('heroLeaf');  
+    const trailBox   = $('trailContainer');  
+    const driftBox   = $('driftContainer');  
+    const steamBox   = $('steamContainer');  
 
-    <!-- 主区域 -->
-    <div class="relative px-[40px] pt-[56px] pb-[40px] text-center bg-footer-grad">
+    let cnClicked = false, ruClicked = false, connected = false;  
+    let heroAnimId = null, driftTimer = null, steamTimer = null;  
 
-        <!-- 茶叶暗纹 -->
-        <div class="footer-watermark">
-            <svg class="leaf-1" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
-            <svg class="leaf-2" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
-            <svg class="leaf-3" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
-        </div>
+    /* ── 辅助 path（用于 getPointAtLength） ── */
+    const ns = 'http://www.w3.org/2000/svg';
+    const hSvg  = document.createElementNS(ns, 'svg');
+    hSvg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;';
+    hSvg.setAttribute('width', '0');
+    hSvg.setAttribute('height', '0');
+    const hPath = document.createElementNS(ns, 'path');
+    hSvg.appendChild(hPath);
+    document.body.appendChild(hSvg);  
 
-        <!-- 品牌名 -->
-        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2">
-            俄域茗通
-        </h3>
-
-        <!-- 金色点缀 -->
-        <div class="flex items-center justify-center gap-3 mb-4">
-            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
-            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.5)]"></div>
-            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
-        </div>
-
-        <!-- Slogan -->
-        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">
-            跨文化传播视域下文化转译服务的设计与运营
-        </p>
-
-        <!-- 快捷导航 -->
-        <nav class="flex justify-center gap-8 flex-wrap">
-            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>
-            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>
-            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
-            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
-            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
-            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
-        </nav>
-    </div>
-
-    <!-- 版权条 -->
-    <div class="px-[40px] py-5 text-center bg-[#E6D5B8]">
-        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">
-            &copy; 2026 俄域茗通团队. 保留所有权利.
-        </p>
-    </div>
-
-</footer>
-
-<script>
-(() => {
-    const $ = id => document.getElementById(id);
-    const mapStage    = $('mapStage'),   chinaWrap  = $('chinaWrap'),   russiaWrap = $('russiaWrap');
-    const pinAnhui    = $('pinAnhui'),   pinMoscow  = $('pinMoscow');
-    const dotAnhui    = $('dotAnhui'),   dotMoscow  = $('dotMoscow');
-    const lineSvg     = $('lineSvg'),    lineCn     = $('lineCn'),      lineRu     = $('lineRu'),    lineFull = $('lineFull');
-    const flowDot     = $('flowDot'),    gap1       = $('gap1'),         gap2       = $('gap2'),      roadText = $('roadText');
-    const tipCn       = $('tipCn'),      tipRu      = $('tipRu');
-    const celeb       = $('celeb'),      celebCard  = $('celebCard'),    hint       = $('hint'),      resetBtn = $('resetBtn');
-
-    let cnClicked = false, ruClicked = false, flowId = null;
-
-    function getPinPos(el) {
-        const sr = mapStage.getBoundingClientRect(), r = el.getBoundingClientRect();
-        return { x: r.left + r.width/2 - sr.left, y: r.top + r.height/2 - sr.top };
-    }
+    /* ── 坐标 ── */  
+    function getPinPos(el) {  
+        const sr = mapStage.getBoundingClientRect(), r = el.getBoundingClientRect();  
+        return { x: r.left + r.width / 2 - sr.left, y: r.top + r.height / 2 - sr.top };  
+    }  
 
     function calcPaths() {
         const w = mapStage.offsetWidth, h = mapStage.offsetHeight;
         lineSvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-        const a = getPinPos(dotAnhui), m = getPinPos(dotMoscow);
-        const mid = { x:(a.x+m.x)/2, y:(a.y+m.y)/2 };
-        const cp1 = { x:a.x+(mid.x-a.x)*.5, y:a.y-60 };
-        const cp2 = { x:mid.x+(m.x-mid.x)*.5, y:m.y+60 };
-        const g1  = { x:mid.x-10, y:mid.y+5 }, g2 = { x:mid.x+10, y:mid.y-5 };
-        lineCn.setAttribute('d',   `M ${a.x},${a.y} C ${cp1.x},${cp1.y} ${mid.x-40},${mid.y+20} ${g1.x},${g1.y}`);
-        lineRu.setAttribute('d',   `M ${g2.x},${g2.y} C ${mid.x+40},${mid.y-20} ${cp2.x},${cp2.y} ${m.x},${m.y}`);
-        lineFull.setAttribute('d', `M ${a.x},${a.y} C ${cp1.x},${cp1.y} ${mid.x},${mid.y} C ${mid.x},${mid.y} ${cp2.x},${cp2.y} ${m.x},${m.y}`);
-        gap1.setAttribute('cx', g1.x); gap1.setAttribute('cy', g1.y);
-        gap2.setAttribute('cx', g2.x); gap2.setAttribute('cy', g2.y);
-        roadText.setAttribute('x', mid.x); roadText.setAttribute('y', mid.y-25);
-    }
+        hSvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
 
-    function syncLineTracking() {
-        let start = performance.now();
-        (function tick(now) { calcPaths(); if(now-start<600) requestAnimationFrame(tick); })(start);
-    }
+        const a = getPinPos(dotAnhui), m = getPinPos(dotMoscow);  
+        const mid = { x: (a.x + m.x) / 2, y: (a.y + m.y) / 2 };  
+        const cp1 = { x: a.x + (mid.x - a.x) * .5, y: a.y - 60 };  
+        const cp2 = { x: mid.x + (m.x - mid.x) * .5, y: m.y + 60 };  
+        const g1  = { x: mid.x - 10, y: mid.y + 5 };  
+        const g2  = { x: mid.x + 10, y: mid.y - 5 };  
 
-    window.addEventListener('load', calcPaths);
-    window.addEventListener('resize', () => {
-        calcPaths();
-        if(cnClicked && ruClicked && flowId) { cancelAnimationFrame(flowId); startFlow(); }
-    });
+        lineCn.setAttribute('d', `M ${Math.round(a.x)},${Math.round(a.y)} C ${Math.round(cp1.x)},${Math.round(cp1.y)} ${Math.round(mid.x-40)},${Math.round(mid.y+20)} ${Math.round(g1.x)},${Math.round(g1.y)}`);
+        lineRu.setAttribute('d', `M ${Math.round(g2.x)},${Math.round(g2.y)} C ${Math.round(mid.x+40)},${Math.round(mid.y-20)} ${Math.round(cp2.x)},${Math.round(cp2.y)} ${Math.round(m.x)},${Math.round(m.y)}`);
 
-    [chinaWrap, russiaWrap].forEach(el => {
-        el.addEventListener('mouseenter', syncLineTracking);
-        el.addEventListener('mouseleave', syncLineTracking);
-    });
+        const fullD = `M ${Math.round(a.x)},${Math.round(a.y)} C ${Math.round(cp1.x)},${Math.round(cp1.y)} ${Math.round(mid.x-40)},${Math.round(mid.y+20)} ${Math.round(g1.x)},${Math.round(g1.y)} C ${Math.round(mid.x+40)},${Math.round(mid.y-20)} ${Math.round(cp2.x)},${Math.round(cp2.y)} ${Math.round(m.x)},${Math.round(m.y)}`;
+        lineFull.setAttribute('d', fullD);
+        hPath.setAttribute('d', fullD);
 
-    chinaWrap.addEventListener('click', () => {
-        if(cnClicked) return; cnClicked = true; hint.classList.add('hidden');
-        chinaWrap.classList.add('active'); pinAnhui.classList.add('show');
-        syncLineTracking(); lineCn.classList.add('visible');
-        setTimeout(() => { gap1.classList.add('show'); gap2.classList.add('show'); }, 1200);
-        setTimeout(() => tipCn.classList.add('show'), 1500);
-        setTimeout(tryConnect, 2000);
-    });
+        gap1.setAttribute('cx', Math.round(g1.x)); gap1.setAttribute('cy', Math.round(g1.y));
+        gap2.setAttribute('cx', Math.round(g2.x)); gap2.setAttribute('cy', Math.round(g2.y));
+        roadText.setAttribute('x', Math.round(mid.x)); roadText.setAttribute('y', Math.round(mid.y - 25));
 
-    russiaWrap.addEventListener('click', () => {
-        if(ruClicked) return; ruClicked = true; hint.classList.add('hidden');
-        russiaWrap.classList.add('active'); pinMoscow.classList.add('show');
-        syncLineTracking(); lineRu.classList.add('visible');
-        setTimeout(() => tipRu.classList.add('show'), 1500);
-        setTimeout(tryConnect, 2000);
-    });
+        nodeS.style.left = (Math.round(a.x) - 9) + 'px';   nodeS.style.top = (Math.round(a.y) - 9) + 'px';
+        nodeM.style.left = (Math.round(mid.x) - 9) + 'px';  nodeM.style.top = (Math.round(mid.y) - 9) + 'px';
+        nodeE.style.left = (Math.round(m.x) - 9) + 'px';    nodeE.style.top = (Math.round(m.y) - 9) + 'px';
+    }  
 
-    function tryConnect() {
-        if(!cnClicked || !ruClicked) return;
-        setTimeout(() => {
-            lineCn.style.opacity='0'; lineRu.style.opacity='0';
-            gap1.style.opacity='0';   gap2.style.opacity='0';
-            calcPaths(); lineFull.classList.add('connected'); roadText.classList.add('show');
-            startFlow();
-        }, 600);
-        setTimeout(celebrate, 1500);
-    }
+    function syncLineTracking() {  
+        let s = performance.now();  
+        (function tick(n) { calcPaths(); if (n - s < 600) requestAnimationFrame(tick); })(s);  
+    }  
 
-    function startFlow() {
-        const path = lineFull, len = path.getTotalLength();
-        let t = 0; flowDot.classList.add('active');
-        (function tick() {
-            t += .003; if(t>1) t=0;
-            const p = path.getPointAtLength(t*len);
-            flowDot.setAttribute('cx', p.x); flowDot.setAttribute('cy', p.y);
-            flowId = requestAnimationFrame(tick);
-        })();
-    }
+    window.addEventListener('load', calcPaths);  
+    window.addEventListener('resize', calcPaths);  
 
-    function celebrate() {
-        celeb.classList.add('active');
-        const emojis=['🌟','✨','🌿','📦','🚀','🤝'];
-        for(let i=0;i<20;i++){
-            const el=document.createElement('div'); el.className='tea-particle';
-            el.textContent=emojis[~~(Math.random()*emojis.length)];
-            el.style.left=(40+Math.random()*20)+'%'; el.style.top=(30+Math.random()*20)+'%';
-            el.style.setProperty('--tx',(Math.random()*200-100)+'px');
-            el.style.setProperty('--ty',(Math.random()*200-100)+'px');
-            el.style.setProperty('--tx2',(Math.random()*400-200)+'px');
-            el.style.setProperty('--ty2',(Math.random()*400-200)+'px');
-            el.style.animationDelay=(Math.random()*.5)+'s';
-            celeb.appendChild(el);
+    [chinaWrap, russiaWrap].forEach(el => {  
+        el.addEventListener('mouseenter', syncLineTracking);  
+        el.addEventListener('mouseleave', syncLineTracking);  
+    });  
+
+    /* ── 点击 ── */  
+    chinaWrap.addEventListener('click', () => {  
+        if (cnClicked) return; cnClicked = true; hint.classList.add('hidden');  
+        chinaWrap.classList.add('active'); pinAnhui.classList.add('show');  
+        syncLineTracking(); lineCn.classList.add('visible');  
+        setTimeout(() => { gap1.classList.add('show'); gap2.classList.add('show'); }, 1200);  
+        setTimeout(tryConnect, 2000);  
+    });  
+
+    russiaWrap.addEventListener('click', () => {  
+        if (ruClicked) return; ruClicked = true; hint.classList.add('hidden');  
+        russiaWrap.classList.add('active'); pinMoscow.classList.add('show');  
+        syncLineTracking(); lineRu.classList.add('visible');  
+        setTimeout(tryConnect, 2000);  
+    });  
+
+    /* ═══════════════════════════════════  
+       连通 → 高亮 → 淡隐 → 叶子旅程  
+       ═══════════════════════════════════ */  
+    function tryConnect() {  
+        if (!cnClicked || !ruClicked || connected) return;  
+        connected = true;  
+
+        setTimeout(() => {  
+            /* 1) 合并全连线，高亮闪烁 */  
+            gap1.style.opacity = '0'; gap2.style.opacity = '0';  
+            lineCn.style.opacity = '0'; lineRu.style.opacity = '0';  
+            calcPaths();  
+            lineFull.classList.add('connected');  
+            roadText.classList.add('show');  
+
+            /* 2) 1.8s 后淡成幽灵线 */  
+            setTimeout(() => {  
+                lineFull.classList.remove('connected');  
+                lineFull.classList.add('ghost');  
+                roadText.classList.add('dim');  
+
+                /* 3) 启动首次叶子旅程 */  
+                setTimeout(startHeroJourney, 500);  
+            }, 1800);  
+
+            resetBtn.style.opacity = '1';  
+        }, 600);  
+    }  
+
+    /* ═══════════════════════════════════  
+       主叶旅程（缓慢，点亮节点+展开标签）  
+       ═══════════════════════════════════ */  
+    const HERO_DURATION = 7000;                // 7 秒走完全程  
+    const NODE_TRIGGERS = [
+        { t: 0.15, node: nodeS, label: labelS },
+        { t: 0.50, node: nodeM, label: labelM },
+        { t: 0.95, node: nodeE, label: labelE },
+    ];  
+
+    function startHeroJourney() {
+        const totalLen = hPath.getTotalLength();
+        const triggered = [false, false, false];
+        const start = performance.now();
+        let lastTrail = 0;
+
+        const a = getPinPos(dotAnhui);
+        heroLeaf.style.left = '0px';
+        heroLeaf.style.top = '0px';
+        heroLeaf.style.transform = `translate(${Math.round(a.x) - 18}px, ${Math.round(a.y) - 18}px)`;
+        heroLeaf.classList.add('active');
+
+        if (totalLen === 0) {
+            console.error('路径长度为0，无法移动！hPath.d:', hPath.getAttribute('d'));
+            return;
         }
-        setTimeout(()=>{ celebCard.classList.add('show'); resetBtn.classList.add('show'); }, 800);
+
+        function tick(now) {
+            const elapsed = now - start;
+            const t = Math.min(elapsed / HERO_DURATION, 1);
+
+            /* 缓动 easeInOutCubic 让运动更自然 */
+            const ease = t < 0.5
+                ? 4 * t * t * t
+                : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+            const pt = hPath.getPointAtLength(ease * totalLen);
+
+            /* 轻微摇曳 */
+            const sec = elapsed / 1000;
+            const swayY = Math.sin(sec * 1.4) * 6;
+            const swayX = Math.cos(sec * 0.9) * 4;
+            const rot = Math.sin(sec * 1.2) * 15;
+
+            heroLeaf.style.transform =
+                `translate(${pt.x - 18 + swayX}px, ${pt.y - 18 + swayY}px) rotate(${rot}deg)`;  
+
+            /* 尾迹 */  
+            if (now - lastTrail > 80) {  
+                lastTrail = now;  
+                spawnTrail(pt.x + swayX, pt.y + swayY);  
+            }  
+
+            /* 触发节点 + 标签展开 */  
+            NODE_TRIGGERS.forEach((cfg, i) => {  
+                if (!triggered[i] && t >= cfg.t) {  
+                    triggered[i] = true;  
+                    cfg.node.classList.add('lit');  
+                    cfg.label.classList.add('unfold');  
+                }  
+            });  
+
+            if (t < 1) {  
+                heroAnimId = requestAnimationFrame(tick);  
+            } else {  
+                /* 旅程结束，叶子淡出 */  
+                heroLeaf.classList.remove('active');  
+                /* 开始余韵循环 */  
+                setTimeout(startDriftLoop, 1200);  
+                startSteam();  
+            }  
+        }  
+        heroAnimId = requestAnimationFrame(tick);  
+    }  
+
+    /* ── 尾迹金色粒子 ── */  
+    function spawnTrail(x, y) {  
+        const el = document.createElement('div');  
+        el.className = 'trail-dot';  
+        const sz = 3 + Math.random() * 4;  
+        Object.assign(el.style, {  
+            width: sz + 'px', height: sz + 'px',  
+            left: (x - sz / 2 + (Math.random() - 0.5) * 8) + 'px',  
+            top:  (y - sz / 2 + (Math.random() - 0.5) * 8) + 'px',  
+            borderRadius: '50%',  
+            background: `radial-gradient(circle, rgba(212,168,83,${0.5 + Math.random() * 0.3}), transparent)`,  
+            opacity: '0.7',  
+            transition: `opacity ${0.8 + Math.random() * 0.6}s ease, transform ${0.8 + Math.random() * 0.6}s ease`,  
+        });  
+        trailBox.appendChild(el);  
+        requestAnimationFrame(() => {  
+            el.style.opacity = '0';  
+            el.style.transform = `translateY(${-10 - Math.random() * 15}px) scale(0.3)`;  
+        });  
+        setTimeout(() => el.remove(), 1800);  
+    }  
+
+    /* ═══════════════════════════════════  
+       余韵循环：一片一片慢速飘  
+       ═══════════════════════════════════ */  
+    const DRIFT_DURATION = 9000;               // 9 秒，更悠缓  
+
+    function startDriftLoop() {  
+        if (!connected) return;  
+        spawnDriftLeaf();  
+        driftTimer = setTimeout(startDriftLoop, 4000 + Math.random() * 2000);  
+    }  
+
+    function leafSVG(sz, hue) {  
+        const fills = ['#5C3A21','#7A5C2E','#6B8E23','#556B2F','#8B6914','#C4A265'];  
+        const veins = ['#D4A853','#F5E6C8','#C4A265','#D4A853','#F5E6C8','#5C3A21'];  
+        return `<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none">  
+            <path d="M12 2C6.5 6 3 10 4 16c1 6 6 6 8 6s7 0 8-6c1-6-2.5-10-8-14z"  
+                  fill="${fills[hue % 6]}" opacity="0.8"/>  
+            <path d="M12 6v12M9 9c1 1 2 3 3 5M15 9c-1 1-2 3-3 5"  
+                  stroke="${veins[hue % 6]}" stroke-width="0.8" opacity="0.45"/>  
+        </svg>`;  
+    }  
+
+    function spawnDriftLeaf() {  
+        const totalLen = hPath.getTotalLength();  
+        const sz   = 16 + Math.random() * 14;  
+        const hue  = Math.floor(Math.random() * 6);  
+        const dur  = DRIFT_DURATION + Math.random() * 2000;  
+        const yAmp = 6 + Math.random() * 10;  
+        const xAmp = 3 + Math.random() * 8;  
+        const rotBase  = Math.random() * 360;  
+        const rotSpeed = (Math.random() - 0.5) * 400;  
+        const phY = Math.random() * Math.PI * 2;  
+        const phX = Math.random() * Math.PI * 2;  
+
+        const el = document.createElement('div');  
+        el.className = 'drift-leaf';  
+        el.innerHTML = leafSVG(sz, hue);  
+        el.style.filter = `drop-shadow(0 0 ${3 + Math.random() * 4}px rgba(212,168,83,0.3))`;  
+        driftBox.appendChild(el);  
+
+        const start = performance.now();  
+
+        function tick(now) {  
+            const t = (now - start) / dur;  
+            if (t > 1) { el.remove(); return; }  
+
+            const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;  
+            const pt = hPath.getPointAtLength(ease * totalLen);  
+
+            const sec = (now - start) / 1000;  
+            const sy = Math.sin(sec * 1.3 + phY) * yAmp;  
+            const sx = Math.cos(sec * 0.8 + phX) * xAmp;  
+
+            /* 淡入淡出 */  
+            let op = 1;  
+            if (t < 0.08) op = t / 0.08;  
+            else if (t > 0.85) op = (1 - t) / 0.15;  
+
+            const rot = rotBase + ease * rotSpeed + Math.sin(sec * 2) * 10;  
+            const sc  = 0.6 + 0.5 * Math.sin(t * Math.PI);  
+
+            el.style.transform = `translate(${pt.x + sx - sz / 2}px, ${pt.y + sy - sz / 2}px) rotate(${rot}deg) scale(${sc})`;  
+            el.style.opacity = op;  
+            requestAnimationFrame(tick);  
+        }  
+        requestAnimationFrame(tick);  
+    }  
+
+    /* ── 茶气 ── */  
+    function startSteam() {  
+        if (steamTimer) return;  
+        steamTimer = setInterval(() => {  
+            if (!connected) return;  
+            const a = getPinPos(dotAnhui), m = getPinPos(dotMoscow);  
+            const mid = { x: (a.x + m.x) / 2, y: (a.y + m.y) / 2 };
+            const pts = [
+                a, mid, m,
+                { x: (a.x + mid.x) / 2, y: (a.y + mid.y) / 2 },
+                { x: (mid.x + m.x) / 2, y: (mid.y + m.y) / 2 }
+            ];
+            const p = pts[Math.floor(Math.random() * pts.length)];
+            const el = document.createElement('div');
+            el.className = 'steam-particle';
+            const sz = 4 + Math.random() * 6;
+            el.style.width = sz + 'px';
+            el.style.height = sz + 'px';
+            el.style.left = (p.x + (Math.random() - 0.5) * 50) + 'px';
+            el.style.top  = (p.y + (Math.random() - 0.5) * 30) + 'px';
+            el.style.animation = `steamFloat ${1.6 + Math.random() * 1.6}s ease-out forwards`;
+            steamBox.appendChild(el);
+            setTimeout(() => el.remove(), 3500);
+        }, 250);
     }
 
+    /* ── 全部停止 ── */
+    function stopAll() {
+        if (heroAnimId) { cancelAnimationFrame(heroAnimId); heroAnimId = null; }
+        if (driftTimer) { clearTimeout(driftTimer); driftTimer = null; }
+        if (steamTimer) { clearInterval(steamTimer); steamTimer = null; }
+        heroLeaf.classList.remove('active');
+        trailBox.innerHTML = '';
+        driftBox.innerHTML = '';
+        steamBox.innerHTML = '';
+    }
+
+    /* ── 重置 ── */
     resetBtn.addEventListener('click', () => {
-        cnClicked=ruClicked=false; if(flowId) cancelAnimationFrame(flowId);
-        chinaWrap.classList.remove('active'); russiaWrap.classList.remove('active');
-        lineCn.classList.remove('visible'); lineRu.classList.remove('visible');
-        lineFull.classList.remove('connected'); lineFull.style.opacity='0';
-        lineCn.style.opacity=''; lineRu.style.opacity='';
-        [gap1,gap2].forEach(g=>{ g.classList.remove('show'); g.style.opacity=''; });
-        [pinAnhui,pinMoscow,tipCn,tipRu,roadText,celebCard,resetBtn].forEach(el=>el.classList.remove('show'));
-        flowDot.classList.remove('active'); celeb.classList.remove('active'); celeb.innerHTML='';
-        hint.classList.remove('hidden'); syncLineTracking();
+        cnClicked = ruClicked = connected = false;
+        stopAll();
+
+        chinaWrap.classList.remove('active');
+        russiaWrap.classList.remove('active');
+        pinAnhui.classList.remove('show');
+        pinMoscow.classList.remove('show');
+
+        lineCn.classList.remove('visible'); lineCn.style.opacity = '';
+        lineRu.classList.remove('visible'); lineRu.style.opacity = '';
+        lineFull.classList.remove('connected', 'ghost');
+        lineFull.style.opacity = '';
+
+        [gap1, gap2].forEach(g => { g.classList.remove('show'); g.style.opacity = ''; });
+        roadText.classList.remove('show', 'dim');
+
+        nodeS.classList.remove('lit');
+        nodeM.classList.remove('lit');
+        nodeE.classList.remove('lit');
+
+        labelS.classList.remove('unfold');
+        labelM.classList.remove('unfold');
+        labelE.classList.remove('unfold');
+
+        resetBtn.style.opacity = '0';
+        hint.classList.remove('hidden');
+        syncLineTracking();
     });
 
+    /* ── 导航栏滚动 ── */
+    const nav = $('navbar');
     window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        if(window.scrollY > 50) {
-            nav.classList.add('!py-4','shadow-nav-scroll','!bg-[rgba(253,248,240,0.95)]');
+        if (window.scrollY > 50) {
+            nav.style.boxShadow = '0 4px 30px rgba(92,58,33,0.08)';
+            nav.style.padding = '14px 60px';
+            nav.style.background = 'rgba(253,248,240,0.95)';
         } else {
-            nav.classList.remove('!py-4','shadow-nav-scroll','!bg-[rgba(253,248,240,0.95)]');
+            nav.style.boxShadow = 'none';
+            nav.style.padding = '22px 60px';
+            nav.style.background = 'rgba(253,248,240,0.85)';
         }
     });
+
+    /* ── 滚动淡入 ── */
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
 })();
 </script>
+
 </body>
 </html>
