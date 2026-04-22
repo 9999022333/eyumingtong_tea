@@ -66,8 +66,8 @@
         .map-wrap img { width:100%; height:100%; object-fit:contain; display:block; mix-blend-mode:darken; }  
         .map-wrap:hover { filter:drop-shadow(0 0 20px rgba(212,168,83,.4)) brightness(1.05); transform:scale(1.02); }  
         .map-wrap.active { filter:drop-shadow(0 0 28px rgba(212,168,83,.5)) brightness(1.08); transform:scale(1.02); }  
-        .map-wrap.russia { width:540px; top:0; right:0; }  
-        .map-wrap.china  { width:500px; bottom:20px; left:60px; }  
+        .map-wrap.russia { width:400px; top:0; right: 350px; }  
+        .map-wrap.china  { width:400px; bottom:-5px; left:260px; }  
 
         /* ── Pin ── */  
         .pin {  
@@ -76,8 +76,8 @@
             transition: all .5s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none;  
         }  
         .pin.show { opacity:1; transform:scale(1); }  
-        .pin.anhui  { left:61%; top:55%; }  
-        .pin.moscow { left:19%; top:47%; }  
+        .pin.anhui  { left:40%; top:50%; }  
+        .pin.moscow { left:55%; top:55%; }  
         .pin.anhui .pin-text { transform: translateX(25px); }  
         @keyframes ringPulse {  
             0%   { width:28px; height:28px; opacity:.4; }  
@@ -188,15 +188,15 @@
         /* 起点、终点标签在上方 */
         .route-node .node-label {
             top: -10px;
-            transform: translateX(-120%) translateY(0);
+            transform: translateX(-220%) translateY(0);
             opacity:0;
             transition: opacity 1.2s cubic-bezier(0.25,1,0.5,1),
                         transform 1.2s cubic-bezier(0.25,1,0.5,1);
         }
         /* 中间节点标签在下方 */
         .route-node.mid-node .node-label {
-            top:auto; bottom: -10px;
-            transform: translateX(50%) translateY(20px);
+            top:auto; bottom: 1px;
+            transform: translateX(10%) translateY(10px);
             opacity:0;
             transition: opacity 1.2s cubic-bezier(0.25,1,0.5,1),
                         transform 1.2s cubic-bezier(0.25,1,0.5,1);
@@ -205,7 +205,7 @@
             opacity:1; transform: translateX(-120%) translateY(0);
         }
         .route-node.mid-node .node-label.unfold {
-            opacity:1; transform: translateX(40%) translateY(20px);
+            opacity:1; transform: translateX(110%) translateY(10px);
         }  
 
         /* 引线 */  
@@ -277,6 +277,29 @@
         }  
         .node-label.unfold .label-sub { opacity:0.7; transform:translateY(0); }  
 
+
+         /* 安徽 */
+        #nodeStart .node-label{
+        top: -14px;                      
+        transform: translateX(-130%) translateY(0); /* 调左右：-越大=越往左 */
+        }
+
+        #nodeStart .node-label.unfold{
+        opacity: 1;
+        transform: translateX(-230%) translateY(0);
+        }
+
+         /* 莫斯科 */
+        #nodeEnd .node-label{
+        top: -10px;                      
+        transform: translateX(-90%) translateY(0);  /* 调左右：相对第1节点可不同 */
+        }
+
+        #nodeEnd .node-label.unfold{
+        opacity: 1;
+        transform: translateX(150%) translateY(-60%);
+        }
+
         /* ── 主叶（旅行者） ── */  
         .hero-leaf {  
             position:absolute; z-index:20; pointer-events:none;  
@@ -313,8 +336,8 @@
         /* ── Hint ── */  
         @keyframes hintIn { to{opacity:.8} }  
         @keyframes hintF {  
-            0%,100% { transform:translateX(-50%) translateY(0); }  
-            50%     { transform:translateX(-50%) translateY(-5px); }  
+            0%,100% { transform:translateX(-50%) translateY(25px); }  
+            50%     { transform:translateX(-50%) translateY(20px); }  
         }  
         .hint {  
             position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);  
@@ -420,9 +443,6 @@
                     <div class="pin moscow" id="pinMoscow">  
                         <div class="pin-dot-outer"></div>  
                         <div class="pin-dot-inner" id="dotMoscow"></div>  
-                        <div class="pin-text">  
-                            <div class="font-serif-en italic text-[13px] text-tea-dark font-bold tracking-[1.5px]">Москва</div>  
-                        </div>  
                     </div>  
                 </div>  
 
@@ -431,10 +451,6 @@
                     <div class="pin anhui" id="pinAnhui">  
                         <div class="pin-dot-outer"></div>  
                         <div class="pin-dot-inner" id="dotAnhui"></div>  
-                        <div class="pin-text">  
-                            <div class="text-[14px] font-black text-tea-dark tracking-[2px]">安徽</div>  
-                            <div class="text-[10px] text-tea-medium tracking-[1px] mt-0.5">黄山 · 祁门 · 六安</div>  
-                        </div>  
                     </div>  
                 </div>  
 
@@ -529,7 +545,7 @@
                 <div id="driftContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:14;"></div>  
                 <div id="steamContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9;"></div>  
 
-                <p class="hint" id="hint">—— 点击两国地图，开启中俄茶路 ——</p>  
+                <p class="hint" id="hint">—— 点击开启中俄茶路 ——</p>  
 
                 <button id="resetBtn"  
                         class="absolute bottom-[-20px] right-5  
