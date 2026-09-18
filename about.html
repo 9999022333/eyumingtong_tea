@@ -166,7 +166,6 @@
 
         /* ── 时间轴节点布局（奇偶行） ── */  
         .timeline-node { display:flex; flex-direction:column; align-items:center; flex:1; }  
-        .timeline-node:nth-child(even) { flex-direction:column-reverse; }  
         .node-top    { padding-bottom:16px; text-align:center; min-height:72px; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; }  
         .node-bottom { padding-top:16px;    text-align:center; min-height:72px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; }  
 
@@ -200,10 +199,10 @@
 <nav id="navbar"  
      class="fixed top-0 left-0 right-0 z-[1000]  
             flex justify-between items-center  
-            px-[60px] py-[22px]  
+            px-[60px] py-[22px] leading-[1.5]  
             bg-[rgba(253,248,240,0.85)] backdrop-blur-xl  
             border-b border-[rgba(196,162,101,0.15)]  
-            transition-all duration-400">  
+            transition-all duration-[400ms]">  
     <div class="flex items-center gap-3  
                 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">  
         <!-- 【修改1】Logo 首屏无需懒加载，保持原样 -->
@@ -262,18 +261,18 @@
         <div class="px-8 pt-7 pb-8 relative z-[1]">  
             <h3 class="font-serif-zh text-[1.2rem] font-black text-tea-dark tracking-[2px]  
                         mb-5 pb-[14px] border-b border-[rgba(212,184,150,0.2)]">  
-                俄域茗通 · 中俄茶文化跨境传播服务平台  
+                俄域茗通 · 徽茶对俄出海AI智能服务平台  
             </h3>  
             <div class="mb-[18px]">  
                 <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 我们是谁</p>  
                 <p class="text-[0.88rem] text-tea-dark opacity-80 leading-[2] tracking-[0.3px]">  
-                    俄域茗通专注安徽茶文化中俄跨境传播与品牌出海，以文化转译为核心，为徽茶企业提供对俄市场适配、品牌重塑、渠道落地一站式服务，搭建中俄茶文化交流与商业赋能的轻资产服务平台。  
+                    "俄域茗通"是聚焦徽茶对俄出海的AI智能服务平台。以俄罗斯市场为核心场景，以行业知识库为基础，以AI智能体为前端入口、专业咨询为深度服务，融合跨文化传播与人工智能技术，帮助安徽茶企降低出海门槛，实现从产品出口向品牌与文化出海升级。  
                 </p>  
             </div>  
             <div class="mb-[18px]">  
                 <p class="text-[0.78rem] font-bold text-tea-light tracking-[2px] mb-2">▸ 我们做什么</p>  
                 <p class="text-[0.88rem] text-tea-dark opacity-80 leading-[2] tracking-[0.3px]">  
-                    我们深耕中俄茶贸市场，融合徽茶非遗底蕴与俄罗斯消费场景，以复合商业模式破解茶企出海痛点，推动徽茶商业价值与文化价值双向输出，打造地方特色文化产业国际化转型示范。  
+                    围绕茶企对俄出海全流程，打造四大AI智能体：<span class="font-bold">市场洞察与智能选品</span>解决"卖什么"，<span class="font-bold">跨文化内容生成</span>解决"怎么讲"，<span class="font-bold">俄语数字营销</span>解决"怎么触达"，<span class="font-bold">跨境客户运营</span>解决"怎么转化"。基础需求由AI快速响应，深层需求由专业团队结合AI智能体提供定制化咨询。  
                 </p>  
             </div>  
         </div>  
@@ -312,7 +311,7 @@
         <div class="team-card relative overflow-hidden  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg  
                     px-5 py-8 text-center">  
-            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-400">  
+            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-[400ms]">  
                 <svg class="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none"  
                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">  
                     <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>  
@@ -320,7 +319,7 @@
                 </svg>  
             </div>  
             <h4 class="font-serif-zh text-[1.3rem] font-bold text-tea-dark tracking-[4px] mb-3">汪女士</h4>  
-            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-400"></div>  
+            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-[400ms]"></div>  
             <p class="text-[0.75rem] text-tea-medium font-semibold tracking-[2px]">项目负责人</p>  
         </div>  
 
@@ -328,7 +327,7 @@
         <div class="team-card relative overflow-hidden  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg  
                     px-5 py-8 text-center">  
-            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-400">  
+            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-[400ms]">  
                 <svg class="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none"  
                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">  
                     <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>  
@@ -336,7 +335,7 @@
                 </svg>  
             </div>  
             <h4 class="font-serif-zh text-[1.3rem] font-bold text-tea-dark tracking-[4px] mb-3">欧阳女士</h4>  
-            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-400"></div>  
+            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-[400ms]"></div>  
             <p class="text-[0.75rem] text-tea-medium font-semibold tracking-[2px]">市场调研员</p>  
         </div>  
 
@@ -344,7 +343,7 @@
         <div class="team-card relative overflow-hidden  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg  
                     px-5 py-8 text-center">  
-            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-400">  
+            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-[400ms]">  
                 <svg class="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none"  
                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">  
                     <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>  
@@ -352,7 +351,7 @@
                 </svg>  
             </div>  
             <h4 class="font-serif-zh text-[1.3rem] font-bold text-tea-dark tracking-[4px] mb-3">肖女士</h4>  
-            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-400"></div>  
+            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-[400ms]"></div>  
             <p class="text-[0.75rem] text-tea-medium font-semibold tracking-[2px]">跨境财务专员</p>  
         </div>  
 
@@ -360,7 +359,7 @@
         <div class="team-card relative overflow-hidden  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg  
                     px-5 py-8 text-center">  
-            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-400">  
+            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-[400ms]">  
                 <svg class="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none"  
                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">  
                     <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>  
@@ -368,7 +367,7 @@
                 </svg>  
             </div>  
             <h4 class="font-serif-zh text-[1.3rem] font-bold text-tea-dark tracking-[4px] mb-3">肖先生</h4>  
-            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-400"></div>  
+            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-[400ms]"></div>  
             <p class="text-[0.75rem] text-tea-medium font-semibold tracking-[2px]">技术开发员</p>  
         </div>  
 
@@ -376,7 +375,7 @@
         <div class="team-card relative overflow-hidden  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg  
                     px-5 py-8 text-center">  
-            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-400">  
+            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-[400ms]">  
                 <svg class="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none"  
                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">  
                     <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>  
@@ -384,7 +383,7 @@
                 </svg>  
             </div>  
             <h4 class="font-serif-zh text-[1.3rem] font-bold text-tea-dark tracking-[4px] mb-3">谌先生</h4>  
-            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-400"></div>  
+            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-[400ms]"></div>  
             <p class="text-[0.75rem] text-tea-medium font-semibold tracking-[2px]">财务分析专员</p>  
         </div>  
 
@@ -392,7 +391,7 @@
         <div class="team-card relative overflow-hidden  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg  
                     px-5 py-8 text-center">  
-            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-400">  
+            <div class="tc-icon text-[rgba(196,162,101,0.3)] mb-5 transition-all duration-[400ms]">  
                 <svg class="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none"  
                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">  
                     <path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/>  
@@ -400,7 +399,7 @@
                 </svg>  
             </div>  
             <h4 class="font-serif-zh text-[1.3rem] font-bold text-tea-dark tracking-[4px] mb-3">朱女士</h4>  
-            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-400"></div>  
+            <div class="tc-divider w-6 h-px bg-[rgba(196,162,101,0.3)] mx-auto mb-3 transition-all duration-[400ms]"></div>  
             <p class="text-[0.75rem] text-tea-medium font-semibold tracking-[2px]">融资专员</p>  
         </div>  
 
@@ -531,7 +530,7 @@
     <div class="fade-in flex gap-5 justify-center flex-wrap mb-12">  
         <div class="ds-item text-center px-7 py-5  
                     bg-card-bg border border-[rgba(212,184,150,0.3)] rounded-lg min-w-[150px]">  
-            <div class="font-serif-zh text-[1.8rem] font-black text-tea-warm mb-[6px]">2024.09</div>  
+            <div class="font-serif-zh text-[1.8rem] font-black text-tea-warm mb-[6px]">2025.07</div>  
             <div class="text-[0.8rem] text-tea-medium tracking-wider">项目启动</div>  
         </div>  
         <div class="ds-item text-center px-7 py-5  
@@ -572,21 +571,21 @@
         <!-- 卷轴主体 -->  
         <div class="scroll-track  
                     bg-scroll-grad border border-border-gold rounded-[4px]  
-                    px-[80px] py-[48px]  
+                    px-[56px] py-[44px]  
                     shadow-[0_4px_24px_rgba(140,110,77,0.08),inset_0_1px_0_rgba(255,255,255,0.6)]">  
 
             <!-- 横轴中线 -->  
-            <div class="absolute top-1/2 left-[80px] right-[80px] h-px -translate-y-1/2  
+            <div class="absolute top-1/2 left-[56px] right-[56px] h-px -translate-y-1/2  
                         bg-[linear-gradient(to_right,transparent,#C4996A_8%,#C4996A_92%,transparent)]"></div>  
 
             <!-- 节点列表 -->  
             <div class="flex justify-between relative z-[2]">  
 
-                <!-- 2024.09 奇数 → 内容在上 -->  
+                <!-- 2025.07 内容在上 -->  
                 <div class="timeline-node">  
                     <div class="node-top">  
-                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2024.09</p>  
-                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[88px] text-center">项目创意<br>萌芽启动</p>  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.07</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">资料搜索<br>整合研判</p>  
                     </div>  
                     <div class="node-stamp  
                                 w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
@@ -594,12 +593,12 @@
                                 shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
                                 z-[3] cursor-default"  
                          style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
-                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2024<br>09</span>  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>07</span>  
                     </div>  
                     <div class="node-bottom"></div>  
                 </div>  
 
-                <!-- 2024.12 偶数 → 内容在下 -->  
+                <!-- 2025.08 内容在下 -->  
                 <div class="timeline-node">  
                     <div class="node-top"></div>  
                     <div class="node-stamp  
@@ -608,53 +607,19 @@
                                 shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
                                 z-[3] cursor-default"  
                          style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
-                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2024<br>12</span>  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>08</span>  
                     </div>  
                     <div class="node-bottom">  
-                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2024.12</p>  
-                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[88px] text-center">团队组建<br>完成立项</p>  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.08</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">数据爬虫<br>市场调研</p>  
                     </div>  
                 </div>  
 
-                <!-- 2025.03 奇数 → 内容在上 -->  
-                <div class="timeline-node">  
-                    <div class="node-top">  
-                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.03</p>  
-                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[88px] text-center">项目正式<br>启动运营</p>  
-                    </div>  
-                    <div class="node-stamp  
-                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
-                                border-2 border-[#C49040]  
-                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
-                                z-[3] cursor-default"  
-                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
-                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>03</span>  
-                    </div>  
-                    <div class="node-bottom"></div>  
-                </div>  
-
-                <!-- 2025.06 偶数 → 内容在下 -->  
-                <div class="timeline-node">  
-                    <div class="node-top"></div>  
-                    <div class="node-stamp  
-                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
-                                border-2 border-[#C49040]  
-                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
-                                z-[3] cursor-default"  
-                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
-                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>06</span>  
-                    </div>  
-                    <div class="node-bottom">  
-                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.06</p>  
-                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[88px] text-center">完成首批<br>市场调研</p>  
-                    </div>  
-                </div>  
-
-                <!-- 2025.09 奇数 → 内容在上 -->  
+                <!-- 2025.09 内容在上 -->  
                 <div class="timeline-node">  
                     <div class="node-top">  
                         <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.09</p>  
-                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[88px] text-center">签约两家<br>合作茶企</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">随俄旅游团<br>徽地调研</p>  
                     </div>  
                     <div class="node-stamp  
                                 w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
@@ -667,7 +632,109 @@
                     <div class="node-bottom"></div>  
                 </div>  
 
-                <!-- 2026.03 偶数 → 内容在下（高亮节点）-->  
+                <!-- 2025.11 内容在下 -->  
+                <div class="timeline-node">  
+                    <div class="node-top"></div>  
+                    <div class="node-stamp  
+                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
+                                border-2 border-[#C49040]  
+                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
+                                z-[3] cursor-default"  
+                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>11</span>  
+                    </div>  
+                    <div class="node-bottom">  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.11</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">中俄专家<br>沟通洽谈</p>  
+                    </div>  
+                </div>  
+
+                <!-- 2025.11 内容在上 -->  
+                <div class="timeline-node">  
+                    <div class="node-top">  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.11</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">新兴茶饮<br>需求调研</p>  
+                    </div>  
+                    <div class="node-stamp  
+                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
+                                border-2 border-[#C49040]  
+                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
+                                z-[3] cursor-default"  
+                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>11</span>  
+                    </div>  
+                    <div class="node-bottom"></div>  
+                </div>  
+
+                <!-- 2025.12 内容在下 -->  
+                <div class="timeline-node">  
+                    <div class="node-top"></div>  
+                    <div class="node-stamp  
+                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
+                                border-2 border-[#C49040]  
+                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
+                                z-[3] cursor-default"  
+                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2025<br>12</span>  
+                    </div>  
+                    <div class="node-bottom">  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2025.12</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">索契莫斯科<br>实地调研</p>  
+                    </div>  
+                </div>  
+
+                <!-- 2026.02 内容在上 -->  
+                <div class="timeline-node">  
+                    <div class="node-top">  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2026.02</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">项目官网<br>搭建上线</p>  
+                    </div>  
+                    <div class="node-stamp  
+                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
+                                border-2 border-[#C49040]  
+                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
+                                z-[3] cursor-default"  
+                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2026<br>02</span>  
+                    </div>  
+                    <div class="node-bottom"></div>  
+                </div>  
+
+                <!-- 2026.03 内容在下 -->  
+                <div class="timeline-node">  
+                    <div class="node-top"></div>  
+                    <div class="node-stamp  
+                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
+                                border-2 border-[#C49040]  
+                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
+                                z-[3] cursor-default"  
+                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2026<br>03</span>  
+                    </div>  
+                    <div class="node-bottom">  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2026.03</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">自媒体矩阵<br>宣传推广</p>  
+                    </div>  
+                </div>  
+
+                <!-- 2026.05 内容在上 -->  
+                <div class="timeline-node">  
+                    <div class="node-top">  
+                        <p class="text-[0.72rem] font-bold text-[#8C6E4D] font-serif-zh tracking-wider mb-1">2026.05</p>  
+                        <p class="text-[0.7rem] text-tea-dark leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">RAG智能体<br>平台搭建</p>  
+                    </div>  
+                    <div class="node-stamp  
+                                w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0  
+                                border-2 border-[#C49040]  
+                                shadow-[0_2px_10px_rgba(212,168,83,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]  
+                                z-[3] cursor-default"  
+                         style="background:radial-gradient(circle at 35% 35%,#F2E0BC,#D4A853);">  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2026<br>05</span>  
+                    </div>  
+                    <div class="node-bottom"></div>  
+                </div>  
+
+                <!-- 2026.06 内容在下 -->  
                 <div class="timeline-node">  
                     <div class="node-top"></div>  
                     <div class="node-stamp  
@@ -676,11 +743,11 @@
                                 z-[3] cursor-default"  
                          style="background:radial-gradient(circle at 35% 35%,#FFF0C8,#E8B840);  
                                 box-shadow:0 2px 14px rgba(212,168,83,0.5);">  
-                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2026<br>03</span>  
+                        <span class="text-[0.5rem] font-bold text-tea-dark font-serif-zh text-center leading-[1.2]">2026<br>06</span>  
                     </div>  
                     <div class="node-bottom">  
-                        <p class="text-[0.72rem] font-bold text-[#C49040] font-serif-zh tracking-wider mb-1">2026.03</p>  
-                        <p class="text-[0.7rem] text-tea-dark font-bold leading-[1.6] tracking-[0.5px] max-w-[88px] text-center">完成首批<br>咨询交付</p>  
+                        <p class="text-[0.72rem] font-bold text-[#C49040] font-serif-zh tracking-wider mb-1">2026.06</p>  
+                        <p class="text-[0.7rem] text-tea-dark font-bold leading-[1.6] tracking-[0.5px] max-w-[76px] text-center">地铁班列<br>视频投放</p>  
                     </div>  
                 </div>  
 

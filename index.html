@@ -361,7 +361,10 @@
         .footer-watermark .leaf-1 { width:64px;height:64px; top:24px; left:10%; transform:rotate(-20deg); }  
         .footer-watermark .leaf-2 { width:48px;height:48px; top:32px; right:12%; transform:rotate(15deg); }  
         .footer-watermark .leaf-3 { width:40px;height:40px; bottom:16px; left:30%; transform:rotate(40deg); }  
-    </style>  
+            ::-webkit-scrollbar { width: 8px; }  
+        ::-webkit-scrollbar-track { background: #FDF8F0; }  
+        ::-webkit-scrollbar-thumb { background: #D4A853; border-radius: 4px; }  
+</style>  
 </head>  
 <body class="font-serif-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed">  
 
@@ -369,11 +372,11 @@
 <nav id="navbar"  
      class="fixed top-0 left-0 right-0 z-[1000]  
             flex justify-between items-center  
-            px-[60px] py-[22px]  
+            px-[60px] py-[22px] leading-[1.5]  
             bg-[rgba(253,248,240,0.85)] backdrop-blur-xl  
             border-b border-[rgba(196,162,101,0.15)]  
-            transition-all duration-400">  
-    <div class="flex items-center gap-3 text-[1.6rem] font-bold text-tea-dark tracking-[3px]">  
+            transition-all duration-[400ms]">  
+    <div class="flex items-center gap-3 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">  
         <img src="images/logo.jpg" alt="俄域茗通Logo"  
              class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">  
         <span>俄域茗通</span>  
@@ -411,24 +414,24 @@
                         my-5 opacity-0 animate-[fadeUp_1s_0.6s_ease_forwards]"></div>  
             <p class="text-[1.05rem] text-tea-medium leading-[1.8] tracking-wider  
                        opacity-0 animate-[fadeUp_1s_0.7s_ease_forwards]">  
-                依托一带一路与RCEP战略红利<br>  
-                以文化转译为核心，B2B企业服务为主体，兼顾B2C细分需求<br>  
-                赋能安徽非遗茶品牌高质量出海俄罗斯  
+                立足安徽茶产业国际化转型需求<br>
+                以AI智能体为前端入口，以专业咨询为深度服务<br>
+                赋能徽茶由<span class="font-semibold">产品输出</span>迈向<span class="font-semibold">品牌输出</span>与<span class="font-semibold">文化输出</span>
             </p>  
-            <div class="grid grid-cols-2 gap-x-2 gap-y-3 mt-[30px] w-fit  
+            <div class="grid grid-cols-[max-content_max-content] gap-x-1 gap-y-3 mt-[30px] w-fit  
                         opacity-0 animate-[fadeUp_1s_0.9s_ease_forwards]">  
                 <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
                             text-[0.8rem] text-tea-dark tracking-wider w-fit  
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">文化适配咨询</span>  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">市场数据采集</span>  
                 <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
                             text-[0.8rem] text-tea-dark tracking-wider w-fit  
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">产品与IP设计</span>  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">AI分析与内容生成</span>  
                 <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
                             text-[0.8rem] text-tea-dark tracking-wider w-fit  
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">快速市场测试</span>  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">产品品牌塑造</span>  
                 <span class="inline-flex items-center px-2.5 py-1 border border-[rgba(196,162,101,0.3)] rounded-full  
                             text-[0.8rem] text-tea-dark tracking-wider w-fit  
-                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">O2O沉浸体验</span>  
+                            bg-[rgba(253,248,240,0.8)] shadow-[0_4px_12px_rgba(92,58,33,0.05)]">线上线下市场验证</span>  
             </div>  
         </div>  
 
@@ -565,32 +568,69 @@
     <div class="text-center mb-[60px] scroll-reveal">  
         <h2 class="text-[2.2rem] text-tea-dark tracking-[3px] font-black">创新出海服务体系</h2>  
         <p class="text-[1rem] text-tea-light mt-[10px] tracking-[2px]">  
-            构建从市场诊断、品牌服务设计到快速市场测试的全链条咨询体系  
+            构建从市场数据采集、AI分析到品牌塑造与市场验证的全链条智能服务体系  
         </p>  
     </div>  
-    <div class="grid grid-cols-3 gap-[40px] max-w-[1200px] mx-auto">  
-        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl  
+    <div class="grid grid-cols-4 gap-[24px] max-w-[1200px] mx-auto">  
+        <div class="feature-card bg-tea-bg p-[40px_26px] rounded-xl  
                     border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
-            <div class="text-[2.5rem] mb-5 inline-block">📊</div>  
-            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">文化适配咨询与品牌重塑</h3>  
+            <div class="w-[52px] h-[52px] rounded-full bg-[rgba(212,168,83,0.08)] mx-auto mb-5 flex items-center justify-center">
+                <svg class="w-[30px] h-[30px] text-tea-warm" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="10.5" cy="10.5" r="7.5"/>
+                    <path d="M15.8 15.8L21 21"/>
+                    <path d="M7.8 13v-1.6M10.5 13V8.2M13.2 13v-3.4"/>
+                </svg>
+            </div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">市场数据采集</h3>  
             <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
-                深度解码俄罗斯茶叶消费偏好与文化语境，系统梳理竞争格局与市场进入障碍，提供品牌定位、俄语命名与核心叙事重构，帮助安徽茶企建立前置决策依据，降低出海试错成本。  
+                围绕俄罗斯茶叶市场规模、茶类结构与竞争格局开展系统调研，结合电商评论、社媒热词与消费者访谈，采集口感偏好、礼赠需求与包装审美等一手数据，沉淀为中俄茶产业语料库与消费者洞察数据库。  
             </p>  
         </div>  
-        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl  
+        <div class="feature-card bg-tea-bg p-[40px_26px] rounded-xl  
                     border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
-            <div class="text-[2.5rem] mb-5 inline-block">🎨</div>  
-            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">创新产品与文创IP设计</h3>  
+            <div class="w-[52px] h-[52px] rounded-full bg-[rgba(212,168,83,0.08)] mx-auto mb-5 flex items-center justify-center">
+                <svg class="w-[30px] h-[30px] text-tea-warm" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2.6"/>
+                    <circle cx="12" cy="4.2" r="1.5"/>
+                    <circle cx="4.6" cy="17.4" r="1.5"/>
+                    <circle cx="19.4" cy="17.4" r="1.5"/>
+                    <path d="M12 5.7v3.7M9.9 13.5L5.8 16.5M14.1 13.5L18.2 16.5"/>
+                </svg>
+            </div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">AI分析与内容生成</h3>  
             <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
-                打造"徽茶小玛（Хуйша Маруся）"中俄融合IP，推出"茶炊微香"茶包、"旋舞茶翼"耳挂茶包及"红金茶笺"茶谱，将安徽非遗制茶工艺转化为契合俄罗斯生活场景的文创符号。  
+                以大语言模型为底层能力，融合RAG知识增强、多源异构数据分析与多智能体协同，构建跨文化内容生成、市场洞察与智能选品、俄语数字营销、跨境客户运营四类AI智能体，贯通从数据采集到用户运营的全流程。  
             </p>  
         </div>  
-        <div class="feature-card bg-tea-bg p-[40px_30px] rounded-xl  
+        <div class="feature-card bg-tea-bg p-[40px_26px] rounded-xl  
                     border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
-            <div class="text-[2.5rem] mb-5 inline-block">🌐</div>  
-            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">O2O 沉浸式跨文化营销</h3>  
+            <div class="w-[52px] h-[52px] rounded-full bg-[rgba(212,168,83,0.08)] mx-auto mb-5 flex items-center justify-center">
+                <svg class="w-[30px] h-[30px] text-tea-warm" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="8.6"/>
+                    <path d="M12 5.2c4.3 3.4 4.3 10.4 0 13.6-4.3-3.2-4.3-10.2 0-13.6z"/>
+                    <path d="M12 7.6v9.4"/>
+                </svg>
+            </div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">产品品牌塑造</h3>  
             <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
-                依托"徽茶为芯·中俄茶文化传播"中俄双语小程序与VK社交平台矩阵，提供个性化茶谱定制与沉浸式文化学习体验，联动俄罗斯孔子学院等本土机构开展茶文化快闪，实现从数字内容认知到线下商业变现的双向引流。  
+                基于市场证据与文化语境确定品牌定位、核心客群与价格带，完成俄语品牌命名与初步商标检索，设计视觉识别系统与应用规范，构建俄罗斯消费者可理解、可记忆的品牌叙事体系。  
+            </p>  
+        </div>  
+        <div class="feature-card bg-tea-bg p-[40px_26px] rounded-xl  
+                    border border-[rgba(196,162,101,0.15)] text-center scroll-reveal">  
+            <div class="w-[52px] h-[52px] rounded-full bg-[rgba(212,168,83,0.08)] mx-auto mb-5 flex items-center justify-center">
+                <svg class="w-[30px] h-[30px] text-tea-warm" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8.5 20V4.8M5.9 7.4L8.5 4.8L11.1 7.4"/>
+                    <path d="M15.5 4v15.2M12.9 16.6L15.5 19.2L18.1 16.6"/>
+                </svg>
+            </div>  
+            <h3 class="text-[1.25rem] font-bold text-tea-dark mb-3 tracking-wider">线上线下市场验证</h3>  
+            <p class="text-[0.9rem] text-tea-medium leading-[1.7]">  
+                通过概念偏好测试与广告反应测试前置验证市场反馈，以小规模渠道测试识别最优进入路径；依托中俄双语小程序与VK社交矩阵联动俄罗斯本土机构，打通数字内容认知到线下商业变现的双向引流。  
             </p>  
         </div>  
     </div>  
@@ -1000,7 +1040,7 @@
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             nav.style.boxShadow = '0 4px 30px rgba(92,58,33,0.08)';
-            nav.style.padding = '14px 60px';
+            nav.style.padding = '16px 60px';
             nav.style.background = 'rgba(253,248,240,0.95)';
         } else {
             nav.style.boxShadow = 'none';

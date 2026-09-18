@@ -30,6 +30,15 @@
         }
     </script>
     <style>
+        /* ── 全站配色与字体变量 ── */
+        :root {
+            --tea-dark:      #5C3A21;
+            --tea-medium:    #8B6914;
+            --tea-warm:      #D4A853;
+            --tea-bg:        #FDF8F0;
+            --font-serif-zh: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+        }
+
         /* 保留必要的伪元素和复杂样式 */
         body::before, body::after {
             content: '';
@@ -126,6 +135,13 @@
         .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+        /* ── 导航栏滚动收缩（桌面端） ── */
+        .navbar.scrolled {
+            padding: 16px 60px;
+            background: rgba(253,248,240,.95);
+            box-shadow: 0 4px 30px rgba(92,58,33,.08);
+        }
+
         /* 响应式调整 */
         @media (max-width: 860px) {
             .main-wrap { flex-direction: column; gap: 40px; padding: 50px 24px 60px; }
@@ -141,9 +157,9 @@
 <body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed relative">
 
 <!-- 导航栏 -->
-<nav class="navbar fixed top-0 left-0 right-0 z-[1000] flex justify-between items-center py-[22px] px-[60px] bg-[rgba(248,244,233,.88)] backdrop-blur-xl border-b border-[rgba(196,162,101,.15)] transition-all duration-400">
+<nav class="navbar fixed top-0 left-0 right-0 z-[1000] flex justify-between items-center py-[22px] px-[60px] leading-[1.5] bg-[rgba(253,248,240,0.85)] backdrop-blur-xl border-b border-[rgba(196,162,101,.15)] transition-all duration-[400ms]">
     <div class="nav-logo flex items-center gap-3 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
-        <img src="images/logo.jpg" alt="俄域茗通Logo" class="h-[42px] w-auto rounded-md mix-blend-multiply">
+        <img src="images/logo.jpg" alt="俄域茗通Logo" class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
         <span>俄域茗通</span>
     </div>
     <ul class="flex gap-[42px] list-none">
@@ -361,7 +377,7 @@
                                 <path d="M4 24h8v-6h4v-4h4V8" stroke="#D4B896" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2,2"/>
                             </svg>
                         </span>
-                        <button type="submit" class="submit-btn inline-block py-[13px] px-[52px] bg-btn-brown text-white border-none rounded-lg font-serif-zh text-[1rem] font-bold tracking-[3px] cursor-pointer transition-all duration-250 shadow-[0_4px_18px_rgba(140,110,77,.18)] hover:bg-[#7A5D3B] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(140,110,77,.25)] active:translate-y-0">提 交 咨 询</button>
+                        <button type="submit" class="submit-btn inline-block py-[13px] px-[52px] bg-btn-brown text-white border-none rounded-lg font-serif-zh text-[1rem] font-bold tracking-[3px] cursor-pointer transition-all duration-300 shadow-[0_4px_18px_rgba(140,110,77,.18)] hover:bg-[#7A5D3B] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(140,110,77,.25)] active:translate-y-0">提 交 咨 询</button>
                         <span class="ruiwen w-[28px] h-[28px] opacity-[.35] flex-shrink-0 scale-x-[-1]">
                             <svg viewBox="0 0 28 28" fill="none" class="w-full h-full">
                                 <path d="M4 24V14h6v-4h4V6h10" stroke="#D4B896" stroke-width="1.2" stroke-linecap="round"/>
