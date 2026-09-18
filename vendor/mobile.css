@@ -39,6 +39,7 @@
         background: none;
         border: none;
         cursor: pointer;
+        position: relative;      /* z-index 对 static 元素无效，必须定位 */
         z-index: 1002;
         -webkit-tap-highlight-color: transparent;
     }
@@ -60,8 +61,10 @@
         position: fixed !important;
         top: 0;
         right: 0;
-        bottom: 0;
+        bottom: auto;
         left: auto;
+        height: 100vh;
+        height: 100dvh;
         width: 70%;
         max-width: 290px;
         flex-direction: column !important;
@@ -107,7 +110,7 @@
         opacity: 0;
         pointer-events: none;
         transition: opacity .3s ease;
-        z-index: 1000;
+        z-index: 999;   /* 必须低于 nav 的 1000，否则会盖住导航栏与抽屉 */
     }
     .nav-mask.open { opacity: 1; pointer-events: auto; }
 
