@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能体 - 俄域茗通 | 四大 AI 智能体・出海全流程赋能</title>
+
+    <script src="vendor/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tea-dark':    '#5C3A21',
+                        'tea-medium':  '#8B6914',
+                        'tea-light':   '#C4A265',
+                        'tea-cream':   '#F5E6C8',
+                        'tea-warm':    '#D4A853',
+                        'tea-bg':      '#FDF8F0',
+                        'gold':        '#C9A96E',
+                        'card-bg':     '#F8F4E9',
+                        'border-gold': '#D4B896',
+                    },
+                    fontFamily: {
+                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],
+                        'sans-zh':  ['"PingFang SC"', '"Microsoft YaHei"', '"Helvetica Neue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="vendor/mobile.css">
+<style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDF8F0; }
+        ::-webkit-scrollbar-thumb { background: #D4A853; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C4A265; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif, "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            background-image: url('images/about_bg_warm.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #FDF8F0;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(253,248,240,0.72);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── 导航下划线 ── */
+        .nav-link-item { position: relative; padding-bottom: 4px; }
+        .nav-link-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: #D4A853;
+            transition: width 0.3s;
+        }
+        .nav-link-item:hover::after,
+        .nav-link-item.active::after { width: 100%; }
+        .nav-link-item:hover,
+        .nav-link-item.active { color: #D4A853; }
+
+        /* ── 滚动淡入 ── */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── 叶片纹理 ── */
+        .hero-pattern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M200 40c0 0-80 65-80 130c0 44.2 35.8 80 80 80s80-35.8 80-80c0-65-80-130-80-130z' fill='none' stroke='%235C3A21' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E") repeat;
+            opacity: .5;
+        }
+
+        /* ── 模块标题尾线 ── */
+        .mh-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #D4B896, transparent);
+            max-width: 300px;
+        }
+
+        .text-grad {
+            background: linear-gradient(135deg, #D4A853, #C9A96E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── 智能体卡片 ── */
+        .svc-card { transition: all .4s ease; }
+        .svc-card::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; right: -10px;
+            width: 120px; height: 120px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z' fill='%235C3A21'/%3E%3C/svg%3E") no-repeat;
+            opacity: .08;
+            pointer-events: none;
+        }
+        .svc-card:hover {
+            box-shadow: 0 12px 40px rgba(92,58,33,0.10);
+            border-color: #D4A853;
+            transform: translateY(-3px);
+            background: rgba(253,248,240,0.94);
+        }
+
+        .svc-list li { position: relative; padding-left: 20px; }
+        .svc-list li::before {
+            content: '◇';
+            position: absolute;
+            left: 0; top: 0;
+            color: #D4A853;
+            font-size: 0.7rem;
+        }
+
+        /* ── 核心技术标签 ── */
+        .tech-tag {
+            display: inline-block;
+            padding: 2px 11px;
+            background: rgba(212,168,83,0.09);
+            border: 1px solid rgba(212,168,83,0.22);
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            color: #8B6914;
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+        }
+        .scene-tag {
+            display: inline-block;
+            padding: 2px 11px;
+            background: rgba(92,58,33,0.05);
+            border: 1px solid rgba(196,162,101,0.2);
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            color: #5C3A21;
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+        }
+        .row-label {
+            width: 70px;
+            flex-shrink: 0;
+            font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #5C3A21;
+            letter-spacing: 2px;
+            padding-top: 4px;
+        }
+
+        /* ── 进入使用按钮 ── */
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 28px;
+            background: #D4A853;
+            color: #FDF8F0;
+            border-radius: 9999px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all .4s ease;
+        }
+        .enter-btn:hover {
+            background: #C49040;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(212,168,83,0.35);
+        }
+        .enter-btn .arw { transition: transform .4s ease; }
+        .enter-btn:hover .arw { transform: translateX(4px); }
+        .footer-watermark { position: absolute; inset: 0; opacity: .04; pointer-events: none; }
+        .footer-watermark svg { position: absolute; fill: #5C3A21; }
+        .footer-watermark .leaf-1 { width: 64px; height: 64px; top: 24px; left: 10%; transform: rotate(-20deg); }
+        .footer-watermark .leaf-2 { width: 48px; height: 48px; top: 32px; right: 12%; transform: rotate(15deg); }
+        .footer-watermark .leaf-3 { width: 40px; height: 40px; bottom: 16px; left: 30%; transform: rotate(40deg); }
+
+        /* ── 窄屏 / 投影仪兜底 ── */
+        @media (max-width: 1240px) {
+            nav { padding-left: 34px !important; padding-right: 34px !important; }
+            nav ul { gap: 24px !important; }
+            nav ul a { font-size: 0.98rem !important; letter-spacing: 0.02em !important; }
+            nav > div { font-size: 1.35rem !important; letter-spacing: 2px !important; }
+            nav img { height: 36px !important; }
+        }
+        @media (max-width: 1060px) {
+            nav ul { gap: 15px !important; }
+            nav ul a { font-size: 0.88rem !important; letter-spacing: 0 !important; }
+            nav > div { font-size: 1.2rem !important; letter-spacing: 1.5px !important; }
+            nav img { height: 32px !important; }
+        }
+
+    
+        /* ===== 手机端（<=768px）适配 ===== */
+        @media (max-width: 768px) {
+            /* 卡片头部：图标标题行与右侧标签行改纵向 */
+            .svc-card > .flex.items-stretch { flex-direction: column !important; }
+            .svc-card > .flex.items-stretch > div:first-child {
+                min-width: 0 !important;
+                border-right: none !important;
+                border-bottom: 1px solid rgba(212,184,150,.3);
+            }
+            .svc-card > .flex.items-stretch > div:last-child {
+                flex-wrap: wrap;
+                justify-content: flex-start !important;
+                gap: 10px !important;
+                padding: 14px 20px !important;
+            }
+            .svc-card > .flex.items-stretch + div { padding: 22px 20px !important; }
+            .svc-list li { font-size: .84rem !important; }
+        }
+    </style>
+</head>
+<body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-[1.8] relative">
+
+<!-- ========== 导航栏 ========== -->
+<nav id="navbar"
+     class="fixed top-0 left-0 right-0 z-[1000]
+            flex justify-between items-center
+            px-[60px] py-[22px] leading-[1.5]
+            bg-[rgba(253,248,240,0.85)] backdrop-blur-xl
+            border-b border-[rgba(196,162,101,0.15)]
+            transition-all duration-[400ms]">
+    <div class="flex items-center gap-3 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
+        <img src="images/logo.jpg" alt="俄域茗通Logo"
+             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
+        <span>俄域茗通</span>
+    </div>
+    <ul id="navMenu" class="flex gap-[42px] list-none">
+        <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
+        <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
+        <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
+        <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>
+        <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="agents.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">智能体</a></li>
+        <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
+    </ul>
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div id="navMask" class="nav-mask"></div>
+
+<!-- ========== 顶部主 KV ========== -->
+<section class="hero-pattern pt-[140px] pb-[80px] px-[60px] text-center relative overflow-hidden bg-[linear-gradient(180deg,#FDF8F0_0%,#F5EBD8_100%)]">
+    <div class="relative z-[2] max-w-[900px] mx-auto">
+        <h1 class="font-serif-zh text-[2.2rem] font-black tracking-[4px] text-tea-dark mb-5">
+            四大 AI 智能体
+        </h1>
+        <div class="flex items-center justify-center gap-3 mb-6">
+            <div class="w-12 h-px bg-[rgba(212,168,83,0.45)]"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.55)]"></div>
+            <div class="w-12 h-px bg-[rgba(212,168,83,0.45)]"></div>
+        </div>
+        <p class="text-[1rem] text-tea-medium tracking-[2px] mb-7">
+            以 AI 智能体为前端入口，以专业咨询为深度服务
+        </p>
+        <p class="text-[0.9rem] text-tea-dark opacity-80 leading-[2] tracking-[0.5px] max-w-[760px] mx-auto">
+            围绕茶企对俄出海全流程，把「卖什么、怎么讲、怎么触达、怎么转化」四件事拆成四个可随时调用的 AI 智能体，
+            以大语言模型为底层能力，融合 RAG 知识增强与多源异构数据分析，贯通从数据采集到用户运营的全流程。
+            基础需求由 AI 快速响应，深层需求由专业团队结合 AI 智能体提供定制化咨询。
+        </p>
+    </div>
+</section>
+
+<!-- ========== 四大智能体 ========== -->
+<section class="relative z-[1] max-w-[1000px] mx-auto px-[60px] pt-[60px] pb-[40px]">
+
+    <!-- ── 智能体 一：跨文化内容生成 ── -->
+    <div class="svc-card fade-in relative overflow-hidden bg-[rgba(248,244,233,0.82)] backdrop-blur-[12px] border border-[rgba(212,184,150,0.38)] rounded-lg mb-9">
+        <div class="flex items-stretch">
+            <div class="flex items-center gap-[14px] bg-[linear-gradient(135deg,rgba(212,184,150,0.45),rgba(212,184,150,0.22))] px-6 py-[18px] min-w-[240px] border-r border-[rgba(212,184,150,0.3)]">
+                <div class="w-9 h-9 flex-shrink-0">
+                    <svg viewBox="0 0 36 36" fill="none"
+                         stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+                         class="w-full h-full">
+                        <path d="M9 5 L21 5 L27 11 L27 31 L9 31 Z"/>
+                        <path d="M21 5 L21 11 L27 11"/>
+                        <line x1="13" y1="17" x2="23" y2="17"/>
+                        <line x1="13" y1="22" x2="23" y2="22"/>
+                        <line x1="13" y1="27" x2="19" y2="27"/>
+                    </svg>
+                </div>
+                <span class="font-serif-zh text-[1.15rem] font-bold text-tea-dark tracking-[2px] leading-[1.4]">跨文化内容生成</span>
+            </div>
+            <div class="flex-1 flex items-center justify-end gap-5 px-7 py-[18px]">
+                <span class="inline-block px-[14px] py-1 bg-[rgba(212,168,83,0.12)] border border-[rgba(212,168,83,0.3)] rounded-full text-[0.75rem] text-tea-warm tracking-wider font-semibold">解决「怎么讲」</span>
+                <span class="font-serif-zh text-[1.05rem] font-bold text-tea-warm tracking-wider">AI 跨文化内容生成引擎</span>
+            </div>
+        </div>
+        <div class="px-8 pt-7 pb-8 relative z-[1]">
+            <div class="bg-[rgba(212,168,83,0.07)] border-l-[3px] border-tea-warm px-5 py-[14px] mb-[22px] rounded-r-[6px]">
+                <p class="text-[0.75rem] text-tea-light tracking-[2px] mb-[6px] font-semibold">核心解决</p>
+                <p class="text-[0.9rem] text-tea-dark leading-[1.8] tracking-[0.5px]">对俄内容生产慢、翻译腔重、文化语境错位，品牌表达落不了地</p>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">核心技术</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="tech-tag">大语言模型 RAG</span>
+                    <span class="tech-tag">多模态生成</span>
+                    <span class="tech-tag">术语库</span>
+                    <span class="tech-tag">文化规则库</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">应用场景</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="scene-tag">徽茶品牌命名</span>
+                    <span class="scene-tag">产品标语</span>
+                    <span class="scene-tag">电商详情页文案</span>
+                    <span class="scene-tag">社媒运营内容</span>
+                    <span class="scene-tag">产品推广话术</span>
+                    <span class="scene-tag">视频脚本</span>
+                    <span class="scene-tag">敏感表达检查</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-7">
+                <span class="row-label">商业价值</span>
+                <p class="flex-1 text-[0.88rem] text-tea-dark opacity-85 leading-[1.9] tracking-[0.5px]">
+                    降低本地化内容生产成本，减少「直译式传播」与文化误读
+                </p>
+            </div>
+            <div class="flex justify-end">
+                <a href="agent-content.html" class="enter-btn">进入使用 <span class="arw">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── 智能体 二：市场洞察与智能选品 ── -->
+    <div class="svc-card fade-in relative overflow-hidden bg-[rgba(248,244,233,0.82)] backdrop-blur-[12px] border border-[rgba(212,184,150,0.38)] rounded-lg mb-9">
+        <div class="flex items-stretch">
+            <div class="flex items-center gap-[14px] bg-[linear-gradient(135deg,rgba(212,184,150,0.45),rgba(212,184,150,0.22))] px-6 py-[18px] min-w-[240px] border-r border-[rgba(212,184,150,0.3)]">
+                <div class="w-9 h-9 flex-shrink-0">
+                    <svg viewBox="0 0 36 36" fill="none"
+                         stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+                         class="w-full h-full">
+                        <path d="M7 5 L7 29 L31 29"/>
+                        <rect x="11" y="19" width="4.5" height="10"/>
+                        <rect x="18" y="13" width="4.5" height="16"/>
+                        <rect x="25" y="8" width="4.5" height="21"/>
+                    </svg>
+                </div>
+                <span class="font-serif-zh text-[1.15rem] font-bold text-tea-dark tracking-[2px] leading-[1.4]">市场洞察与智能选品</span>
+            </div>
+            <div class="flex-1 flex items-center justify-end gap-5 px-7 py-[18px]">
+                <span class="inline-block px-[14px] py-1 bg-[rgba(212,168,83,0.12)] border border-[rgba(212,168,83,0.3)] rounded-full text-[0.75rem] text-tea-warm tracking-wider font-semibold">解决「卖什么」</span>
+                <span class="font-serif-zh text-[1.05rem] font-bold text-tea-warm tracking-wider">AI 市场需求预测与选品助手</span>
+            </div>
+        </div>
+        <div class="px-8 pt-7 pb-8 relative z-[1]">
+            <div class="bg-[rgba(212,168,83,0.07)] border-l-[3px] border-tea-warm px-5 py-[14px] mb-[22px] rounded-r-[6px]">
+                <p class="text-[0.75rem] text-tea-light tracking-[2px] mb-[6px] font-semibold">核心解决</p>
+                <p class="text-[0.9rem] text-tea-dark leading-[1.8] tracking-[0.5px]">选品靠经验判断、试错成本高、库存积压风险大</p>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">核心技术</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="tech-tag">NLP</span>
+                    <span class="tech-tag">时间序列预测</span>
+                    <span class="tech-tag">用户聚类</span>
+                    <span class="tech-tag">多指标推荐</span>
+                    <span class="tech-tag">情感分析</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">应用场景</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="scene-tag">判断茶类适配度</span>
+                    <span class="scene-tag">口味偏好分析</span>
+                    <span class="scene-tag">规格与价格带匹配</span>
+                    <span class="scene-tag">区域人群差异</span>
+                    <span class="scene-tag">选品优先级排序</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-7">
+                <span class="row-label">商业价值</span>
+                <p class="flex-1 text-[0.88rem] text-tea-dark opacity-85 leading-[1.9] tracking-[0.5px]">
+                    降低选品试错与库存风险，提高产品与市场的匹配度
+                </p>
+            </div>
+            <div class="flex justify-end">
+                <a href="agent-insight.html" class="enter-btn">进入使用 <span class="arw">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── 智能体 三：俄语数字营销 ── -->
+    <div class="svc-card fade-in relative overflow-hidden bg-[rgba(248,244,233,0.82)] backdrop-blur-[12px] border border-[rgba(212,184,150,0.38)] rounded-lg mb-9">
+        <div class="flex items-stretch">
+            <div class="flex items-center gap-[14px] bg-[linear-gradient(135deg,rgba(212,184,150,0.45),rgba(212,184,150,0.22))] px-6 py-[18px] min-w-[240px] border-r border-[rgba(212,184,150,0.3)]">
+                <div class="w-9 h-9 flex-shrink-0">
+                    <svg viewBox="0 0 36 36" fill="none"
+                         stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+                         class="w-full h-full">
+                        <rect x="15" y="5" width="6" height="13" rx="3"/>
+                        <path d="M10.5 15 A7.5 7.5 0 0 1 25.5 15"/>
+                        <line x1="18" y1="22.5" x2="18" y2="29"/>
+                        <line x1="13" y1="29" x2="23" y2="29"/>
+                    </svg>
+                </div>
+                <span class="font-serif-zh text-[1.15rem] font-bold text-tea-dark tracking-[2px] leading-[1.4]">俄语数字营销</span>
+            </div>
+            <div class="flex-1 flex items-center justify-end gap-5 px-7 py-[18px]">
+                <span class="inline-block px-[14px] py-1 bg-[rgba(212,168,83,0.12)] border border-[rgba(212,168,83,0.3)] rounded-full text-[0.75rem] text-tea-warm tracking-wider font-semibold">解决「怎么触达」</span>
+                <span class="font-serif-zh text-[1.05rem] font-bold text-tea-warm tracking-wider">AI 数字人俄语数字营销与直播辅助系统</span>
+            </div>
+        </div>
+        <div class="px-8 pt-7 pb-8 relative z-[1]">
+            <div class="bg-[rgba(212,168,83,0.07)] border-l-[3px] border-tea-warm px-5 py-[14px] mb-[22px] rounded-r-[6px]">
+                <p class="text-[0.75rem] text-tea-light tracking-[2px] mb-[6px] font-semibold">核心解决</p>
+                <p class="text-[0.9rem] text-tea-dark leading-[1.8] tracking-[0.5px]">俄语主播难招难养、直播时段受限、内容产能跟不上投放节奏</p>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">核心技术</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="tech-tag">TTS / ASR</span>
+                    <span class="tech-tag">LLM 知识库问答</span>
+                    <span class="tech-tag">多模态交互</span>
+                    <span class="tech-tag">数字人</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">应用场景</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="scene-tag">短视频</span>
+                    <span class="scene-tag">直播讲解</span>
+                    <span class="scene-tag">实时商品问答</span>
+                    <span class="scene-tag">意向客户收集</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-7">
+                <span class="row-label">商业价值</span>
+                <p class="flex-1 text-[0.88rem] text-tea-dark opacity-85 leading-[1.9] tracking-[0.5px]">
+                    延长内容生产与直播服务时长，降低俄语主播与培训成本
+                </p>
+            </div>
+            <div class="flex justify-end">
+                <a href="agent-live.html" class="enter-btn">进入使用 <span class="arw">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── 智能体 四：跨境客户运营 ── -->
+    <div class="svc-card fade-in relative overflow-hidden bg-[rgba(248,244,233,0.82)] backdrop-blur-[12px] border border-[rgba(212,184,150,0.38)] rounded-lg mb-2">
+        <div class="flex items-stretch">
+            <div class="flex items-center gap-[14px] bg-[linear-gradient(135deg,rgba(212,184,150,0.45),rgba(212,184,150,0.22))] px-6 py-[18px] min-w-[240px] border-r border-[rgba(212,184,150,0.3)]">
+                <div class="w-9 h-9 flex-shrink-0">
+                    <svg viewBox="0 0 36 36" fill="none"
+                         stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+                         class="w-full h-full">
+                        <rect x="5" y="6" width="15" height="11" rx="2"/>
+                        <path d="M8 17 L8 21 L12 17"/>
+                        <rect x="16" y="16" width="15" height="11" rx="2"/>
+                        <path d="M27 27 L27 31 L23 27"/>
+                    </svg>
+                </div>
+                <span class="font-serif-zh text-[1.15rem] font-bold text-tea-dark tracking-[2px] leading-[1.4]">跨境客户运营</span>
+            </div>
+            <div class="flex-1 flex items-center justify-end gap-5 px-7 py-[18px]">
+                <span class="inline-block px-[14px] py-1 bg-[rgba(212,168,83,0.12)] border border-[rgba(212,168,83,0.3)] rounded-full text-[0.75rem] text-tea-warm tracking-wider font-semibold">解决「怎么转化」</span>
+                <span class="font-serif-zh text-[1.05rem] font-bold text-tea-warm tracking-wider">AI 智能客服与私域运营工具</span>
+            </div>
+        </div>
+        <div class="px-8 pt-7 pb-8 relative z-[1]">
+            <div class="bg-[rgba(212,168,83,0.07)] border-l-[3px] border-tea-warm px-5 py-[14px] mb-[22px] rounded-r-[6px]">
+                <p class="text-[0.75rem] text-tea-light tracking-[2px] mb-[6px] font-semibold">核心解决</p>
+                <p class="text-[0.9rem] text-tea-dark leading-[1.8] tracking-[0.5px]">跨时区响应慢、咨询流失率高、复购缺乏抓手</p>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">核心技术</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="tech-tag">RAG</span>
+                    <span class="tech-tag">客户画像</span>
+                    <span class="tech-tag">意图识别</span>
+                    <span class="tech-tag">CRM 工作流</span>
+                    <span class="tech-tag">人工转接</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-[14px]">
+                <span class="row-label">应用场景</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <span class="scene-tag">售前咨询</span>
+                    <span class="scene-tag">冲泡指导</span>
+                    <span class="scene-tag">订单跟进</span>
+                    <span class="scene-tag">客户分层</span>
+                    <span class="scene-tag">复购提醒</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start mb-7">
+                <span class="row-label">商业价值</span>
+                <p class="flex-1 text-[0.88rem] text-tea-dark opacity-85 leading-[1.9] tracking-[0.5px]">
+                    提高响应效率与线索转化率，沉淀可复用的消费者资产
+                </p>
+            </div>
+            <div class="flex justify-end">
+                <a href="agent-service.html" class="enter-btn">进入使用 <span class="arw">→</span></a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ========== 分隔线 ========== -->
+<div class="relative z-[1] flex items-center justify-center gap-4 py-[55px] max-w-[600px] mx-auto">
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>
+    <div class="flex gap-[6px]">
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>
+        <span class="w-[6px] h-[6px] border border-border-gold rotate-45 opacity-40 block"></span>
+    </div>
+    <div class="flex-1 max-w-[200px] h-px bg-border-gold opacity-30"></div>
+</div>
+
+<!-- ========== 订阅引导 ========== -->
+<section class="relative z-[1] max-w-[1000px] mx-auto px-[60px] pb-[90px]">
+    <div class="fade-in text-center">
+        <div class="flex items-center gap-4 mb-8 max-w-[520px] mx-auto">
+            <h2 class="font-serif-zh text-[1.6rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">如何开始使用</h2>
+            <div class="mh-line"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-6 mb-10">
+            <div class="fade-in bg-[rgba(248,244,233,0.82)] backdrop-blur-[10px] border border-[rgba(212,184,150,0.35)] rounded-lg px-6 py-7 text-center">
+                <div class="font-serif-zh text-[1.05rem] font-bold text-tea-dark tracking-[2px] mb-3">Free 免费版</div>
+                <p class="text-[0.83rem] text-tea-dark opacity-80 leading-[1.8] tracking-[0.5px]">
+                    智能体基础问答，获取选品方向与创意初步建议
+                </p>
+            </div>
+            <div class="fade-in bg-[rgba(248,244,233,0.82)] backdrop-blur-[10px] border border-[rgba(212,184,150,0.35)] rounded-lg px-6 py-7 text-center">
+                <div class="font-serif-zh text-[1.05rem] font-bold text-tea-dark tracking-[2px] mb-3">Plus Lite 轻量版</div>
+                <p class="text-[0.83rem] text-tea-dark opacity-80 leading-[1.8] tracking-[0.5px]">
+                    跨文化内容生成智能体，俄语命名、卖点文案与包装创意
+                </p>
+            </div>
+            <div class="fade-in bg-[rgba(248,244,233,0.82)] backdrop-blur-[10px] border border-[rgba(212,184,150,0.35)] rounded-lg px-6 py-7 text-center">
+                <div class="font-serif-zh text-[1.05rem] font-bold text-tea-dark tracking-[2px] mb-3">Plus Pro 标准版</div>
+                <p class="text-[0.83rem] text-tea-dark opacity-80 leading-[1.8] tracking-[0.5px]">
+                    四大智能体全量开放，含选品清单、推广策略与转化跟进
+                </p>
+            </div>
+        </div>
+        <a href="products.html" class="enter-btn">查看完整订阅方案 <span class="arw">→</span></a>
+    </div>
+</section>
+
+<!-- ========== 页脚分隔线 ========== -->
+<div class="relative z-[1] max-w-[900px] mx-auto px-[40px]">
+    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>
+    <div class="h-0.5"></div>
+    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>
+</div>
+
+<!-- ========== 页脚 ========== -->
+<footer class="relative z-[1] overflow-hidden">
+    <div class="relative px-[40px] pt-[56px] pb-[40px] text-center bg-[linear-gradient(to_bottom,rgba(242,232,214,0.97),rgba(239,226,204,0.98))] backdrop-blur-[8px]">
+        <div class="footer-watermark">
+            <svg class="leaf-1" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-2" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-3" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+        </div>
+        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2">俄域茗通</h3>
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.5)]"></div>
+            <div class="footer-links w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+        </div>
+        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">
+            跨文化传播视域下文化转译服务的设计与运营
+        </p>
+        <nav class="flex justify-center gap-8 flex-wrap">
+            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>
+            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>
+            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
+            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
+            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="agents.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">智能体</a>
+            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
+        </nav>
+    </div>
+    <div class="px-[40px] py-5 text-center bg-[#E6D5B8]">
+        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">
+            &copy; 2026 俄域茗通团队. 保留所有权利.
+        </p>
+    </div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            nav.classList.add('!py-4', 'shadow-[0_4px_30px_rgba(92,58,33,0.08)]', '!bg-[rgba(253,248,240,0.95)]');
+        } else {
+            nav.classList.remove('!py-4', 'shadow-[0_4px_30px_rgba(92,58,33,0.08)]', '!bg-[rgba(253,248,240,0.95)]');
+        }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+/* 手机端抽屉菜单开关 */
+(function () {
+    var nav = document.getElementById('navbar') || document.querySelector('nav.navbar');
+    var btn = document.getElementById('navToggle');
+    var mask = document.getElementById('navMask');
+    if (!nav || !btn) return;
+    var menu = nav.querySelector('ul');
+    if (!menu) return;
+
+    function setOpen(on) {
+        menu.classList.toggle('open', on);
+        btn.classList.toggle('open', on);
+        if (mask) mask.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? '关闭菜单' : '打开菜单');
+        document.body.style.overflow = on ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+    });
+    if (mask) mask.addEventListener('click', function () { setOpen(false); });
+    menu.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+    });
+})();
+</script>
+</body>
+</html>

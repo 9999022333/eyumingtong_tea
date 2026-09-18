@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>联系我们 - 俄域茗通 | 以茶为媒・通联中俄</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="vendor/tailwind.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -29,7 +29,8 @@
             },
         }
     </script>
-    <style>
+    <link rel="stylesheet" href="vendor/mobile.css">
+<style>
         /* ── 全站配色与字体变量 ── */
         :root {
             --tea-dark:      #5C3A21;
@@ -152,6 +153,33 @@
             .nav-links { gap: 18px; }
             .nav-links a { font-size: .9rem; }
         }
+        /* ── 窄屏 / 投影仪兜底 ── */
+        @media (max-width: 1240px) {
+            nav { padding-left: 34px !important; padding-right: 34px !important; }
+            nav ul { gap: 24px !important; }
+            nav ul a { font-size: 0.98rem !important; letter-spacing: 0.02em !important; }
+            nav > div { font-size: 1.35rem !important; letter-spacing: 2px !important; }
+            nav img { height: 36px !important; }
+        }
+        @media (max-width: 1060px) {
+            nav ul { gap: 15px !important; }
+            nav ul a { font-size: 0.88rem !important; letter-spacing: 0 !important; }
+            nav > div { font-size: 1.2rem !important; letter-spacing: 1.5px !important; }
+            nav img { height: 32px !important; }
+        }
+
+    
+        /* ===== 手机端（<=768px）适配 ===== */
+        @media (max-width: 768px) {
+            /* .info-col 带 Tailwind 的 w-[390px]，与 860 块同优先级且 Tailwind 后注入，
+               必须 !important 才能压住 */
+            .info-col { width: 100% !important; }
+            .main-wrap { padding: 44px 20px 54px !important; }
+            .form-card { padding: 32px 20px 28px !important; }
+            .form-header { gap: 10px !important; }
+            .info-row { word-break: break-word; }
+            a[href^="mailto"], a[href^="tel"] { word-break: break-all; }
+        }
     </style>
 </head>
 <body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed relative">
@@ -162,16 +190,21 @@
         <img src="images/logo.jpg" alt="俄域茗通Logo" class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
         <span>俄域茗通</span>
     </div>
-    <ul class="flex gap-[42px] list-none">
+    <ul id="navMenu" class="flex gap-[42px] list-none">
         <!-- 给每个导航链接添加 font-serif-zh -->
         <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
         <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
         <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
         <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 ">案例展示</a></li>
         <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="agents.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">智能体</a></li>
         <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">联系我们</a></li>
     </ul>
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
+<div id="navMask" class="nav-mask"></div>
 
 <!-- Hero -->
 <section class="page-hero relative z-10 pt-[140px] px-[60px] pb-[60px] text-center bg-gradient-to-b from-[#FDF8F0] to-[#F5EBD8] overflow-hidden">
@@ -447,12 +480,13 @@
             <div class="orn-line w-[32px] h-[1px] bg-[rgba(212,168,83,.4)]"></div>
         </div>
         <p class="footer-slogan text-[.85rem] text-[#785A44] tracking-[3px] font-medium mb-[24px]">跨文化传播视域下文化转译服务的设计与运营</p>
-        <div class="footer-nav flex justify-center gap-[32px] flex-wrap">
+        <div class="footer-links footer-nav flex justify-center gap-[32px] flex-wrap">
             <a href="index.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">首页</a>
             <a href="about.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">关于我们</a>
             <a href="products.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">产品服务</a>
             <a href="cases.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">案例展示</a>
             <a href="market.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">产品营销</a>
+            <a href="agents.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">智能体</a>
             <a href="contact.html" class="text-[.85rem] text-[rgba(120,90,68,.8)] no-underline tracking-[1px] transition-colors duration-300 hover:text-[#D4A853]">联系我们</a>
         </div>
     </div>
@@ -490,5 +524,41 @@ function handleSubmit(e){
 }
 </script>
 
+
+<script>
+/* 手机端抽屉菜单开关 */
+(function () {
+    var nav = document.getElementById('navbar') || document.querySelector('nav.navbar');
+    var btn = document.getElementById('navToggle');
+    var mask = document.getElementById('navMask');
+    if (!nav || !btn) return;
+    var menu = nav.querySelector('ul');
+    if (!menu) return;
+
+    function setOpen(on) {
+        menu.classList.toggle('open', on);
+        btn.classList.toggle('open', on);
+        if (mask) mask.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? '关闭菜单' : '打开菜单');
+        document.body.style.overflow = on ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+    });
+    if (mask) mask.addEventListener('click', function () { setOpen(false); });
+    menu.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+    });
+})();
+</script>
 </body>
 </html>

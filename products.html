@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>产品服务 - 俄域茗通 | 徽茶出海全周期服务体系</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="vendor/tailwind.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -30,7 +30,8 @@
         }
     </script>
 
-    <style>
+    <link rel="stylesheet" href="vendor/mobile.css">
+<style>
         /* ── 全页背景图 ── */
         body {
             background-image: url('images/about_bg_warm.png');
@@ -129,6 +130,40 @@
         /* ── fade-in 动画 ── */
         .fade-in { opacity:0; transform:translateY(30px); transition:opacity .8s ease, transform .8s ease; }
         .fade-in.visible { opacity:1; transform:translateY(0); }
+        /* ── 窄屏 / 投影仪兜底 ── */
+        @media (max-width: 1240px) {
+            nav { padding-left: 34px !important; padding-right: 34px !important; }
+            nav ul { gap: 24px !important; }
+            nav ul a { font-size: 0.98rem !important; letter-spacing: 0.02em !important; }
+            nav > div { font-size: 1.35rem !important; letter-spacing: 2px !important; }
+            nav img { height: 36px !important; }
+        }
+        @media (max-width: 1060px) {
+            nav ul { gap: 15px !important; }
+            nav ul a { font-size: 0.88rem !important; letter-spacing: 0 !important; }
+            nav > div { font-size: 1.2rem !important; letter-spacing: 1.5px !important; }
+            nav img { height: 32px !important; }
+        }
+
+    
+        /* ===== 手机端（<=768px）适配 ===== */
+        @media (max-width: 768px) {
+            /* 卡片头部：图标标题行与右侧标签行改纵向 */
+            .svc-card > .flex.items-stretch { flex-direction: column !important; }
+            .svc-card > .flex.items-stretch > div:first-child {
+                min-width: 0 !important;
+                border-right: none !important;
+                border-bottom: 1px solid rgba(212,184,150,.3);
+            }
+            .svc-card > .flex.items-stretch > div:last-child {
+                flex-wrap: wrap;
+                justify-content: flex-start !important;
+                gap: 10px !important;
+                padding: 14px 20px !important;
+            }
+            .svc-card > .flex.items-stretch + div { padding: 22px 20px !important; }
+            .svc-list li { font-size: .84rem !important; }
+        }
     </style>
 </head>
 <body class="text-tea-dark overflow-x-hidden leading-[1.8]">
@@ -147,16 +182,21 @@
              class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
         <span>俄域茗通</span>
     </div>
-     <ul class="flex gap-[42px] list-none">
+     <ul id="navMenu" class="flex gap-[42px] list-none">
         <!-- 给每个导航链接添加 font-serif-zh -->
         <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
         <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
         <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">产品服务</a></li>
         <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>
         <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="agents.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">智能体</a></li>
         <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
     </ul>
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
+<div id="navMask" class="nav-mask"></div>
 
 <!-- ========== 顶部主 KV ========== -->
 <section class="hero-pattern pt-[140px] pb-[80px] px-[60px]
@@ -627,7 +667,7 @@
         <div class="flex items-center justify-center gap-3 mb-4">
             <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
             <div class="w-[6px] h-[6px] rounded-full bg-[rgba(212,168,83,0.5)]"></div>
-            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+            <div class="footer-links w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
         </div>
 
         <!-- Slogan -->
@@ -642,6 +682,7 @@
             <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
             <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
             <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="agents.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">智能体</a>
             <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
         </nav>
     </div>
@@ -672,6 +713,42 @@
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+/* 手机端抽屉菜单开关 */
+(function () {
+    var nav = document.getElementById('navbar') || document.querySelector('nav.navbar');
+    var btn = document.getElementById('navToggle');
+    var mask = document.getElementById('navMask');
+    if (!nav || !btn) return;
+    var menu = nav.querySelector('ul');
+    if (!menu) return;
+
+    function setOpen(on) {
+        menu.classList.toggle('open', on);
+        btn.classList.toggle('open', on);
+        if (mask) mask.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? '关闭菜单' : '打开菜单');
+        document.body.style.overflow = on ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+    });
+    if (mask) mask.addEventListener('click', function () { setOpen(false); });
+    menu.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+    });
+})();
 </script>
 </body>
 </html>

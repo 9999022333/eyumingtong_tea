@@ -4,7 +4,7 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>案例展示 - 俄域茗通 | 以成果为证・以案例为鉴</title>  
-    <script src="https://cdn.tailwindcss.com"></script>  
+    <script src="vendor/tailwind.js"></script>  
     <script>  
         tailwind.config = {  
             theme: {  
@@ -30,7 +30,8 @@
             }  
         }  
     </script>  
-    <style>  
+    <link rel="stylesheet" href="vendor/mobile.css">
+<style>  
         body { font-family: "PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif,"Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }  
 
         /* 导航栏下划线动画 */  
@@ -103,6 +104,21 @@
         ::-webkit-scrollbar { width: 8px; }  
         ::-webkit-scrollbar-track { background: #FDF8F0; }  
         ::-webkit-scrollbar-thumb { background: #D4A853; border-radius: 4px; }  
+        /* ── 窄屏 / 投影仪兜底 ── */
+        @media (max-width: 1240px) {
+            nav { padding-left: 34px !important; padding-right: 34px !important; }
+            nav ul { gap: 24px !important; }
+            nav ul a { font-size: 0.98rem !important; letter-spacing: 0.02em !important; }
+            nav > div { font-size: 1.35rem !important; letter-spacing: 2px !important; }
+            nav img { height: 36px !important; }
+        }
+        @media (max-width: 1060px) {
+            nav ul { gap: 15px !important; }
+            nav ul a { font-size: 0.88rem !important; letter-spacing: 0 !important; }
+            nav > div { font-size: 1.2rem !important; letter-spacing: 1.5px !important; }
+            nav img { height: 32px !important; }
+        }
+
     </style>  
 </head>  
 <body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-relaxed">  
@@ -113,16 +129,21 @@
         <img src="images/logo.jpg" alt="俄域茗通Logo" class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">  
         <span>俄域茗通</span>  
     </div>  
-    <ul class="flex gap-[42px] list-none">
+    <ul id="navMenu" class="flex gap-[42px] list-none">
         <!-- 给每个导航链接添加 font-serif-zh -->
         <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 ">首页</a></li>
         <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
         <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
         <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">案例展示</a></li>
         <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="agents.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">智能体</a></li>
         <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
-    </ul> 
-</nav>  
+    </ul>    <button id="navToggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+    </button>
+ 
+</nav><div id="navMask" class="nav-mask"></div>
+  
 
 <!-- ==================== 顶部 KV ==================== -->  
 <section class="hero-texture relative pt-[140px] pb-[80px] px-[60px] text-center overflow-hidden" style="background:linear-gradient(180deg,#FDF8F0 0%,#F5EBD8 100%);">  
@@ -494,12 +515,13 @@
             <div class="w-8 h-px bg-tea-warm/40"></div>
         </div>
         <p class="text-[.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">跨文化传播视域下文化转译服务的设计与运营</p>
-        <div class="flex justify-center gap-8 flex-wrap">
+        <div class="footer-links flex justify-center gap-8 flex-wrap">
             <a href="index.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">首页</a>
             <a href="about.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">关于我们</a>
             <a href="products.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">产品服务</a>
             <a href="cases.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">案例展示</a>
             <a href="market.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="agents.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">智能体</a>
             <a href="contact.html" class="text-[.85rem] text-[#785A44]/80 no-underline tracking-[1px] transition-colors duration-300 hover:text-tea-warm">联系我们</a>
         </div>
     </div>
@@ -527,5 +549,41 @@ const observer=new IntersectionObserver((entries)=>{
 document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
 </script>
 
+
+<script>
+/* 手机端抽屉菜单开关 */
+(function () {
+    var nav = document.getElementById('navbar') || document.querySelector('nav.navbar');
+    var btn = document.getElementById('navToggle');
+    var mask = document.getElementById('navMask');
+    if (!nav || !btn) return;
+    var menu = nav.querySelector('ul');
+    if (!menu) return;
+
+    function setOpen(on) {
+        menu.classList.toggle('open', on);
+        btn.classList.toggle('open', on);
+        if (mask) mask.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? '关闭菜单' : '打开菜单');
+        document.body.style.overflow = on ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+    });
+    if (mask) mask.addEventListener('click', function () { setOpen(false); });
+    menu.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+    });
+})();
+</script>
 </body>
 </html>

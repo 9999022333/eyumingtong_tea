@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨境客户运营 - 俄域茗通 | AI 智能客服与私域运营工具</title>
+
+    <script src="vendor/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tea-dark':    '#5C3A21',
+                        'tea-medium':  '#8B6914',
+                        'tea-light':   '#C4A265',
+                        'tea-cream':   '#F5E6C8',
+                        'tea-warm':    '#D4A853',
+                        'tea-bg':      '#FDF8F0',
+                        'gold':        '#C9A96E',
+                        'card-bg':     '#F8F4E9',
+                        'border-gold': '#D4B896',
+                    },
+                    fontFamily: {
+                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],
+                        'sans-zh':  ['"PingFang SC"', '"Microsoft YaHei"', '"Helvetica Neue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="vendor/mobile.css">
+<style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDF8F0; }
+        ::-webkit-scrollbar-thumb { background: #D4A853; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C4A265; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif, "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            background-image: url('images/about_bg_warm.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #FDF8F0;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(253,248,240,0.72);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── 导航下划线 ── */
+        .nav-link-item { position: relative; padding-bottom: 4px; }
+        .nav-link-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: #D4A853;
+            transition: width 0.3s;
+        }
+        .nav-link-item:hover::after,
+        .nav-link-item.active::after { width: 100%; }
+        .nav-link-item:hover,
+        .nav-link-item.active { color: #D4A853; }
+
+        /* ── 滚动淡入 ── */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        .hero-pattern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M200 40c0 0-80 65-80 130c0 44.2 35.8 80 80 80s80-35.8 80-80c0-65-80-130-80-130z' fill='none' stroke='%235C3A21' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E") repeat;
+            opacity: .5;
+        }
+
+        .mh-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #D4B896, transparent);
+            max-width: 300px;
+        }
+
+        .panel {
+            background: rgba(248,244,233,0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212,184,150,0.38);
+            border-radius: 10px;
+        }
+
+        /* ── 参数面板控件 ── */
+        .ws-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #C4A265;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .ws-select, .ws-input {
+            width: 100%;
+            padding: 9px 12px;
+            background: #FDFAF4;
+            border: 1px solid rgba(180,150,110,.35);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: #5C3A21;
+            letter-spacing: .5px;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .ws-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 L6 8 L9.5 4.5' fill='none' stroke='%23C4A265' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        .ws-select:focus, .ws-input:focus {
+            border-color: #D4A853;
+            box-shadow: 0 0 0 3px rgba(212,168,83,.1);
+        }
+
+        /* ── 对话区 ── */
+        .msg-user { display: flex; justify-content: flex-end; margin-bottom: 18px; }
+        .msg-user .bubble {
+            max-width: 78%;
+            background: #D4A853;
+            color: #FDF8F0;
+            padding: 11px 18px;
+            border-radius: 14px 14px 3px 14px;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            letter-spacing: .3px;
+        }
+        .msg-ai { display: flex; gap: 11px; margin-bottom: 20px; }
+        .msg-ai .avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(212,168,83,.12);
+            border: 1px solid rgba(212,168,83,.3);
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .msg-ai .avatar svg { width: 18px; height: 18px; }
+        .msg-ai .bubble {
+            max-width: 84%;
+            background: #FDF8F0;
+            border: 1px solid rgba(212,184,150,0.4);
+            padding: 14px 18px;
+            border-radius: 3px 14px 14px 14px;
+            font-size: 0.88rem;
+            line-height: 1.9;
+            letter-spacing: .3px;
+            color: #5C3A21;
+        }
+        .msg-ai .bubble .ah {
+            font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #5C3A21;
+            margin-bottom: 8px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid rgba(212,184,150,0.28);
+        }
+        .msg-ai .bubble .ru {
+            font-family: Georgia, "Times New Roman", serif;
+            background: rgba(212,168,83,.08);
+            border-left: 3px solid #D4A853;
+            padding: 8px 13px;
+            border-radius: 0 6px 6px 0;
+            margin: 9px 0;
+            letter-spacing: .2px;
+        }
+        .msg-ai .bubble ul { list-style: none; padding: 0; margin: 9px 0; }
+        .msg-ai .bubble ul li { position: relative; padding-left: 17px; margin-bottom: 3px; }
+        .msg-ai .bubble ul li::before {
+            content: '◇';
+            position: absolute; left: 0; top: 0;
+            color: #D4A853;
+            font-size: 0.7rem;
+        }
+        .msg-ai .bubble .sub {
+            font-weight: 700;
+            color: #8B6914;
+            letter-spacing: 1px;
+            display: block;
+            margin: 11px 0 5px;
+        }
+        .reply-acts {
+            display: flex; gap: 14px;
+            margin-top: 12px; padding-top: 10px;
+            border-top: 1px solid rgba(212,184,150,0.22);
+        }
+        .reply-act {
+            background: none; border: none; padding: 0;
+            font-family: inherit;
+            font-size: 0.76rem;
+            color: #C4A265;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: color .3s;
+        }
+        .reply-act:hover { color: #D4A853; }
+
+        /* ── 打字指示 ── */
+        .typing { display: flex; gap: 5px; align-items: center; height: 20px; }
+        .typing span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #C4A265;
+            animation: blink 1.2s infinite;
+        }
+        .typing span:nth-child(2) { animation-delay: .2s; }
+        .typing span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink {
+            0%, 60%, 100% { opacity: .25; transform: translateY(0); }
+            30%           { opacity: 1;   transform: translateY(-3px); }
+        }
+
+        /* ── 示例提问胶囊 ── */
+        .chip {
+            background: rgba(212,168,83,0.09);
+            border: 1px solid rgba(212,168,83,0.26);
+            border-radius: 9999px;
+            padding: 6px 15px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            color: #8B6914;
+            letter-spacing: .5px;
+            cursor: pointer;
+            transition: all .3s;
+        }
+        .chip:hover {
+            background: rgba(212,168,83,0.2);
+            border-color: #D4A853;
+            transform: translateY(-1px);
+        }
+
+        .send-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 0 26px;
+            background: #D4A853;
+            color: #FDF8F0;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .4s ease;
+        }
+        .send-btn:hover { background: #C49040; box-shadow: 0 6px 18px rgba(212,168,83,0.32); }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 0.82rem; color: #C4A265;
+            letter-spacing: 1.5px; text-decoration: none;
+            transition: color .3s;
+        }
+        .back-link:hover { color: #D4A853; }
+
+        .row-label {
+            width: 70px; flex-shrink: 0;
+            font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            font-size: 0.85rem; font-weight: 700;
+            color: #5C3A21; letter-spacing: 2px;
+            padding-top: 4px;
+        }
+        .tech-tag {
+            display: inline-block; padding: 2px 11px;
+            background: rgba(212,168,83,0.09);
+            border: 1px solid rgba(212,168,83,0.22);
+            border-radius: 9999px;
+            font-size: 0.78rem; color: #8B6914;
+            letter-spacing: 0.5px; line-height: 1.7;
+        }
+        .scene-tag {
+            display: inline-block; padding: 2px 11px;
+            background: rgba(92,58,33,0.05);
+            border: 1px solid rgba(196,162,101,0.2);
+            border-radius: 9999px;
+            font-size: 0.78rem; color: #5C3A21;
+            letter-spacing: 0.5px; line-height: 1.7;
+        }
+
+        .footer-watermark { position: absolute; inset: 0; opacity: .04; pointer-events: none; }
+        .footer-watermark svg { position: absolute; fill: #5C3A21; }
+        .footer-watermark .leaf-1 { width: 64px; height: 64px; top: 24px; left: 10%; transform: rotate(-20deg); }
+        .footer-watermark .leaf-2 { width: 48px; height: 48px; top: 32px; right: 12%; transform: rotate(15deg); }
+        .footer-watermark .leaf-3 { width: 40px; height: 40px; bottom: 16px; left: 30%; transform: rotate(40deg); }
+        /* ── 窄屏 / 投影仪兜底 ── */
+        @media (max-width: 1240px) {
+            nav { padding-left: 34px !important; padding-right: 34px !important; }
+            nav ul { gap: 24px !important; }
+            nav ul a { font-size: 0.98rem !important; letter-spacing: 0.02em !important; }
+            nav > div { font-size: 1.35rem !important; letter-spacing: 2px !important; }
+            nav img { height: 36px !important; }
+        }
+        @media (max-width: 1060px) {
+            nav ul { gap: 15px !important; }
+            nav ul a { font-size: 0.88rem !important; letter-spacing: 0 !important; }
+            nav > div { font-size: 1.2rem !important; letter-spacing: 1.5px !important; }
+            nav img { height: 32px !important; }
+        }
+
+    
+        /* ── 会话列表 ── */
+        .conv {
+            display: flex; gap: 11px;
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(212,184,150,0.2);
+            cursor: pointer;
+            transition: background .3s;
+        }
+        .conv:hover { background: rgba(212,168,83,0.06); }
+        .conv.active {
+            background: rgba(212,168,83,0.13);
+            border-left: 3px solid #D4A853;
+            padding-left: 11px;
+        }
+        .conv .cav {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(212,168,83,.16);
+            border: 1px solid rgba(212,168,83,.3);
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: .92rem; color: #8B6914;
+        }
+        .conv .cn { font-size: .82rem; color: #5C3A21; font-weight: 700; letter-spacing: .3px; }
+        .conv .cm {
+            font-size: .72rem; color: #5C3A21; opacity: .58; letter-spacing: .2px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .conv .ct { font-size: .68rem; color: #C4A265; letter-spacing: .5px; flex-shrink: 0; }
+        .badge {
+            min-width: 17px; height: 17px; padding: 0 5px;
+            border-radius: 9999px;
+            background: #D4A853; color: #FDF8F0;
+            font-size: .66rem; line-height: 1;
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        /* ── 客户画像 ── */
+        .kv {
+            display: flex; justify-content: space-between; gap: 10px;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(212,184,150,0.3);
+            font-size: .78rem;
+        }
+        .kv:last-child { border-bottom: none; }
+        .kv .k { color: #C4A265; letter-spacing: 1px; flex-shrink: 0; }
+        .kv .v { color: #5C3A21; text-align: right; letter-spacing: .3px; }
+        /* ── 开关 ── */
+        .switch {
+            position: relative;
+            width: 40px; height: 22px; border-radius: 9999px;
+            background: rgba(180,150,110,.3);
+            cursor: pointer; transition: background .3s;
+            flex-shrink: 0;
+        }
+        .switch::after {
+            content: '';
+            position: absolute; top: 3px; left: 3px;
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #FDF8F0;
+            transition: transform .3s;
+        }
+        .switch.on { background: #D4A853; }
+        .switch.on::after { transform: translateX(18px); }
+
+        /* ── 窄屏兜底：三栏在 1180px 以下收窄两侧，保证对话区可用 ── */
+        @media (max-width: 1180px) {
+            .ws-wrap  { padding-left: 26px !important; padding-right: 26px !important; }
+            .ws-col-a { width: 222px !important; }
+            .ws-col-c { width: 244px !important; }
+        }
+
+    
+        /* ===== 手机端（<=768px）适配 ===== */
+        @media (max-width: 768px) {
+            /* 三栏改纵向 */
+            div.fade-in.flex { flex-direction: column !important; height: auto !important; }
+            .ws-col-a, .ws-col-c { width: 100% !important; }
+            .ws-col-a { height: 338px !important; }
+            .ws-col-c { height: auto !important; max-height: none !important; }
+            div.fade-in.flex > div.flex-1 { height: 62vh !important; min-height: 430px; }
+
+            #q { min-width: 0 !important; }
+            #sendBtn { flex-shrink: 0; }
+            #chips { flex-direction: column !important; align-items: stretch !important; }
+            #chips .chip { width: 100%; text-align: left; white-space: normal; line-height: 1.6; }
+        }
+    </style>
+</head>
+<body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-[1.8] relative">
+
+<!-- ========== 导航栏 ========== -->
+<nav id="navbar"
+     class="fixed top-0 left-0 right-0 z-[1000]
+            flex justify-between items-center
+            px-[60px] py-[22px] leading-[1.5]
+            bg-[rgba(253,248,240,0.85)] backdrop-blur-xl
+            border-b border-[rgba(196,162,101,0.15)]
+            transition-all duration-[400ms]">
+    <div class="flex items-center gap-3 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
+        <img src="images/logo.jpg" alt="俄域茗通Logo"
+             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
+        <span>俄域茗通</span>
+    </div>
+    <ul id="navMenu" class="flex gap-[42px] list-none">
+        <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
+        <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
+        <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
+        <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>
+        <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="agents.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">智能体</a></li>
+        <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
+    </ul>
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div id="navMask" class="nav-mask"></div>
+
+
+<!-- ========== 智能体头部 ========== -->
+<section class="hero-pattern pt-[130px] pb-[40px] px-[60px] relative overflow-hidden bg-[linear-gradient(180deg,#FDF8F0_0%,#F5EBD8_100%)]">
+    <div class="relative z-[2] max-w-[1200px] mx-auto">
+        <a href="agents.html" class="back-link mb-6 inline-flex">← 全部智能体</a>
+        <div class="flex items-center gap-5">
+            <div class="w-12 h-12 flex-shrink-0"><svg viewBox="0 0 36 36" fill="none" stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><rect x="5" y="6" width="15" height="11" rx="2"/><path d="M8 17 L8 21 L12 17"/><rect x="16" y="16" width="15" height="11" rx="2"/><path d="M27 27 L27 31 L23 27"/></svg></div>
+            <div>
+                <h1 class="font-serif-zh text-[1.9rem] font-black tracking-[3px] text-tea-dark leading-[1.3]">跨境客户运营</h1>
+                <p class="text-[0.88rem] text-tea-light tracking-[1.5px] mt-1">AI 智能客服与私域运营工具　·　解决「怎么转化」</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 工作台 ========== -->
+<section class="ws-wrap relative z-[1] max-w-[1400px] mx-auto px-[60px] pt-[38px] pb-[60px]">
+    <div class="fade-in flex gap-5 items-stretch h-[700px]">
+
+        <!-- ── 第一栏：会话列表 ── -->
+        <aside class="ws-col-a panel w-[264px] flex-shrink-0 flex flex-col overflow-hidden">
+            <div class="px-5 py-[15px] border-b border-[rgba(212,184,150,0.28)] flex-shrink-0">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-serif-zh text-[0.95rem] font-bold text-tea-dark tracking-[2px]">会话列表</span>
+                    <span class="text-[0.7rem] text-tea-light tracking-[1px]">6 条未读</span>
+                </div>
+                <input type="text" class="ws-input" style="padding:8px 12px;font-size:0.78rem;"
+                       placeholder="搜索客户或订单号">
+            </div>
+            <div id="convList" class="flex-1 overflow-y-auto">
+                <div class="conv active" data-name="Алексей Морозов" data-region="Москва" data-stage="复购客户" data-amount="¥ 186,400" data-last="2026-08-22" data-tea="祁门红茶 / 太平猴魁">
+                    <div class="cav">А</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Алексей Морозов</span>
+                            <span class="ml-auto ct">10:24</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Когда будет следующая партия?</span>
+                            <span class="badge ml-auto">2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="conv" data-name="Ирина Соколова" data-region="Санкт-Петербург" data-stage="活跃客户" data-amount="¥ 42,800" data-last="2026-09-03" data-tea="黄山毛峰">
+                    <div class="cav">И</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Ирина Соколова</span>
+                            <span class="ml-auto ct">09:51</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Спасибо, чай очень понравился!</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="conv" data-name="Дмитрий Волков" data-region="Екатеринбург" data-stage="意向客户" data-amount="¥ 0" data-last="—" data-tea="六安瓜片">
+                    <div class="cav">Д</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Дмитрий Волков</span>
+                            <span class="ml-auto ct">昨天</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Нужен счёт на 50 кг</span>
+                            <span class="badge ml-auto">3</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="conv" data-name="Ольга Кузнецова" data-region="Казань" data-stage="新客咨询" data-amount="¥ 8,600" data-last="2026-08-30" data-tea="屯溪绿茶">
+                    <div class="cav">О</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Ольга Кузнецова</span>
+                            <span class="ml-auto ct">昨天</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Есть ли сертификаты качества?</span>
+                            <span class="badge ml-auto">1</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="conv" data-name="Сергей Попов" data-region="Новосибирск" data-stage="沉睡客户" data-amount="¥ 65,200" data-last="2026-05-14" data-tea="祁门红茶">
+                    <div class="cav">С</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Сергей Попов</span>
+                            <span class="ml-auto ct">周一</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Какая минимальная партия заказа?</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="conv" data-name="Мария Лебедева" data-region="Нижний Новгород" data-stage="新客咨询" data-amount="¥ 0" data-last="—" data-tea="黄山毛峰">
+                    <div class="cav">М</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Мария Лебедева</span>
+                            <span class="ml-auto ct">周一</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Можно ли заказать образцы?</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="conv" data-name="Павел Орлов" data-region="Самара" data-stage="沉睡客户" data-amount="¥ 23,900" data-last="2026-03-08" data-tea="六安瓜片">
+                    <div class="cav">П</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="cn truncate">Павел Орлов</span>
+                            <span class="ml-auto ct">上周</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-[3px]">
+                            <span class="cm">Пришлите прайс-лист, пожалуйста</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ── 第二栏：对话区 ── -->
+        <div class="panel flex-1 min-w-0 flex flex-col">
+
+            <div class="flex items-center justify-between px-6 py-[15px] border-b border-[rgba(212,184,150,0.28)] flex-shrink-0">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span id="peerName" class="font-serif-zh text-[0.95rem] font-bold text-tea-dark tracking-[2px] truncate">Алексей Морозов</span>
+                    <span id="peerRegion" class="tech-tag">Москва</span>
+                </div>
+                <button id="resetBtn" class="reply-act">清空对话</button>
+            </div>
+
+            <div id="stream" class="flex-1 overflow-y-auto px-6 py-5">
+                <div id="empty" class="min-h-full flex flex-col items-center justify-center text-center">
+                    <div class="w-9 h-9 mb-4 opacity-45"><svg viewBox="0 0 36 36" fill="none" stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><rect x="5" y="6" width="15" height="11" rx="2"/><path d="M8 17 L8 21 L12 17"/><rect x="16" y="16" width="15" height="11" rx="2"/><path d="M27 27 L27 31 L23 27"/></svg></div>
+                    <p class="text-[0.9rem] text-tea-medium tracking-[1px] mb-2">选择左侧会话，或直接输入客户问题</p>
+                    <p class="text-[0.8rem] text-tea-light tracking-[0.5px] leading-[1.9] max-w-[340px]">助手会自动调取该客户的历史订单与偏好记录，给出俄语应答与跟进建议</p>
+                </div>
+            </div>
+
+            <div id="chips" class="flex flex-wrap gap-2 px-6 pb-3 flex-shrink-0">
+                <button class="chip" data-q="Сколько стоит доставка в Москву?">Сколько стоит доставка в Москву?</button>
+                <button class="chip" data-q="Есть ли сертификаты качества?">Есть ли сертификаты качества?</button>
+                <button class="chip" data-q="Какая минимальная партия заказа?">Какая минимальная партия заказа?</button>
+            </div>
+
+            <div class="flex gap-3 px-6 pb-6 flex-shrink-0">
+                <input id="q" type="text" class="ws-input flex-1" style="padding:13px 16px;"
+                       placeholder="输入客户问题，或直接用俄语提问">
+                <button id="sendBtn" class="send-btn">发 送</button>
+            </div>
+
+        </div>
+
+        <!-- ── 第三栏：客户画像 + 运营参数 ── -->
+        <aside class="ws-col-c w-[288px] flex-shrink-0 flex flex-col gap-5 min-h-0">
+
+            <div class="panel p-5 flex-shrink-0">
+                <div class="font-serif-zh text-[1rem] font-bold text-tea-dark tracking-[2px] mb-4 pb-3 border-b border-[rgba(212,184,150,0.25)]">客户画像</div>
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="cav" style="width:42px;height:42px;font-size:1.05rem;">А</div>
+                    <div class="min-w-0">
+                        <div id="pfName" class="font-serif-zh text-[0.92rem] font-bold text-tea-dark tracking-[1px] truncate">Алексей Морозов</div>
+                        <div id="pfRegion" class="text-[0.72rem] text-tea-light tracking-[1px] mt-[2px]">俄罗斯 · Москва</div>
+                    </div>
+                </div>
+                <div class="kv"><span class="k">客户阶段</span><span class="v" id="pfStage">复购客户</span></div>
+                <div class="kv"><span class="k">累计采购额</span><span class="v" id="pfAmount">¥ 186,400</span></div>
+                <div class="kv"><span class="k">最近下单</span><span class="v" id="pfLast">2026-08-22</span></div>
+                <div class="kv"><span class="k">偏好茶类</span><span class="v" id="pfTea">祁门红茶 / 太平猴魁</span></div>
+                <div class="kv"><span class="k">关注点</span><span class="v">交期稳定 · 价格不敏感</span></div>
+            </div>
+
+            <div class="panel p-5 flex-1 min-h-0 overflow-y-auto">
+                <div class="font-serif-zh text-[1rem] font-bold text-tea-dark tracking-[2px] mb-5 pb-3 border-b border-[rgba(212,184,150,0.25)]">运营参数</div>
+
+                <div class="mb-4">
+                    <label class="ws-label" for="p-tier">客户分层</label>
+                    <select id="p-tier" class="ws-select">
+                        <option>按采购额分层</option>
+                        <option>按活跃度分层</option>
+                        <option>按茶类偏好分层</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="ws-label" for="p-ch">沟通渠道</label>
+                    <select id="p-ch" class="ws-select">
+                        <option>VK 私信</option>
+                        <option>Telegram</option>
+                        <option>WhatsApp</option>
+                        <option>邮件</option>
+                    </select>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-[rgba(212,184,150,0.25)]">
+                    <div>
+                        <div class="text-[0.82rem] text-tea-dark tracking-[1px] font-bold">自动转接人工</div>
+                        <p class="text-[0.72rem] text-tea-light tracking-[1px] mt-[3px]">识别到议价或投诉时转出</p>
+                    </div>
+                    <div id="switchAuto" class="switch on"></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<!-- ========== 能力说明 ========== -->
+<section class="relative z-[1] max-w-[1200px] mx-auto px-[60px] pb-[70px]">
+    <div class="fade-in flex items-center gap-4 mb-8 max-w-[420px]">
+        <h2 class="font-serif-zh text-[1.5rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">能力说明</h2>
+        <div class="mh-line"></div>
+    </div>
+    <div class="fade-in panel px-8 py-7">
+        <div class="flex gap-4 items-start mb-[14px]">
+            <span class="row-label">核心技术</span>
+            <div class="flex-1 flex flex-wrap gap-2"><span class="tech-tag">RAG</span><span class="tech-tag">客户画像</span><span class="tech-tag">意图识别</span><span class="tech-tag">CRM 工作流</span><span class="tech-tag">人工转接</span></div>
+        </div>
+        <div class="flex gap-4 items-start mb-[14px]">
+            <span class="row-label">应用场景</span>
+            <div class="flex-1 flex flex-wrap gap-2"><span class="scene-tag">售前咨询</span><span class="scene-tag">冲泡指导</span><span class="scene-tag">订单跟进</span><span class="scene-tag">客户分层</span><span class="scene-tag">复购提醒</span></div>
+        </div>
+        <div class="flex gap-4 items-start">
+            <span class="row-label">商业价值</span>
+            <p class="flex-1 text-[0.88rem] text-tea-dark opacity-85 leading-[1.9] tracking-[0.5px]">提高响应效率与线索转化率，沉淀可复用的消费者资产</p>
+        </div>
+    </div>
+</section>
+<!-- ========== 页脚分隔线 ========== -->
+<div class="relative z-[1] max-w-[900px] mx-auto px-[40px]">
+    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>
+    <div class="h-0.5"></div>
+    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>
+</div>
+
+<!-- ========== 页脚 ========== -->
+<footer class="relative z-[1] overflow-hidden">
+    <div class="relative px-[40px] pt-[56px] pb-[40px] text-center bg-[linear-gradient(to_bottom,rgba(242,232,214,0.97),rgba(239,226,204,0.98))] backdrop-blur-[8px]">
+        <div class="footer-watermark">
+            <svg class="leaf-1" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-2" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-3" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+        </div>
+        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2">俄域茗通</h3>
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.5)]"></div>
+            <div class="footer-links w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+        </div>
+        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">
+            跨文化传播视域下文化转译服务的设计与运营
+        </p>
+        <nav class="flex justify-center gap-8 flex-wrap">
+            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>
+            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>
+            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
+            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
+            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="agents.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">智能体</a>
+            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
+        </nav>
+    </div>
+    <div class="px-[40px] py-5 text-center bg-[#E6D5B8]">
+        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">
+            &copy; 2026 俄域茗通团队. 保留所有权利.
+        </p>
+    </div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            nav.classList.add('!py-4', 'shadow-[0_4px_30px_rgba(92,58,33,0.08)]', '!bg-[rgba(253,248,240,0.95)]');
+        } else {
+            nav.classList.remove('!py-4', 'shadow-[0_4px_30px_rgba(92,58,33,0.08)]', '!bg-[rgba(253,248,240,0.95)]');
+        }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+(function () {
+    const AVATAR = '<svg viewBox="0 0 36 36" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="6" width="15" height="11" rx="2"/><path d="M8 17 L8 21 L12 17"/><rect x="16" y="16" width="15" height="11" rx="2"/><path d="M27 27 L27 31 L23 27"/></svg>';
+
+    const SCRIPTS = [
+        {
+            keys: ['доставка', 'доставк', '运费', '物流', 'москв'],
+            answer:
+                '<div class="ah">运费与时效 · 应答话术</div>'
+              + '<div class="ru">Доставка по Москве занимает два дня, по России — от трёх до семи дней. '
+              + 'При заказе от трёх тысяч рублей доставка бесплатная.</div>'
+              + '<span class="sub">中文对照</span>'
+              + '<ul><li>莫斯科市区 2 天送达，俄罗斯全境 3–7 天；订单满 3000 卢布免运费</li></ul>'
+              + '<span class="sub">跟进建议</span>'
+              + '<ul>'
+              + '<li>该客户历史客单价 4,200 卢布，已满足免运费门槛，可直接强调这一点促成下单</li>'
+              + '<li>如客户追问清关，补充说明由我方承担清关责任</li>'
+              + '</ul>'
+        },
+        {
+            keys: ['сертификат', 'качеств', '证书', '认证', '质检'],
+            answer:
+                '<div class="ah">质量证书 · 应答话术</div>'
+              + '<div class="ru">Да, у нас есть сертификат соответствия и протокол лабораторных испытаний. '
+              + 'Можем отправить скан по электронной почте.</div>'
+              + '<span class="sub">中文对照</span>'
+              + '<ul><li>可提供合格证书与实验室检测报告扫描件</li></ul>'
+              + '<span class="sub">可提供的文件</span>'
+              + '<ul>'
+              + '<li>出口食品生产企业备案证明</li>'
+              + '<li>第三方实验室农残与重金属检测报告</li>'
+              + '<li>原产地证明</li>'
+              + '</ul>'
+              + '<span class="sub">跟进建议</span>'
+              + '<ul><li>该客户处于新客咨询阶段，发送文件后 24 小时内主动回访，询问是否需要样品</li></ul>'
+        },
+        {
+            keys: ['минимальн', 'партия', 'опт', '起订', '最小'],
+            answer:
+                '<div class="ah">最小起订量 · 应答话术</div>'
+              + '<div class="ru">Минимальная партия для оптового заказа — двадцать килограммов. '
+              + 'Для первой пробной партии можем снизить до пяти килограммов.</div>'
+              + '<span class="sub">中文对照</span>'
+              + '<ul><li>批发最小起订量 20 公斤；首次试单可降至 5 公斤</li></ul>'
+              + '<span class="sub">跟进建议</span>'
+              + '<ul>'
+              + '<li>该客户为意向客户，尚未产生采购记录，建议直接给出试单方案降低决策门槛</li>'
+              + '<li>试单报价可上浮 8%，作为批量采购的锚点</li>'
+              + '</ul>'
+        },
+        {
+            keys: ['оплат', 'счёт', 'счет', 'платеж', 'платёж', '付款', '支付', '发票'],
+            answer:
+                '<div class="ah">付款方式 · 应答话术</div>'
+              + '<div class="ru">Работаем по предоплате пятьдесят процентов, остаток — после отгрузки. '
+              + 'Счёт выставляем в течение одного рабочего дня.</div>'
+              + '<span class="sub">中文对照</span>'
+              + '<ul><li>预付 50%，发货前结清尾款；一个工作日内出账</li></ul>'
+              + '<span class="sub">支持的结算方式</span>'
+              + '<ul>'
+              + '<li>人民币跨境结算</li>'
+              + '<li>卢布电汇</li>'
+              + '<li>信用证（单笔 50 万元以上）</li>'
+              + '</ul>'
+              + '<span class="sub">跟进建议</span>'
+              + '<ul><li>该客户已明确要 50 公斤，属于议价环节，触发自动转接人工复核价格</li></ul>'
+        }
+    ];
+
+    const FALLBACK = '<div class="ah">已收到你的问题</div>'
+      + '<p>当前可自动应答的咨询类型包括：</p>'
+      + '<ul>'
+      + '<li><strong>运费与时效</strong>　доставка / 物流 / 清关</li>'
+      + '<li><strong>质量证书</strong>　сертификат / 检测报告 / 认证</li>'
+      + '<li><strong>起订量与批发</strong>　минимальная партия / 试单方案</li>'
+      + '<li><strong>付款与账期</strong>　оплата / счёт / 结算方式</li>'
+      + '</ul>'
+      + '<p>你可以用俄语或中文提问，例如 «Сколько стоит доставка в Москву?»。</p>';
+
+    const stream  = document.getElementById('stream');
+    const input   = document.getElementById('q');
+    const chips   = document.getElementById('chips');
+    const EMPTY   = stream.innerHTML;
+    let busy = false;
+
+    const toBottom  = () => { stream.scrollTop = stream.scrollHeight; };
+    const dropEmpty = () => { const e = document.getElementById('empty'); if (e) e.remove(); };
+
+    function addUser(text) {
+        dropEmpty();
+        const row = document.createElement('div');
+        row.className = 'msg-user';
+        const b = document.createElement('div');
+        b.className = 'bubble';
+        b.textContent = text;
+        row.appendChild(b);
+        stream.appendChild(row);
+        toBottom();
+    }
+
+    function addTyping() {
+        dropEmpty();
+        const row = document.createElement('div');
+        row.className = 'msg-ai';
+        row.id = 'typing';
+        row.innerHTML = '<div class="avatar">' + AVATAR + '</div>'
+                      + '<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+        stream.appendChild(row);
+        toBottom();
+    }
+
+    function addAI(html, src) {
+        dropEmpty();
+        const row = document.createElement('div');
+        row.className = 'msg-ai';
+        row.dataset.src = src;
+        row.innerHTML = '<div class="avatar">' + AVATAR + '</div>'
+                      + '<div class="bubble">' + html
+                      + '<div class="reply-acts">'
+                      + '<button class="reply-act" data-a="copy">复制</button>'
+                      + '<button class="reply-act" data-a="regen">重新生成</button>'
+                      + '</div></div>';
+        stream.appendChild(row);
+        toBottom();
+    }
+
+    function pick(text) {
+        const t = text.toLowerCase();
+        for (const s of SCRIPTS) {
+            if (s.keys.some(k => t.indexOf(k) !== -1)) return s.answer;
+        }
+        return FALLBACK;
+    }
+
+    function reply(text) {
+        if (busy) return;
+        busy = true;
+        addTyping();
+        setTimeout(() => {
+            const el = document.getElementById('typing');
+            if (el) el.remove();
+            addAI(pick(text), text);
+            busy = false;
+        }, 850 + Math.random() * 700);
+    }
+
+    function ask(text) {
+        const t = (text || '').trim();
+        if (!t || busy) return;
+        addUser(t);
+        reply(t);
+    }
+
+    function send() {
+        ask(input.value);
+        input.value = '';
+        input.focus();
+    }
+
+    document.getElementById('sendBtn').addEventListener('click', send);
+
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); send(); }
+    });
+
+    chips.addEventListener('click', e => {
+        const c = e.target.closest('.chip');
+        if (c) ask(c.dataset.q);
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        if (busy) return;
+        stream.innerHTML = EMPTY;
+    });
+
+    stream.addEventListener('click', e => {
+        const btn = e.target.closest('.reply-act');
+        if (!btn || !stream.contains(btn)) return;
+        const wrap = btn.closest('.msg-ai');
+        if (!wrap) return;
+
+        if (btn.dataset.a === 'copy') {
+            const text = wrap.querySelector('.bubble').innerText;
+            const done = () => {
+                btn.textContent = '已复制';
+                setTimeout(() => { btn.textContent = '复制'; }, 1400);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(() => {});
+            }
+        } else if (btn.dataset.a === 'regen') {
+            const src = wrap.dataset.src;
+            wrap.remove();
+            reply(src);
+        }
+    });
+
+    /* ── 会话切换 ── */
+    const convList = document.getElementById('convList');
+    if (convList) {
+        convList.addEventListener('click', e => {
+            const c = e.target.closest('.conv');
+            if (!c || busy) return;
+            convList.querySelectorAll('.conv').forEach(x => x.classList.remove('active'));
+            c.classList.add('active');
+
+            const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+            set('peerName',   c.dataset.name);
+            set('peerRegion', c.dataset.region);
+            set('pfName',     c.dataset.name);
+            set('pfRegion',   '俄罗斯 · ' + c.dataset.region);
+            set('pfStage',    c.dataset.stage);
+            set('pfAmount',   c.dataset.amount);
+            set('pfLast',     c.dataset.last);
+            set('pfTea',      c.dataset.tea);
+
+            stream.innerHTML = EMPTY;
+        });
+    }
+
+    /* ── 自动转接开关 ── */
+    const sw = document.getElementById('switchAuto');
+    if (sw) sw.addEventListener('click', () => sw.classList.toggle('on'));
+
+})();
+</script>
+
+<script>
+/* 手机端抽屉菜单开关 */
+(function () {
+    var nav = document.getElementById('navbar') || document.querySelector('nav.navbar');
+    var btn = document.getElementById('navToggle');
+    var mask = document.getElementById('navMask');
+    if (!nav || !btn) return;
+    var menu = nav.querySelector('ul');
+    if (!menu) return;
+
+    function setOpen(on) {
+        menu.classList.toggle('open', on);
+        btn.classList.toggle('open', on);
+        if (mask) mask.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? '关闭菜单' : '打开菜单');
+        document.body.style.overflow = on ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+    });
+    if (mask) mask.addEventListener('click', function () { setOpen(false); });
+    menu.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+    });
+})();
+</script>
+</body>
+</html>

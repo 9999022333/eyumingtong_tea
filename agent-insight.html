@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市场洞察与智能选品 - 俄域茗通 | AI 市场需求预测与选品助手</title>
+
+    <script src="vendor/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tea-dark':    '#5C3A21',
+                        'tea-medium':  '#8B6914',
+                        'tea-light':   '#C4A265',
+                        'tea-cream':   '#F5E6C8',
+                        'tea-warm':    '#D4A853',
+                        'tea-bg':      '#FDF8F0',
+                        'gold':        '#C9A96E',
+                        'card-bg':     '#F8F4E9',
+                        'border-gold': '#D4B896',
+                    },
+                    fontFamily: {
+                        'serif-zh': ['"Songti SC"', '"STSong"', '"SimSun"', '"Noto Serif SC"', 'serif'],
+                        'sans-zh':  ['"PingFang SC"', '"Microsoft YaHei"', '"Helvetica Neue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="vendor/mobile.css">
+<style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDF8F0; }
+        ::-webkit-scrollbar-thumb { background: #D4A853; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C4A265; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif, "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            background-image: url('images/about_bg_warm.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #FDF8F0;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(253,248,240,0.72);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── 导航下划线 ── */
+        .nav-link-item { position: relative; padding-bottom: 4px; }
+        .nav-link-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: #D4A853;
+            transition: width 0.3s;
+        }
+        .nav-link-item:hover::after,
+        .nav-link-item.active::after { width: 100%; }
+        .nav-link-item:hover,
+        .nav-link-item.active { color: #D4A853; }
+
+        /* ── 滚动淡入 ── */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        .hero-pattern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M200 40c0 0-80 65-80 130c0 44.2 35.8 80 80 80s80-35.8 80-80c0-65-80-130-80-130z' fill='none' stroke='%235C3A21' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E") repeat;
+            opacity: .5;
+        }
+
+        .mh-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #D4B896, transparent);
+            max-width: 300px;
+        }
+
+        .panel {
+            background: rgba(248,244,233,0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212,184,150,0.38);
+            border-radius: 10px;
+        }
+
+        /* ── 参数面板控件 ── */
+        .ws-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #C4A265;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .ws-select, .ws-input {
+            width: 100%;
+            padding: 9px 12px;
+            background: #FDFAF4;
+            border: 1px solid rgba(180,150,110,.35);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: #5C3A21;
+            letter-spacing: .5px;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .ws-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 L6 8 L9.5 4.5' fill='none' stroke='%23C4A265' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        .ws-select:focus, .ws-input:focus {
+            border-color: #D4A853;
+            box-shadow: 0 0 0 3px rgba(212,168,83,.1);
+        }
+
+        /* ── 对话区 ── */
+        .msg-user { display: flex; justify-content: flex-end; margin-bottom: 18px; }
+        .msg-user .bubble {
+            max-width: 78%;
+            background: #D4A853;
+            color: #FDF8F0;
+            padding: 11px 18px;
+            border-radius: 14px 14px 3px 14px;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            letter-spacing: .3px;
+        }
+        .msg-ai { display: flex; gap: 11px; margin-bottom: 20px; }
+        .msg-ai .avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(212,168,83,.12);
+            border: 1px solid rgba(212,168,83,.3);
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .msg-ai .avatar svg { width: 18px; height: 18px; }
+        .msg-ai .bubble {
+            max-width: 84%;
+            background: #FDF8F0;
+            border: 1px solid rgba(212,184,150,0.4);
+            padding: 14px 18px;
+            border-radius: 3px 14px 14px 14px;
+            font-size: 0.88rem;
+            line-height: 1.9;
+            letter-spacing: .3px;
+            color: #5C3A21;
+        }
+        .msg-ai .bubble .ah {
+            font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #5C3A21;
+            margin-bottom: 8px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid rgba(212,184,150,0.28);
+        }
+        .msg-ai .bubble .ru {
+            font-family: Georgia, "Times New Roman", serif;
+            background: rgba(212,168,83,.08);
+            border-left: 3px solid #D4A853;
+            padding: 8px 13px;
+            border-radius: 0 6px 6px 0;
+            margin: 9px 0;
+            letter-spacing: .2px;
+        }
+        .msg-ai .bubble ul { list-style: none; padding: 0; margin: 9px 0; }
+        .msg-ai .bubble ul li { position: relative; padding-left: 17px; margin-bottom: 3px; }
+        .msg-ai .bubble ul li::before {
+            content: '◇';
+            position: absolute; left: 0; top: 0;
+            color: #D4A853;
+            font-size: 0.7rem;
+        }
+        .msg-ai .bubble .sub {
+            font-weight: 700;
+            color: #8B6914;
+            letter-spacing: 1px;
+            display: block;
+            margin: 11px 0 5px;
+        }
+        .reply-acts {
+            display: flex; gap: 14px;
+            margin-top: 12px; padding-top: 10px;
+            border-top: 1px solid rgba(212,184,150,0.22);
+        }
+        .reply-act {
+            background: none; border: none; padding: 0;
+            font-family: inherit;
+            font-size: 0.76rem;
+            color: #C4A265;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: color .3s;
+        }
+        .reply-act:hover { color: #D4A853; }
+
+        /* ── 打字指示 ── */
+        .typing { display: flex; gap: 5px; align-items: center; height: 20px; }
+        .typing span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #C4A265;
+            animation: blink 1.2s infinite;
+        }
+        .typing span:nth-child(2) { animation-delay: .2s; }
+        .typing span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink {
+            0%, 60%, 100% { opacity: .25; transform: translateY(0); }
+            30%           { opacity: 1;   transform: translateY(-3px); }
+        }
+
+        /* ── 示例提问胶囊 ── */
+        .chip {
+            background: rgba(212,168,83,0.09);
+            border: 1px solid rgba(212,168,83,0.26);
+            border-radius: 9999px;
+            padding: 6px 15px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            color: #8B6914;
+            letter-spacing: .5px;
+            cursor: pointer;
+            transition: all .3s;
+        }
+        .chip:hover {
+            background: rgba(212,168,83,0.2);
+            border-color: #D4A853;
+            transform: translateY(-1px);
+        }
+
+        .send-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 0 26px;
+            background: #D4A853;
+            color: #FDF8F0;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .4s ease;
+        }
+        .send-btn:hover { background: #C49040; box-shadow: 0 6px 18px rgba(212,168,83,0.32); }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 0.82rem; color: #C4A265;
+            letter-spacing: 1.5px; text-decoration: none;
+            transition: color .3s;
+        }
+        .back-link:hover { color: #D4A853; }
+
+        .row-label {
+            width: 70px; flex-shrink: 0;
+            font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+            font-size: 0.85rem; font-weight: 700;
+            color: #5C3A21; letter-spacing: 2px;
+            padding-top: 4px;
+        }
+        .tech-tag {
+            display: inline-block; padding: 2px 11px;
+            background: rgba(212,168,83,0.09);
+            border: 1px solid rgba(212,168,83,0.22);
+            border-radius: 9999px;
+            font-size: 0.78rem; color: #8B6914;
+            letter-spacing: 0.5px; line-height: 1.7;
+        }
+        .scene-tag {
+            display: inline-block; padding: 2px 11px;
+            background: rgba(92,58,33,0.05);
+            border: 1px solid rgba(196,162,101,0.2);
+            border-radius: 9999px;
+            font-size: 0.78rem; color: #5C3A21;
+            letter-spacing: 0.5px; line-height: 1.7;
+        }
+
+        .footer-watermark { position: absolute; inset: 0; opacity: .04; pointer-events: none; }
+        .footer-watermark svg { position: absolute; fill: #5C3A21; }
+        .footer-watermark .leaf-1 { width: 64px; height: 64px; top: 24px; left: 10%; transform: rotate(-20deg); }
+        .footer-watermark .leaf-2 { width: 48px; height: 48px; top: 32px; right: 12%; transform: rotate(15deg); }
+        .footer-watermark .leaf-3 { width: 40px; height: 40px; bottom: 16px; left: 30%; transform: rotate(40deg); }
+        /* ── 窄屏 / 投影仪兜底 ── */
+        @media (max-width: 1240px) {
+            nav { padding-left: 34px !important; padding-right: 34px !important; }
+            nav ul { gap: 24px !important; }
+            nav ul a { font-size: 0.98rem !important; letter-spacing: 0.02em !important; }
+            nav > div { font-size: 1.35rem !important; letter-spacing: 2px !important; }
+            nav img { height: 36px !important; }
+        }
+        @media (max-width: 1060px) {
+            nav ul { gap: 15px !important; }
+            nav ul a { font-size: 0.88rem !important; letter-spacing: 0 !important; }
+            nav > div { font-size: 1.2rem !important; letter-spacing: 1.5px !important; }
+            nav img { height: 32px !important; }
+        }
+
+    
+        /* ── 指标卡 ── */
+        .metric {
+            background: rgba(248,244,233,0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212,184,150,0.38);
+            border-radius: 10px;
+            padding: 15px 18px;
+            display: flex; flex-direction: column;
+        }
+        .metric .mk { font-size: .72rem; color: #C4A265; letter-spacing: 1.5px; font-weight: 700; }
+        .metric .mv {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.5rem; font-weight: 700; color: #8B6914;
+            letter-spacing: .5px; margin: 6px 0 3px; line-height: 1.2;
+        }
+        .metric .md { font-size: .72rem; color: #5C3A21; opacity: .68; letter-spacing: .3px; margin-top: auto; }
+
+    
+        /* ===== 手机端（<=768px）适配 ===== */
+        @media (max-width: 768px) {
+            /* 左右栏改纵向，对话区排到参数面板之前 */
+            div.fade-in.flex > aside.panel { width: 100% !important; order: 2; }
+            div.fade-in.flex > div.flex-1  { order: 1; width: 100% !important; min-width: 0 !important; }
+            div.fade-in.flex { flex-direction: column !important; }
+
+            /* 对话面板给一个视口相关高度，否则会塌成 0 */
+            .panel.flex-1 { height: 60vh !important; min-height: 400px; }
+
+            /* 输入框默认尺寸会让整行溢出，必须允许收缩 */
+            #q { min-width: 0 !important; }
+            #sendBtn { flex-shrink: 0; }
+
+            /* 示例提问胶囊改竖排，长句不再横向溢出 */
+            #chips { flex-direction: column !important; align-items: stretch !important; }
+            #chips .chip { width: 100%; text-align: left; white-space: normal; line-height: 1.6; }
+        }
+    </style>
+</head>
+<body class="font-sans-zh bg-tea-bg text-tea-dark overflow-x-hidden leading-[1.8] relative">
+
+<!-- ========== 导航栏 ========== -->
+<nav id="navbar"
+     class="fixed top-0 left-0 right-0 z-[1000]
+            flex justify-between items-center
+            px-[60px] py-[22px] leading-[1.5]
+            bg-[rgba(253,248,240,0.85)] backdrop-blur-xl
+            border-b border-[rgba(196,162,101,0.15)]
+            transition-all duration-[400ms]">
+    <div class="flex items-center gap-3 font-serif-zh text-[1.6rem] font-bold text-tea-dark tracking-[3px]">
+        <img src="images/logo.jpg" alt="俄域茗通Logo"
+             class="h-[42px] w-auto rounded-[6px] mix-blend-multiply">
+        <span>俄域茗通</span>
+    </div>
+    <ul id="navMenu" class="flex gap-[42px] list-none">
+        <li><a href="index.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">首页</a></li>
+        <li><a href="about.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">关于我们</a></li>
+        <li><a href="products.html" class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品服务</a></li>
+        <li><a href="cases.html"    class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">案例展示</a></li>
+        <li><a href="market.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">产品营销</a></li>
+        <li><a href="agents.html"   class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300 active">智能体</a></li>
+        <li><a href="contact.html"  class="nav-link-item font-serif-zh no-underline text-tea-dark text-[1.1rem] font-semibold tracking-wider transition-colors duration-300">联系我们</a></li>
+    </ul>
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div id="navMask" class="nav-mask"></div>
+
+
+<!-- ========== 智能体头部 ========== -->
+<section class="hero-pattern pt-[130px] pb-[40px] px-[60px] relative overflow-hidden bg-[linear-gradient(180deg,#FDF8F0_0%,#F5EBD8_100%)]">
+    <div class="relative z-[2] max-w-[1200px] mx-auto">
+        <a href="agents.html" class="back-link mb-6 inline-flex">← 全部智能体</a>
+        <div class="flex items-center gap-5">
+            <div class="w-12 h-12 flex-shrink-0"><svg viewBox="0 0 36 36" fill="none" stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M7 5 L7 29 L31 29"/><rect x="11" y="19" width="4.5" height="10"/><rect x="18" y="13" width="4.5" height="16"/><rect x="25" y="8" width="4.5" height="21"/></svg></div>
+            <div>
+                <h1 class="font-serif-zh text-[1.9rem] font-black tracking-[3px] text-tea-dark leading-[1.3]">市场洞察与智能选品</h1>
+                <p class="text-[0.88rem] text-tea-light tracking-[1.5px] mt-1">AI 市场需求预测与选品助手　·　解决「卖什么」</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 工作台 ========== -->
+<section class="relative z-[1] max-w-[1200px] mx-auto px-[60px] pt-[38px] pb-[60px]">
+    <div class="fade-in flex gap-6 items-start">
+
+        <!-- ── 左栏：分析参数 ── -->
+        <aside class="panel w-[280px] flex-shrink-0 p-6">
+            <div class="font-serif-zh text-[1rem] font-bold text-tea-dark tracking-[2px] mb-5 pb-3 border-b border-[rgba(212,184,150,0.25)]">分析参数</div>
+
+            <div class="mb-5">
+                <label class="ws-label" for="p-region">目标地区</label>
+                <select id="p-region" class="ws-select">
+                    <option>俄罗斯全境</option>
+                    <option>莫斯科</option>
+                    <option>圣彼得堡</option>
+                    <option>叶卡捷琳堡</option>
+                    <option>新西伯利亚</option>
+                    <option>中亚地区</option>
+                </select>
+            </div>
+
+            <div class="mb-5">
+                <label class="ws-label" for="p-price">价格带</label>
+                <select id="p-price" class="ws-select">
+                    <option>300–500 ₽</option>
+                    <option>500–800 ₽</option>
+                    <option>800–1200 ₽</option>
+                    <option>1200 ₽ 以上</option>
+                    <option>不限</option>
+                </select>
+            </div>
+            <div class="mb-5">
+                <label class="ws-label" for="p-channel">销售渠道</label>
+                <select id="p-channel" class="ws-select">
+                    <option>Ozon</option>
+                    <option>Wildberries</option>
+                    <option>Yandex Market</option>
+                    <option>线下专营店</option>
+                    <option>全渠道</option>
+                </select>
+            </div>
+            <div class="mb-5">
+                <label class="ws-label" for="p-range">时间范围</label>
+                <select id="p-range" class="ws-select">
+                    <option>近 12 个月</option>
+                    <option>近 6 个月</option>
+                    <option>近 3 个月</option>
+                    <option>近 3 年</option>
+                </select>
+            </div>
+            <div class="pt-4 border-t border-[rgba(212,184,150,0.25)]">
+                <p class="text-[0.72rem] text-tea-light tracking-[1.5px] leading-[1.9]">指标卡随所选地区与价格带联动，当前展示为默认范围。</p>
+            </div>
+        </aside>
+
+        <!-- ── 右栏：指标卡 + 分析工作区 ── -->
+        <div class="flex-1 min-w-0 flex flex-col gap-5 h-[660px]">
+
+            <div class="grid grid-cols-4 gap-4 flex-shrink-0">
+                <div class="metric">
+                    <div class="mk">市场规模</div>
+                    <div class="mv">$4.7 亿</div>
+                    <div class="md">俄罗斯红茶年进口额</div>
+                </div>
+                <div class="metric">
+                    <div class="mk">年增速</div>
+                    <div class="mv">+11.2%</div>
+                    <div class="md">近三年复合增长率</div>
+                </div>
+                <div class="metric">
+                    <div class="mk">主流价格带</div>
+                    <div class="mv">300–500 ₽</div>
+                    <div class="md">电商销量最集中区间</div>
+                </div>
+                <div class="metric">
+                    <div class="mk">热搜茶类</div>
+                    <div class="mv">祁门红茶</div>
+                    <div class="md">搜索量同比 ↑38%</div>
+                </div>
+            </div>
+
+            <div class="panel flex-1 min-h-0 flex flex-col">
+
+                <div class="flex items-center justify-between px-6 py-[15px] border-b border-[rgba(212,184,150,0.28)] flex-shrink-0">
+                    <span class="font-serif-zh text-[0.95rem] font-bold text-tea-dark tracking-[2px]">选品分析工作区</span>
+                    <button id="resetBtn" class="reply-act">清空对话</button>
+                </div>
+
+                <div id="stream" class="flex-1 overflow-y-auto px-6 py-5">
+                <div id="empty" class="min-h-full flex flex-col items-center justify-center text-center">
+                    <div class="w-9 h-9 mb-4 opacity-45"><svg viewBox="0 0 36 36" fill="none" stroke="#5C3A21" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M7 5 L7 29 L31 29"/><rect x="11" y="19" width="4.5" height="10"/><rect x="18" y="13" width="4.5" height="16"/><rect x="25" y="8" width="4.5" height="21"/></svg></div>
+                    <p class="text-[0.9rem] text-tea-medium tracking-[1px] mb-2">描述你的选品目标</p>
+                    <p class="text-[0.8rem] text-tea-light tracking-[0.5px] leading-[1.9] max-w-[340px]">助手会结合平台销量、搜索热度与竞品分布，给出带优先级的选品建议</p>
+                </div>
+                </div>
+
+                <div id="chips" class="flex flex-wrap gap-2 px-6 pb-3 flex-shrink-0">
+                <button class="chip" data-q="给我一份 300–500 卢布价格带的选品清单">给我一份 300–500 卢布价格带的选品清单</button>
+                <button class="chip" data-q="莫斯科市场哪些茶类竞争度最低">莫斯科市场哪些茶类竞争度最低</button>
+                <button class="chip" data-q="分析祁门红茶在 Ozon 的价格分布">分析祁门红茶在 Ozon 的价格分布</button>
+                </div>
+
+                <div class="flex gap-3 px-6 pb-6 flex-shrink-0">
+                    <input id="q" type="text" class="ws-input flex-1" style="padding:13px 16px;"
+                           placeholder="描述你的选品目标，例如：500–800 卢布价位段还有哪些机会">
+                    <button id="sendBtn" class="send-btn">发 送</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 能力说明 ========== -->
+<section class="relative z-[1] max-w-[1200px] mx-auto px-[60px] pb-[70px]">
+    <div class="fade-in flex items-center gap-4 mb-8 max-w-[420px]">
+        <h2 class="font-serif-zh text-[1.5rem] font-black tracking-[3px] text-tea-dark whitespace-nowrap">能力说明</h2>
+        <div class="mh-line"></div>
+    </div>
+    <div class="fade-in panel px-8 py-7">
+        <div class="flex gap-4 items-start mb-[14px]">
+            <span class="row-label">核心技术</span>
+            <div class="flex-1 flex flex-wrap gap-2"><span class="tech-tag">NLP</span><span class="tech-tag">时间序列预测</span><span class="tech-tag">用户聚类</span><span class="tech-tag">多指标推荐</span><span class="tech-tag">情感分析</span></div>
+        </div>
+        <div class="flex gap-4 items-start mb-[14px]">
+            <span class="row-label">应用场景</span>
+            <div class="flex-1 flex flex-wrap gap-2"><span class="scene-tag">判断茶类适配度</span><span class="scene-tag">口味偏好分析</span><span class="scene-tag">规格与价格带匹配</span><span class="scene-tag">区域人群差异</span><span class="scene-tag">选品优先级排序</span></div>
+        </div>
+        <div class="flex gap-4 items-start">
+            <span class="row-label">商业价值</span>
+            <p class="flex-1 text-[0.88rem] text-tea-dark opacity-85 leading-[1.9] tracking-[0.5px]">降低选品试错与库存风险，提高产品与市场的匹配度</p>
+        </div>
+    </div>
+</section>
+<!-- ========== 页脚分隔线 ========== -->
+<div class="relative z-[1] max-w-[900px] mx-auto px-[40px]">
+    <div class="h-px bg-[rgba(212,184,150,0.4)]"></div>
+    <div class="h-0.5"></div>
+    <div class="h-px bg-[rgba(224,208,184,0.5)]"></div>
+</div>
+
+<!-- ========== 页脚 ========== -->
+<footer class="relative z-[1] overflow-hidden">
+    <div class="relative px-[40px] pt-[56px] pb-[40px] text-center bg-[linear-gradient(to_bottom,rgba(242,232,214,0.97),rgba(239,226,204,0.98))] backdrop-blur-[8px]">
+        <div class="footer-watermark">
+            <svg class="leaf-1" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-2" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+            <svg class="leaf-3" viewBox="0 0 24 24"><path d="M12 2C12 2 5 8.5 5 15C5 18.866 7.68629 22 11 22H13C16.3137 22 19 18.866 19 15C19 8.5 12 2 12 2Z"/></svg>
+        </div>
+        <h3 class="font-serif-zh text-[1.5rem] font-bold tracking-[4px] text-[#5A3E2B] mb-2">俄域茗通</h3>
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(212,168,83,0.5)]"></div>
+            <div class="footer-links w-8 h-px bg-[rgba(212,168,83,0.4)]"></div>
+        </div>
+        <p class="text-[0.85rem] text-[#785A44] tracking-[3px] font-medium mb-6">
+            跨文化传播视域下文化转译服务的设计与运营
+        </p>
+        <nav class="flex justify-center gap-8 flex-wrap">
+            <a href="index.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">首页</a>
+            <a href="about.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">关于我们</a>
+            <a href="products.html" class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品服务</a>
+            <a href="cases.html"    class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">案例展示</a>
+            <a href="market.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">产品营销</a>
+            <a href="agents.html"   class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">智能体</a>
+            <a href="contact.html"  class="text-[0.85rem] text-[rgba(120,90,68,0.8)] no-underline tracking-wider transition-colors duration-300 hover:text-tea-warm">联系我们</a>
+        </nav>
+    </div>
+    <div class="px-[40px] py-5 text-center bg-[#E6D5B8]">
+        <p class="text-[0.75rem] text-[#947860] tracking-wider m-0">
+            &copy; 2026 俄域茗通团队. 保留所有权利.
+        </p>
+    </div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            nav.classList.add('!py-4', 'shadow-[0_4px_30px_rgba(92,58,33,0.08)]', '!bg-[rgba(253,248,240,0.95)]');
+        } else {
+            nav.classList.remove('!py-4', 'shadow-[0_4px_30px_rgba(92,58,33,0.08)]', '!bg-[rgba(253,248,240,0.95)]');
+        }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+(function () {
+    const AVATAR = '<svg viewBox="0 0 36 36" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 L7 29 L31 29"/><rect x="11" y="19" width="4.5" height="10"/><rect x="18" y="13" width="4.5" height="16"/><rect x="25" y="8" width="4.5" height="21"/></svg>';
+
+    const SCRIPTS = [
+        {
+            keys: ['选品', '清单', '价格带', '推荐'],
+            answer:
+                '<div class="ah">选品清单 · 300–500 ₽ 价格带</div>'
+              + '<p>按「需求增速 × 竞争度 × 供货稳定性」综合排序，给出前三优先项：</p>'
+              + '<span class="sub">优先级 1　祁门红茶 · 100 g 铁罐装</span>'
+              + '<ul>'
+              + '<li>该价位段搜索量同比 +38%，在售 SKU 仅 42 个，供给缺口明显</li>'
+              + '<li>建议定价 449 ₽，与主流价格带中枢重合，毛利空间约 46%</li>'
+              + '<li>风险：铁罐运输体积大，需核算跨境物流成本</li>'
+              + '</ul>'
+              + '<span class="sub">优先级 2　黄山毛峰 · 250 g 纸盒装</span>'
+              + '<ul>'
+              + '<li>绿茶品类在莫斯科增速 +19%，但消费者教育成本高于红茶</li>'
+              + '<li>建议定价 389 ₽，走高性价比走量路线</li>'
+              + '</ul>'
+              + '<span class="sub">优先级 3　太平猴魁 · 50 g 礼盒装</span>'
+              + '<ul>'
+              + '<li>礼赠场景溢价空间大，但该价位段容量有限，建议小批量试销</li>'
+              + '</ul>'
+              + '<span class="sub">建议动作</span>'
+              + '<ul><li>首批以祁门红茶为主力，黄山毛峰作为流量款搭配上架</li></ul>'
+        },
+        {
+            keys: ['竞争', '竞品', '蓝海', '饱和度', '最低'],
+            answer:
+                '<div class="ah">竞争度分析 · 莫斯科市场</div>'
+              + '<span class="sub">竞争度最低的三个细分</span>'
+              + '<ul>'
+              + '<li><strong>太平猴魁 · 礼盒装</strong>　在售 SKU 11 个，头部品牌集中度低</li>'
+              + '<li><strong>六安瓜片 · 散茶</strong>　在售 SKU 19 个，但搜索量基数偏小</li>'
+              + '<li><strong>屯溪绿茶 · 有机认证</strong>　在售 SKU 7 个，认证门槛形成天然壁垒</li>'
+              + '</ul>'
+              + '<span class="sub">竞争度最高（不建议新进入）</span>'
+              + '<ul>'
+              + '<li>普通红茶茶包　在售 SKU 超过 600 个，价格战激烈</li>'
+              + '<li>调味花果茶　被本土品牌与土耳其供应链双重挤压</li>'
+              + '</ul>'
+              + '<span class="sub">判断依据</span>'
+              + '<ul><li>综合在售 SKU 数、头部品牌市占率、近半年新进入者数量三项指标</li></ul>'
+        },
+        {
+            keys: ['价格', '定价', '卢布', '分布', '₽'],
+            answer:
+                '<div class="ah">价格分布 · 祁门红茶在 Ozon</div>'
+              + '<span class="sub">销量分布</span>'
+              + '<ul>'
+              + '<li>300–500 ₽　占销量 47%，为主力价格带，竞争最集中</li>'
+              + '<li>500–800 ₽　占销量 28%，消费者对「手工采摘」等卖点溢价接受度高</li>'
+              + '<li>800 ₽ 以上　占销量 12%，集中在礼盒与收藏级产品</li>'
+              + '</ul>'
+              + '<span class="sub">价格弹性观察</span>'
+              + '<ul>'
+              + '<li>100 g 规格从 399 ₽ 提到 449 ₽，转化率仅下降 3.1%，仍处弹性不足区间</li>'
+              + '<li>250 g 规格提价 10% 则转化率下降 14%，建议维持现价</li>'
+              + '</ul>'
+              + '<span class="sub">建议</span>'
+              + '<ul><li>100 g 规格可上调至 449 ₽；250 g 规格以赠品替代直接提价</li></ul>'
+        },
+        {
+            keys: ['趋势', '增长', '热搜', '预测', '前景'],
+            answer:
+                '<div class="ah">趋势预测 · 未来 6 个月</div>'
+              + '<span class="sub">增长最快的三个方向</span>'
+              + '<ul>'
+              + '<li><strong>小规格尝鲜装</strong>　预测增速 +52%，契合首次尝试中国茶的消费者</li>'
+              + '<li><strong>礼赠场景组合装</strong>　预测增速 +31%，与俄历新年和新年档期强相关</li>'
+              + '<li><strong>有机认证茶</strong>　预测增速 +27%，健康叙事在俄语区接受度持续上升</li>'
+              + '</ul>'
+              + '<span class="sub">季节性提示</span>'
+              + '<ul>'
+              + '<li>11 月至次年 1 月为礼赠高峰，建议提前 6–8 周备货</li>'
+              + '<li>6–8 月为淡季，适合做内容种草与私域沉淀</li>'
+              + '</ul>'
+              + '<span class="sub">风险提示</span>'
+              + '<ul><li>卢布汇率波动会直接影响终端定价，建议按季度复核价格策略</li></ul>'
+        }
+    ];
+
+    const FALLBACK = '<div class="ah">已收到你的分析需求</div>'
+      + '<p>当前可输出的分析类型包括：</p>'
+      + '<ul>'
+      + '<li><strong>选品清单</strong>　按价格带给出带优先级的选品建议</li>'
+      + '<li><strong>竞争度分析</strong>　识别竞争度低的细分市场</li>'
+      + '<li><strong>价格分布</strong>　平台价格带与销量分布</li>'
+      + '<li><strong>趋势预测</strong>　未来半年增长方向与季节性提示</li>'
+      + '</ul>'
+      + '<p>你可以直接描述需求，例如「给我一份 300–500 卢布价格带的选品清单」。</p>';
+
+    const stream  = document.getElementById('stream');
+    const input   = document.getElementById('q');
+    const chips   = document.getElementById('chips');
+    const EMPTY   = stream.innerHTML;
+    let busy = false;
+
+    const toBottom  = () => { stream.scrollTop = stream.scrollHeight; };
+    const dropEmpty = () => { const e = document.getElementById('empty'); if (e) e.remove(); };
+
+    function addUser(text) {
+        dropEmpty();
+        const row = document.createElement('div');
+        row.className = 'msg-user';
+        const b = document.createElement('div');
+        b.className = 'bubble';
+        b.textContent = text;
+        row.appendChild(b);
+        stream.appendChild(row);
+        toBottom();
+    }
+
+    function addTyping() {
+        dropEmpty();
+        const row = document.createElement('div');
+        row.className = 'msg-ai';
+        row.id = 'typing';
+        row.innerHTML = '<div class="avatar">' + AVATAR + '</div>'
+                      + '<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+        stream.appendChild(row);
+        toBottom();
+    }
+
+    function addAI(html, src) {
+        dropEmpty();
+        const row = document.createElement('div');
+        row.className = 'msg-ai';
+        row.dataset.src = src;
+        row.innerHTML = '<div class="avatar">' + AVATAR + '</div>'
+                      + '<div class="bubble">' + html
+                      + '<div class="reply-acts">'
+                      + '<button class="reply-act" data-a="copy">复制</button>'
+                      + '<button class="reply-act" data-a="regen">重新生成</button>'
+                      + '</div></div>';
+        stream.appendChild(row);
+        toBottom();
+    }
+
+    function pick(text) {
+        const t = text.toLowerCase();
+        for (const s of SCRIPTS) {
+            if (s.keys.some(k => t.indexOf(k) !== -1)) return s.answer;
+        }
+        return FALLBACK;
+    }
+
+    function reply(text) {
+        if (busy) return;
+        busy = true;
+        addTyping();
+        setTimeout(() => {
+            const el = document.getElementById('typing');
+            if (el) el.remove();
+            addAI(pick(text), text);
+            busy = false;
+        }, 850 + Math.random() * 700);
+    }
+
+    function ask(text) {
+        const t = (text || '').trim();
+        if (!t || busy) return;
+        addUser(t);
+        reply(t);
+    }
+
+    function send() {
+        ask(input.value);
+        input.value = '';
+        input.focus();
+    }
+
+    document.getElementById('sendBtn').addEventListener('click', send);
+
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); send(); }
+    });
+
+    chips.addEventListener('click', e => {
+        const c = e.target.closest('.chip');
+        if (c) ask(c.dataset.q);
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        if (busy) return;
+        stream.innerHTML = EMPTY;
+    });
+
+    stream.addEventListener('click', e => {
+        const btn = e.target.closest('.reply-act');
+        if (!btn || !stream.contains(btn)) return;
+        const wrap = btn.closest('.msg-ai');
+        if (!wrap) return;
+
+        if (btn.dataset.a === 'copy') {
+            const text = wrap.querySelector('.bubble').innerText;
+            const done = () => {
+                btn.textContent = '已复制';
+                setTimeout(() => { btn.textContent = '复制'; }, 1400);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(() => {});
+            }
+        } else if (btn.dataset.a === 'regen') {
+            const src = wrap.dataset.src;
+            wrap.remove();
+            reply(src);
+        }
+    });
+
+})();
+</script>
+
+<script>
+/* 手机端抽屉菜单开关 */
+(function () {
+    var nav = document.getElementById('navbar') || document.querySelector('nav.navbar');
+    var btn = document.getElementById('navToggle');
+    var mask = document.getElementById('navMask');
+    if (!nav || !btn) return;
+    var menu = nav.querySelector('ul');
+    if (!menu) return;
+
+    function setOpen(on) {
+        menu.classList.toggle('open', on);
+        btn.classList.toggle('open', on);
+        if (mask) mask.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? '关闭菜单' : '打开菜单');
+        document.body.style.overflow = on ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+    });
+    if (mask) mask.addEventListener('click', function () { setOpen(false); });
+    menu.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+    });
+})();
+</script>
+</body>
+</html>
